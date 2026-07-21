@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+ * Palette — straight from the Yawe coat of arms (BUILD-BRIEF.md section 3).
+ * Azure leads, Or is the jewel, Gules a spark, Sable anchors, Paper is the room.
+ * ------------------------------------------------------------------------- */
+@theme {
+  --color-azure: #2b5df2;
+  --color-azure-deep: #1e46c8;
+  --color-azure-bright: #5c82ff; /* azure nudged brighter for dark-mode contrast */
+  --color-or: #fcdd09;
+  --color-or-soft: #ffe764;
+  --color-gules: #d50000;
+  --color-sable: #000000;
+  --color-steel: #848484;
+  --color-paper: #f7f5f0;
+  --color-night: #141416;
+
+  /* Portfolix pastel tag chips */
+  --color-chip-blue: #d9e8ff;
+  --color-chip-pink: #ffe0ec;
+  --color-chip-orange: #ffe7c7;
+  --color-chip-purple: #e9defc;
+  --color-chip-mint: #d9f5e3;
+
+  /* Type system (wired to next/font variables in app/layout.tsx) */
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-clash), ui-sans-serif, system-ui, sans-serif;
+  --font-heraldic: var(--font-cinzel), ui-serif, Georgia, serif;
+  --font-hand: var(--font-caveat), cursive;
+
+  /* Shared radii / shadows for the skeuomorphic artifacts */
+  --radius-card: 1.25rem;
+  --shadow-polaroid: 0 1px 2px rgb(0 0 0 / 0.08), 0 8px 24px rgb(0 0 0 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.08), 0 16px 40px rgb(0 0 0 / 0.16);
+}
+
+/* Theme-flipping semantic tokens. Register with `inline` so utilities like
+ * `bg-canvas` resolve the variable at use-time. */
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-canvas-raised: var(--canvas-raised);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+}
+
+:root {
+  --canvas: var(--color-paper);
+  --canvas-raised: #ffffff;
+  --ink: var(--color-night);
+  --ink-soft: #55534e;
+  --line: rgb(20 20 22 / 0.1);
+  --accent: var(--color-azure);
+}
+
+.dark {
+  --canvas: var(--color-night);
+  --canvas-raised: #1d1d20;
+  --ink: #f4f2ec;
+  --ink-soft: #a3a09a;
+  --line: rgb(244 242 236 / 0.12);
+  --accent: var(--color-azure-bright);
+}
+
+@theme inline {
+  --color-accent: var(--accent);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-or);
+  color: var(--color-sable);
+}
+
+/* Hard rule (brief section 4): honor reduced motion globally for CSS-driven
+ * flourishes; Framer Motion springs are gated per-component. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

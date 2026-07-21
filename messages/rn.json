@@ -1,0 +1,25 @@
+{
+  "hero": {
+    "greeting": "Agandi! Ninye Sipho.",
+    "tagline": "Nimbaire omuri DeFi, kandi naaganirizaaho.",
+    "blessing": "Ruhanga akureka; ogende oine amaani."
+  },
+  "kickers": {
+    "about": "Ebikwata aha nyowe",
+    "projects": "Ebi nkaire",
+    "work": "Ebiro by'omurimo",
+    "awards": "Friji yangye",
+    "reading": "Eki nshoma hati",
+    "watches": "Saaha zangye",
+    "nowPlaying": "Ekirikuzana",
+    "now": "Hati hati",
+    "stack": "Laptop ey'amasitika",
+    "talks": "Okugamba n'amahuriro",
+    "passport": "Kampala okushika UK",
+    "proverb": "Eky'okuganira",
+    "faith": "Coram Deo",
+    "testimonials": "Ebigambo birungi",
+    "guestbook": "Eky'okwandiikaho",
+    "connect": "Twogere"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "hero": {
+    "greeting": "Oli otya! I'm Sipho.",
+    "tagline": "I build in DeFi, and I talk about it too.",
+    "blessing": "May you leave here a little lighter than you came."
+  },
+  "kickers": {
+    "about": "About",
+    "projects": "Things I've built",
+    "work": "Places I've worked",
+    "awards": "The fridge",
+    "reading": "Currently reading",
+    "watches": "The watch roll",
+    "nowPlaying": "Now playing",
+    "now": "Right now",
+    "stack": "The stickered lid",
+    "talks": "Talks & media",
+    "passport": "Kampala to the UK",
+    "proverb": "A word from home",
+    "faith": "Coram Deo",
+    "testimonials": "Kind words",
+    "guestbook": "The guestbook",
+    "connect": "Say hello"
+  }
+}
