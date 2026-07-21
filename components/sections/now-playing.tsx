@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/section";
@@ -107,10 +108,12 @@ export function NowPlaying() {
             >
               {/* centre label: the album art, spins with the record */}
               {track?.albumArtUrl ? (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img
+                <Image
                   src={track.albumArtUrl}
                   alt=""
+                  width={112}
+                  height={112}
+                  sizes="(max-width: 640px) 96px, 112px"
                   className="size-24 rounded-full border-4 border-black/70 object-cover sm:size-28"
                 />
               ) : (

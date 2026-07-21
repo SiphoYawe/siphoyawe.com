@@ -8,6 +8,14 @@ const nextConfig: NextConfig = {
     root: __dirname,
   },
   outputFileTracingRoot: __dirname,
+  images: {
+    // Spotify album art (real now-playing) and the dev placeholder host.
+    remotePatterns: [
+      { protocol: "https", hostname: "i.scdn.co" },
+      { protocol: "https", hostname: "mosaic.scdn.co" },
+      { protocol: "https", hostname: "placehold.co" },
+    ],
+  },
 };
 
 export default nextConfig;

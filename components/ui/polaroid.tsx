@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { springs } from "@/lib/motion";
 import { TapeStrip } from "./doodles";
@@ -44,8 +45,15 @@ export function Polaroid({
       {tape && (
         <TapeStrip className="absolute -top-3 left-1/2 z-10 -translate-x-1/2 -rotate-3" />
       )}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt={alt} className="block aspect-square w-full object-cover" />
+      <div className="relative block aspect-square w-full overflow-hidden">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(max-width: 640px) 80vw, 320px"
+          className="object-cover"
+        />
+      </div>
       <figcaption className="flex min-h-10 items-center justify-between gap-3 px-1 pt-3">
         {caption ? (
           <span className="font-hand text-xl leading-none text-[#3c3a36]">{caption}</span>
