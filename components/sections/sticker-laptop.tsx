@@ -34,12 +34,17 @@ const NUDGES: ReadonlyArray<readonly [number, number]> = [
 ];
 
 /**
- * One die-cut sticker linking out: white rim, glossy coloured face, display
- * label. Micro-interaction (brief 6.10): peels on hover (lifts, rotates a
- * touch, corner shadow grows, springs.bouncy), then links out on click.
+ * One die-cut sticker linking out. When the AI-generated brand logo is present
+ * (slot `stickers-brand/sticker-<slug>`) it renders that image, already
+ * die-cut with a baked-in white rim, so it just gets a subtle drop shadow.
+ * Otherwise it falls back to a text pill: white rim, glossy coloured face,
+ * display label. Micro-interaction (brief 6.10): peels on hover (lifts,
+ * rotates a touch, corner shadow grows, springs.bouncy), then links out on
+ * click.
  */
 function Sticker({ sticker, index }: { sticker: LaptopSticker; index: number }) {
   const reduce = useReducedMotion();
+  const logoSrc = aiAsset(`stickers-brand/sticker-${sticker.slug}`);
   const { face, ink } = FACE_COLORS[sticker.color];
   const round = sticker.label.length <= 6 ? "rounded-full" : "rounded-xl";
   const [nx, ny] = NUDGES[index % NUDGES.length];
@@ -85,23 +90,39 @@ function Sticker({ sticker, index }: { sticker: LaptopSticker; index: number }) 
           }}
           className="absolute inset-x-1 -bottom-1 h-3 rounded-[50%] bg-black/25 blur-[5px]"
         />
-        {/* white die-cut rim + coloured face */}
+        {/* the sticker face: AI die-cut logo when present, else a text pill */}
         <motion.span
           variants={{
             visible: { y: 0, rotate: 0, scale: 1 },
             hover: { y: -5, rotate: 4, scale: 1.07, transition: springs.bouncy },
           }}
-          className={`relative block bg-white p-[3px] shadow-sm ${round}`}
+          className={
+            logoSrc
+              ? "relative block"
+              : `relative block bg-white p-[3px] shadow-sm ${round}`
+          }
         >
-          <span
-            className={`block px-3.5 py-1.5 font-display text-xs font-semibold tracking-wide whitespace-nowrap sm:text-sm ${round}`}
-            style={{
-              background: `radial-gradient(circle at 30% 20%, rgb(255 255 255 / 0.5), transparent 52%), ${face}`,
-              color: ink,
-            }}
-          >
-            {sticker.label}
-          </span>
+          {logoSrc ? (
+            // Logo is already die-cut (white rim baked in): no pill background,
+            // just a soft lift shadow so it sits on the lid.
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={logoSrc}
+              alt=""
+              loading="lazy"
+              className="block h-10 w-auto max-w-[6.5rem] object-contain drop-shadow-[0_3px_5px_rgb(0_0_0/0.28)] sm:h-12 sm:max-w-[7.5rem]"
+            />
+          ) : (
+            <span
+              className={`block px-3.5 py-1.5 font-display text-xs font-semibold tracking-wide whitespace-nowrap sm:text-sm ${round}`}
+              style={{
+                background: `radial-gradient(circle at 30% 20%, rgb(255 255 255 / 0.5), transparent 52%), ${face}`,
+                color: ink,
+              }}
+            >
+              {sticker.label}
+            </span>
+          )}
         </motion.span>
       </motion.a>
     </li>
