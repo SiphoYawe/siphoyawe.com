@@ -63,7 +63,7 @@ function EnamelPin({ job, index }: { job: Experience; index: number }) {
 
 /**
  * Work Experience (brief section 6.4): company pins pinned above a
- * hand-drawn timeline arrow, 2020 to now, with handwritten annotation.
+ * hand-drawn timeline arrow, 2023 to now, with handwritten annotation.
  */
 export function WorkExperience() {
   const t = useTranslations("kickers");
