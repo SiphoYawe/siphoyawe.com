@@ -13,10 +13,10 @@ export type Watch = {
 /** The collection, per Sipho. The last one is a hint, not a possession. */
 export const WATCHES: Watch[] = [
   {
-    id: "seiko-skx",
+    id: "seiko-5-snxs79",
     brand: "Seiko",
-    model: "SKX (black dial)",
-    why: "the classic. Goes anywhere, forgives everything.",
+    model: "5 (SNXS79)",
+    why: "the everyday classic. Goes anywhere, forgives everything.",
     tone: "sable",
   },
   {
