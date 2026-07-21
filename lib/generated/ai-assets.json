@@ -11,7 +11,16 @@
   "artifacts/vinyl-player": "/assets/ai/artifacts/vinyl-player.webp",
   "artifacts/watch-roll": "/assets/ai/artifacts/watch-roll.webp",
   "artifacts/wax-seal": "/assets/ai/artifacts/wax-seal.webp",
+  "doodles/doodle-arrow-curly": "/assets/ai/doodles/doodle-arrow-curly.webp",
+  "doodles/doodle-bird": "/assets/ai/doodles/doodle-bird.webp",
   "doodles/doodle-burst-left": "/assets/ai/doodles/doodle-burst-left.webp",
+  "doodles/doodle-burst-right": "/assets/ai/doodles/doodle-burst-right.webp",
+  "doodles/doodle-circle": "/assets/ai/doodles/doodle-circle.webp",
+  "doodles/doodle-crown": "/assets/ai/doodles/doodle-crown.webp",
+  "doodles/doodle-fish": "/assets/ai/doodles/doodle-fish.webp",
+  "doodles/doodle-sun": "/assets/ai/doodles/doodle-sun.webp",
+  "doodles/doodle-underline": "/assets/ai/doodles/doodle-underline.webp",
+  "doodles/doodle-waves": "/assets/ai/doodles/doodle-waves.webp",
   "doodles/timeline-arrow": "/assets/ai/doodles/timeline-arrow.webp",
   "hero/sticker-ankole": "/assets/ai/hero/sticker-ankole.webp",
   "hero/sticker-crane-feather": "/assets/ai/hero/sticker-crane-feather.webp",
@@ -25,5 +34,7 @@
   "mascot/crane-peek-side": "/assets/ai/mascot/crane-peek-side.webp",
   "mascot/crane-pointing": "/assets/ai/mascot/crane-pointing.webp",
   "mascot/crane-sleeping": "/assets/ai/mascot/crane-sleeping.webp",
-  "mascot/crane-standing": "/assets/ai/mascot/crane-standing.webp"
+  "mascot/crane-standing": "/assets/ai/mascot/crane-standing.webp",
+  "textures/hero-rays": "/assets/ai/textures/hero-rays.webp",
+  "textures/map-kampala-uk": "/assets/ai/textures/map-kampala-uk.webp"
 }
