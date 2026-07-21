@@ -43,6 +43,16 @@ function scan() {
   return out;
 }
 
+// On CI/deploy (Vercel) the content-drop staging area is not part of the repo,
+// so SOURCE is absent. In that case do NOT wipe: the committed public/assets/ai
+// and lib/generated/ai-assets.json ARE the finals and must be served as-is.
+if (!existsSync(SOURCE)) {
+  console.log(
+    "[ai-assets] no content-drop source (deploy/CI): keeping committed public/assets/ai as-is",
+  );
+  process.exit(0);
+}
+
 const slots = scan();
 
 rmSync(PUBLIC_DIR, { recursive: true, force: true });
