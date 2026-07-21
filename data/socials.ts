@@ -10,8 +10,10 @@ export const SOCIALS = [
 ] as const;
 
 export const CONTACT_EMAIL = "yawephillip@gmail.com";
-export const CALCOM_LINK = "siphoyawe/intro"; // TODO(Sipho): confirm cal.com link
-/** false until the cal.com link above is confirmed: the booking block then
- * shows a designed placeholder instead of cal.com's 404 box. */
-export const CALCOM_CONFIRMED = false;
-export const READY_SCRIBE_URL = "https://readyscribe.substack.com"; // TODO(Sipho): confirm
+/** cal.com booking handle. Comes from NEXT_PUBLIC_CAL_LINK, with Sipho's
+ * confirmed link as the build-time fallback. */
+export const CALCOM_LINK = process.env.NEXT_PUBLIC_CAL_LINK || "sipho-yawe/30min";
+/** The cal.com link is confirmed, so the booking block renders the live embed
+ * instead of the designed placeholder. */
+export const CALCOM_CONFIRMED = true;
+export const READY_SCRIBE_URL = "https://readyscribe17.substack.com";

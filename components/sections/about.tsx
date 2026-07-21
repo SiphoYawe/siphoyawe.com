@@ -1,4 +1,5 @@
 import { Section } from "@/components/ui/section";
+import { Kicker } from "@/components/ui/kicker";
 import { Polaroid } from "@/components/ui/polaroid";
 import { TagChip } from "@/components/ui/tag-chip";
 import { BentoCard } from "@/components/ui/bento-card";
@@ -16,7 +17,7 @@ const HEADSHOT = { src: "/images/sipho-main-1200.webp", alt: "Sipho Yawe speakin
  */
 export function About() {
   return (
-    <Section id="about" kicker="About" title="Come in, take your shoes off" aside="the two-minute version">
+    <Section id="about" kicker={<Kicker k="about" />} title="Come in, take your shoes off" aside="the two-minute version">
       <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
         {/* Polaroid + scattered chips */}
         <Reveal className="relative mx-auto w-fit lg:mx-0">

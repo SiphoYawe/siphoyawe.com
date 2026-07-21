@@ -66,7 +66,8 @@ export function Turnstile({ onToken, className = "" }: TurnstileProps) {
       "error-callback": () => onToken(null),
     });
     return () => {
-      containerRef.current = null;
+      // Reset the live widget before React tears the container down; nulling the
+      // ref first would strand the widget with no node to reset against.
       window.turnstile?.reset(widgetId);
     };
   }, [ready, onToken]);

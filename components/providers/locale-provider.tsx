@@ -60,7 +60,14 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <LocaleContext.Provider value={{ locale, setLocale }}>
-      <NextIntlClientProvider locale={locale} messages={MESSAGES[locale]}>
+      {/* A fixed timeZone gives next-intl a global default, silencing its
+          ENVIRONMENT_FALLBACK warning during static render. The decorative
+          locales format no dates, so the value only needs to be stable. */}
+      <NextIntlClientProvider
+        locale={locale}
+        messages={MESSAGES[locale]}
+        timeZone="UTC"
+      >
         {children}
       </NextIntlClientProvider>
     </LocaleContext.Provider>

@@ -77,10 +77,6 @@ function StickerLetter({
       onMouseEnter={reveal}
       onMouseLeave={() => setOpen(false)}
       onClick={() => setOpen((v) => !v)} // touch support
-      onFocus={reveal}
-      onBlur={() => setOpen(false)}
-      tabIndex={0}
-      aria-label={`Letter ${char}, hides a sticker`}
     >
       {char}
       <AnimatePresence>
