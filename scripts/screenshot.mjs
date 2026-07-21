@@ -8,27 +8,33 @@ const shell = execSync(
 const [url, out, width = "1440", height = "900", fullPage = "false", dark = "false", hoverSel = "", hoverMs = "0"] =
   process.argv.slice(2);
 const browser = await chromium.launch({ executablePath: shell });
-const page = await browser.newPage({
+const context = await browser.newContext({
   viewport: { width: +width, height: +height },
   colorScheme: dark === "true" ? "dark" : "light",
 });
+// Skip the preloader in screenshot runs.
+await context.addInitScript(() => {
+  try { window.sessionStorage.setItem("sy-preloaded", "1"); } catch {}
+});
+const page = await context.newPage();
 await page.goto(url, { waitUntil: "networkidle" });
 
 // Scroll through so whileInView reveals fire, then settle back at the top.
+// behaviour:"instant" overrides the site's CSS smooth scrolling.
 await page.evaluate(async () => {
   await new Promise((resolve) => {
     let y = 0;
     const step = () => {
       y += window.innerHeight * 0.7;
-      window.scrollTo(0, y);
-      if (y < document.body.scrollHeight) setTimeout(step, 120);
+      window.scrollTo({ top: y, behavior: "instant" });
+      if (y < document.body.scrollHeight) setTimeout(step, 90);
       else resolve();
     };
     step();
   });
 });
 await page.waitForTimeout(600);
-await page.evaluate(() => window.scrollTo(0, 0));
+await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
 await page.waitForTimeout(400);
 
 if (hoverSel) {

@@ -1,0 +1,11 @@
+import { chromium } from "playwright-core";
+import { execSync } from "node:child_process";
+const shell = execSync('ls -d "$HOME"/Library/Caches/ms-playwright/chromium_headless_shell-*/chrome-mac/headless_shell | tail -1').toString().trim();
+const browser = await chromium.launch({ executablePath: shell });
+const page = await browser.newPage();
+page.on("console", (m) => console.log("[console]", m.type(), m.text().slice(0, 300)));
+page.on("pageerror", (e) => console.log("[pageerror]", e.message.slice(0, 500)));
+await page.goto(process.argv[2], { waitUntil: "networkidle" });
+await page.waitForTimeout(2500);
+console.log("[h1 count]", await page.locator("h1").count());
+await browser.close();

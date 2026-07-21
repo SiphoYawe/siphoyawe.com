@@ -23,7 +23,14 @@ export function BurstStrokes({ className = "" }: { className?: string }) {
 }
 
 /** Hand-drawn squiggle underline — the active-nav and accent underline. */
-export function SquiggleUnderline({ className = "" }: { className?: string }) {
+export function SquiggleUnderline({
+  className = "",
+  gradient = false,
+}: {
+  className?: string;
+  /** Yellow-to-Azure stroke (active nav link, brief section 7). */
+  gradient?: boolean;
+}) {
   return (
     <svg
       viewBox="0 0 120 12"
@@ -31,10 +38,18 @@ export function SquiggleUnderline({ className = "" }: { className?: string }) {
       aria-hidden
       preserveAspectRatio="none"
       className={className}
-      stroke="currentColor"
+      stroke={gradient ? "url(#squiggle-grad)" : "currentColor"}
       strokeWidth="3.5"
       strokeLinecap="round"
     >
+      {gradient && (
+        <defs>
+          <linearGradient id="squiggle-grad" x1="0" y1="0" x2="120" y2="0" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#FCDD09" />
+            <stop offset="1" stopColor="#2B5DF2" />
+          </linearGradient>
+        </defs>
+      )}
       <path d="M2 8 C 14 2, 22 11, 34 6 S 50 2, 62 7 S 82 11, 94 6 S 110 3, 118 7" />
     </svg>
   );
