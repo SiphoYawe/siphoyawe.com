@@ -48,6 +48,13 @@ const MOCK_GUESTBOOK: GuestbookEntry[] = [
   },
 ];
 
+/** SSG-safe seed for the guestbook wall's first paint (brief: static by
+ * default). The client wall refetches /api/guestbook after mount and swaps
+ * in live entries once Claude's endpoint exists. */
+export function getGuestbookSeed(): GuestbookEntry[] {
+  return MOCK_GUESTBOOK;
+}
+
 async function tryFetch<T>(input: RequestInfo, init?: RequestInit): Promise<T | null> {
   try {
     const res = await fetch(input, init);

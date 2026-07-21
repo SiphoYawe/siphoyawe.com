@@ -1,37 +1,50 @@
 import { Hero } from "@/components/hero/hero";
 import { Preloader } from "@/components/preloader/preloader";
 import { CraneMascot } from "@/components/crane/crane-mascot";
-import { SocialDock } from "@/components/nav/social-dock";
+import { About } from "@/components/sections/about";
+import { Projects } from "@/components/sections/projects";
+import { WorkExperience } from "@/components/sections/work-experience";
+import { Awards } from "@/components/sections/awards";
+import { Reading } from "@/components/sections/reading";
+import { Watches } from "@/components/sections/watches";
+import { NowPlaying } from "@/components/sections/now-playing";
+import { CorkboardNow } from "@/components/sections/corkboard-now";
+import { StickerLaptop } from "@/components/sections/sticker-laptop";
+import { Talks } from "@/components/sections/talks";
+import { Passport } from "@/components/sections/passport";
+import { Proverb } from "@/components/sections/proverb";
+import { Faith } from "@/components/sections/faith";
+import { Testimonials } from "@/components/sections/testimonials";
+import { Guestbook } from "@/components/sections/guestbook";
+import { Connect } from "@/components/sections/connect";
 
 /**
- * Phase 2 checkpoint: hero + signature interactions live. Placeholder
- * sections below carry the nav anchor ids until Phase 3 furnishes the room.
+ * The intimate scroll (brief section 5): seventeen sections, each a designed
+ * artifact, in the brief's order. Hero closes with the wordmark; Connect
+ * closes the page with the wax seal.
  */
 export default function Home() {
   return (
     <main>
       <Preloader />
       <Hero />
+      <About />
+      <Projects />
+      <WorkExperience />
+      <Awards />
+      <Reading />
+      <Watches />
+      <NowPlaying />
+      <CorkboardNow />
+      <StickerLaptop />
+      <Talks />
+      <Passport />
+      <Proverb />
+      <Faith />
+      <Testimonials />
+      <Guestbook />
+      <Connect />
       <CraneMascot />
-
-      {["about", "work", "reading"].map((id) => (
-        <section
-          key={id}
-          id={id}
-          className="mx-auto grid min-h-[60vh] max-w-5xl scroll-mt-24 place-items-center px-6 py-24"
-        >
-          <p className="font-hand text-2xl text-ink-soft">
-            the {id} section lands in phase 3
-          </p>
-        </section>
-      ))}
-
-      <section
-        id="connect"
-        className="mx-auto grid min-h-[60vh] max-w-5xl scroll-mt-24 place-items-center px-6 py-24"
-      >
-        <SocialDock />
-      </section>
     </main>
   );
 }

@@ -1,0 +1,100 @@
+import { Section } from "@/components/ui/section";
+import { Polaroid } from "@/components/ui/polaroid";
+import { TagChip } from "@/components/ui/tag-chip";
+import { BentoCard } from "@/components/ui/bento-card";
+import { Handwritten } from "@/components/ui/handwritten";
+import { Reveal } from "@/components/ui/reveal";
+import { DoodleArrow } from "@/components/ui/doodles";
+import { BIO, FACTS, IDENTITY_CHIPS, POLAROID_CAPTION } from "@/data/about";
+
+// TODO(Sipho): real headshot. Placeholder silhouette until then.
+const HEADSHOT_PLACEHOLDER =
+  "data:image/svg+xml," +
+  encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><rect width="400" height="400" fill="#2B5DF2"/><circle cx="200" cy="155" r="72" fill="#F7F5F0"/><ellipse cx="200" cy="335" rx="125" ry="95" fill="#F7F5F0"/><text x="200" y="388" font-family="sans-serif" font-size="17" fill="#FCDD09" text-anchor="middle">headshot placeholder</text></svg>`,
+  );
+
+/**
+ * About (brief section 6.2): tilted polaroid with status pill and scattered
+ * identity chips, warm bio in bento cards, and a quiet facts grid.
+ */
+export function About() {
+  return (
+    <Section id="about" kicker="About" title="Come in, take your shoes off" aside="the two-minute version">
+      <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
+        {/* Polaroid + scattered chips */}
+        <Reveal className="relative mx-auto w-fit lg:mx-0">
+          <Polaroid
+            src={HEADSHOT_PLACEHOLDER}
+            alt="Portrait of Sipho Yawe (placeholder)"
+            caption={POLAROID_CAPTION}
+            status="Open to talks"
+            rotate={-4}
+            tape
+            className="w-64 sm:w-72"
+          />
+          <div aria-hidden className="absolute -top-6 -right-10 hidden rotate-6 sm:block">
+            <TagChip label={IDENTITY_CHIPS[0].label} color={IDENTITY_CHIPS[0].color} rotate={IDENTITY_CHIPS[0].rotate} />
+          </div>
+          <div aria-hidden className="absolute top-1/3 -right-14 hidden sm:block">
+            <TagChip label={IDENTITY_CHIPS[1].label} color={IDENTITY_CHIPS[1].color} rotate={IDENTITY_CHIPS[1].rotate} />
+          </div>
+          <div aria-hidden className="absolute -bottom-4 -right-8 hidden sm:block">
+            <TagChip label={IDENTITY_CHIPS[2].label} color={IDENTITY_CHIPS[2].color} rotate={IDENTITY_CHIPS[2].rotate} />
+          </div>
+          <div aria-hidden className="absolute -top-4 -left-10 hidden -rotate-6 sm:block">
+            <TagChip label={IDENTITY_CHIPS[3].label} color={IDENTITY_CHIPS[3].color} rotate={IDENTITY_CHIPS[3].rotate} />
+          </div>
+          <div aria-hidden className="absolute top-1/2 -left-14 hidden sm:block">
+            <TagChip label={IDENTITY_CHIPS[4].label} color={IDENTITY_CHIPS[4].color} rotate={IDENTITY_CHIPS[4].rotate} />
+          </div>
+          {/* chips inline on small screens */}
+          <div className="mt-6 flex flex-wrap justify-center gap-2 sm:hidden">
+            {IDENTITY_CHIPS.map((chip) => (
+              <TagChip key={chip.label} {...chip} />
+            ))}
+          </div>
+        </Reveal>
+
+        {/* Bio bento cards */}
+        <div className="grid gap-5">
+          <Reveal>
+            <BentoCard className="relative">
+              <p className="text-lg leading-relaxed">{BIO.short}</p>
+              <DoodleArrow className="absolute -bottom-2 right-6 w-12 rotate-[160deg] text-or" />
+            </BentoCard>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <BentoCard>
+              <p className="leading-relaxed text-ink-soft">{BIO.whatIDo}</p>
+            </BentoCard>
+          </Reveal>
+          <Reveal delay={0.16}>
+            <BentoCard>
+              <p className="leading-relaxed text-ink-soft">{BIO.offKeyboard}</p>
+              <Handwritten className="mt-4" rotate={-1.5}>
+                this is the bit the CV leaves out
+              </Handwritten>
+            </BentoCard>
+          </Reveal>
+        </div>
+      </div>
+
+      {/* Facts grid (Olivia pattern) */}
+      <Reveal className="mt-14">
+        <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-4">
+          {FACTS.map((fact) => (
+            <div key={fact.label} className="bg-canvas-raised p-5">
+              <dt className="font-heraldic text-[11px] tracking-[0.25em] text-ink-soft uppercase">
+                {fact.label}
+              </dt>
+              <dd className="mt-2 font-display text-sm font-semibold sm:text-base">
+                {fact.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </Reveal>
+    </Section>
+  );
+}

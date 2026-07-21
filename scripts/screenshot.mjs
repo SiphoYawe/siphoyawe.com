@@ -17,7 +17,9 @@ await context.addInitScript(() => {
   try { window.sessionStorage.setItem("sy-preloaded", "1"); } catch {}
 });
 const page = await context.newPage();
-await page.goto(url, { waitUntil: "networkidle" });
+// "load" not networkidle: the cal.com embed keeps connections open forever.
+await page.goto(url, { waitUntil: "load" });
+await page.waitForTimeout(2500);
 
 // Scroll through so whileInView reveals fire, then settle back at the top.
 // behaviour:"instant" overrides the site's CSS smooth scrolling.

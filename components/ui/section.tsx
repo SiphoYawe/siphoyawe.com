@@ -2,8 +2,9 @@ import { Reveal } from "./reveal";
 
 type SectionProps = {
   id?: string;
-  /** Heraldic kicker word above the title (often the translated kicker). */
-  kicker?: string;
+  /** Heraldic kicker word above the title (pass <Kicker k="..."/> for the
+   * translated surface). */
+  kicker?: React.ReactNode;
   title?: string;
   /** Optional handwritten aside next to the title (danielsun annotation). */
   aside?: string;

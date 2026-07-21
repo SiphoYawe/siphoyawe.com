@@ -1,0 +1,14 @@
+import { chromium } from "playwright-core";
+import { execSync } from "node:child_process";
+const shell = execSync('ls -d "$HOME"/Library/Caches/ms-playwright/chromium_headless_shell-*/chrome-mac/headless_shell | tail -1').toString().trim();
+const browser = await chromium.launch({ executablePath: shell });
+const context = await browser.newContext({ viewport: { width: 1440, height: 1400 }, colorScheme: process.argv[4] === "dark" ? "dark" : "light" });
+await context.addInitScript(() => { try { sessionStorage.setItem("sy-preloaded", "1"); } catch {} });
+const page = await context.newPage();
+await page.goto(process.argv[2], { waitUntil: "load" });
+await page.waitForTimeout(2200);
+await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "instant" }));
+await page.waitForTimeout(900);
+await page.screenshot({ path: process.argv[3] });
+await browser.close();
+console.log("saved", process.argv[3]);
