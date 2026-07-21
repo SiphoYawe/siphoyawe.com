@@ -6,10 +6,11 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ThemeToggle } from "./theme-toggle";
 import { LanguageToggle } from "./language-toggle";
+import { MobileMenu } from "./mobile-menu";
 import { SquiggleUnderline } from "@/components/ui/doodles";
 import { springs } from "@/lib/motion";
 
-const NAV_LINKS = [
+export const NAV_LINKS = [
   { href: "/#about", id: "about", label: "About" },
   { href: "/#work", id: "work", label: "Work" },
   { href: "/#reading", id: "reading", label: "Reading" },
@@ -109,8 +110,11 @@ export function PillNav() {
           )}
         </Link>
 
-        <LanguageToggle />
-        <ThemeToggle />
+        {/* Toggles live in the pill on desktop; on mobile they move into the menu */}
+        <span className="hidden items-center sm:flex">
+          <LanguageToggle />
+          <ThemeToggle />
+        </span>
 
         <Link
           href="/#connect"
@@ -118,6 +122,8 @@ export function PillNav() {
         >
           Book me
         </Link>
+
+        <MobileMenu />
       </nav>
     </motion.header>
   );
