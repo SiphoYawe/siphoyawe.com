@@ -6,6 +6,7 @@ import { Kicker } from "@/components/ui/kicker";
 import { Reveal } from "@/components/ui/reveal";
 import { Handwritten } from "@/components/ui/handwritten";
 import { springs } from "@/lib/motion";
+import { aiAsset } from "@/lib/ai-assets";
 import { NOW } from "@/data/now";
 
 const PIN_COLORS = ["#D50000", "#2B5DF2", "#FCDD09", "#141416"];
@@ -75,6 +76,10 @@ function PinnedCard({
  * stamp with the last-updated date.
  */
 export function CorkboardNow() {
+  // AI corkboard final (AI-ASSET-PROMPTS.md C6) replaces the CSS cork texture
+  // when it lands; cards, pins, string and the updated stamp stay in code.
+  const corkSrc = aiAsset("artifacts/corkboard");
+
   return (
     <Section
       id="now"
@@ -95,6 +100,22 @@ export function CorkboardNow() {
               backgroundSize: "90px 90px, 70px 70px, 50px 50px, 100% 100%",
             }}
           >
+            {corkSrc && (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={corkSrc}
+                  alt=""
+                  loading="lazy"
+                  className="absolute inset-0 size-full rounded-[inherit] object-cover"
+                />
+                {/* inset vignette re-applied over the image */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-[inset_0_2px_14px_rgb(0_0_0/0.35)]"
+                />
+              </>
+            )}
             <ul className="relative grid gap-6 pt-4 sm:grid-cols-2 lg:grid-cols-4">
               {NOW.cards.map((card, i) => (
                 <PinnedCard key={card.id} card={card} index={i} />

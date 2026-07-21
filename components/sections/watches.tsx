@@ -6,6 +6,7 @@ import { Kicker } from "@/components/ui/kicker";
 import { Reveal } from "@/components/ui/reveal";
 import { springs } from "@/lib/motion";
 import { WATCHES, type Watch } from "@/data/watches";
+import { aiAsset } from "@/lib/ai-assets";
 
 const TONES: Record<Watch["tone"], { face: string; strap: string; hand: string }> = {
   azure: { face: "#2B5DF2", strap: "#1e46c8", hand: "#F7F5F0" },
@@ -103,6 +104,9 @@ function WatchPiece({ watch }: { watch: Watch }) {
  * an honest placeholder until the real roll is shot.
  */
 export function Watches() {
+  // AI leather roll photo (AI-ASSET-PROMPTS.md C4) becomes the base surface
+  // when it lands; the dials and captions stay in code on top either way.
+  const rollSrc = aiAsset("artifacts/watch-roll");
   return (
     <Section
       id="watches"
@@ -113,11 +117,27 @@ export function Watches() {
       <Reveal>
         <div
           className="relative rounded-2xl shadow-(--shadow-lift)"
-          style={{
-            background:
-              "linear-gradient(140deg, #7d4e2c 0%, #5f3a1f 45%, #4a2c16 100%)",
-          }}
+          style={
+            rollSrc
+              ? undefined
+              : {
+                  background:
+                    "linear-gradient(140deg, #7d4e2c 0%, #5f3a1f 45%, #4a2c16 100%)",
+                }
+          }
         >
+          {rollSrc && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={rollSrc}
+              alt=""
+              loading="lazy"
+              className="absolute inset-0 size-full rounded-2xl object-cover"
+            />
+          )}
+          {/* CSS roll dressing, only while the AI roll photo is absent */}
+          {!rollSrc && (
+            <>
           {/* flap edge with its own stitch line */}
           <div
             aria-hidden
@@ -135,6 +155,8 @@ export function Watches() {
             aria-hidden
             className="pointer-events-none absolute inset-2.5 rounded-xl border-2 border-dashed border-[#e8c493]/35"
           />
+            </>
+          )}
 
           <ol className="relative grid gap-8 px-6 pt-16 pb-8 sm:grid-cols-3 sm:gap-6 sm:px-8">
             {WATCHES.map((watch) => (

@@ -6,6 +6,7 @@ import { Kicker } from "@/components/ui/kicker";
 import { Reveal } from "@/components/ui/reveal";
 import { Handwritten } from "@/components/ui/handwritten";
 import { springs } from "@/lib/motion";
+import { aiAsset } from "@/lib/ai-assets";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 import { TALKS, type Talk } from "@/data/talks";
 
@@ -57,6 +58,9 @@ function TalkShell({
 function Lanyard({ talk, index }: { talk: Talk; index: number }) {
   const reduce = useReducedMotion();
   const strip = STRIP_COLORS[index % STRIP_COLORS.length];
+  // AI lanyard + badge (AI-ASSET-PROMPTS.md C11) replaces the CSS artifact
+  // when it lands; the SPEAKER strip and the text overlay stay in code.
+  const aiSrc = aiAsset("artifacts/lanyard");
 
   return (
     <TalkShell talk={talk} className="w-60">
@@ -66,6 +70,28 @@ function Lanyard({ talk, index }: { talk: Talk; index: number }) {
         style={{ transformOrigin: "top center" }}
         className="flex flex-col items-center"
       >
+        {aiSrc ? (
+          <div className="relative w-full">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={aiSrc} alt="" loading="lazy" className="w-full" />
+            {/* overlay sits on the blank badge face; the inset percentages
+                may need a nudge once the generated final lands */}
+            <div className="absolute inset-x-[14%] top-[38%] overflow-hidden rounded-lg">
+              <div className="px-4 pt-2 pb-1.5 text-center" style={{ background: strip }}>
+                <span aria-hidden className="mx-auto mb-1.5 block h-1 w-8 rounded-full bg-sable/25" />
+                <p className="font-heraldic text-[10px] tracking-[0.35em] text-[#F7F5F0]">SPEAKER</p>
+              </div>
+              <div className="p-4 text-center">
+                <p className="font-display text-base leading-snug font-semibold text-[#141416]">{talk.title}</p>
+                <p className="mt-1.5 text-sm text-[#55534e]">{talk.venue}</p>
+                <p className="mt-1 font-heraldic text-[10px] tracking-[0.25em] text-accent uppercase">
+                  {talk.date}
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <>
         {/* the strap, an inverted V */}
         <svg viewBox="0 0 200 56" aria-hidden className="h-12 w-44 text-azure">
           <path d="M22 2 L100 50" stroke="currentColor" strokeWidth="7" strokeLinecap="round" />
@@ -86,6 +112,8 @@ function Lanyard({ talk, index }: { talk: Talk; index: number }) {
             </p>
           </div>
         </div>
+          </>
+        )}
       </motion.div>
     </TalkShell>
   );
@@ -99,6 +127,9 @@ function Lanyard({ talk, index }: { talk: Talk; index: number }) {
  */
 function Stub({ talk, index }: { talk: Talk; index: number }) {
   const reduce = useReducedMotion();
+  // AI ticket stub (AI-ASSET-PROMPTS.md C12) replaces the torn-edge CSS
+  // ticket when it lands; the SY nub and the text overlay stay in code.
+  const aiSrc = aiAsset("artifacts/ticket-stub");
 
   return (
     <TalkShell talk={talk} className="w-full">
@@ -106,6 +137,31 @@ function Stub({ talk, index }: { talk: Talk; index: number }) {
         className="drop-shadow-sm dark:drop-shadow-md"
         style={{ transform: `rotate(${STUB_TILTS[index % STUB_TILTS.length]}deg)` }}
       >
+        {aiSrc ? (
+          <motion.div
+            whileHover={reduce ? undefined : { x: 6 }}
+            transition={springs.soft}
+            className="relative"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={aiSrc} alt="" loading="lazy" className="w-full" />
+            {/* nub + text over the blank center panel of the generated ticket */}
+            <div className="absolute inset-0 flex">
+              <div className="grid w-12 shrink-0 place-items-center">
+                <span aria-hidden className="-rotate-90 font-heraldic text-[10px] tracking-[0.3em] text-[#55534e]">
+                  SY
+                </span>
+              </div>
+              <div className="min-w-0 self-center p-4 sm:p-5">
+                <p className="font-display text-base leading-snug font-semibold text-[#141416]">{talk.title}</p>
+                <p className="mt-1 text-sm text-[#55534e]">{talk.venue}</p>
+                <p className="mt-1.5 font-heraldic text-[10px] tracking-[0.25em] text-accent uppercase">
+                  {talk.date}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        ) : (
         <motion.div
           whileHover={reduce ? undefined : { x: 6 }}
           transition={springs.soft}
@@ -126,6 +182,7 @@ function Stub({ talk, index }: { talk: Talk; index: number }) {
             </p>
           </div>
         </motion.div>
+        )}
       </div>
     </TalkShell>
   );

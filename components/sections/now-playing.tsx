@@ -8,6 +8,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { PillButton } from "@/components/ui/pill-button";
 import { getNowPlaying } from "@/lib/api";
 import type { NowPlaying as NowPlayingTrack } from "@/lib/types";
+import { aiAsset } from "@/lib/ai-assets";
 
 /** Cruising speed of the record, seconds per revolution. */
 const SPIN_SECONDS = 2.6;
@@ -59,6 +60,9 @@ export function NowPlaying() {
   };
 
   const spinning = Boolean(track?.isPlaying) && !reduce;
+  // AI record player deck (AI-ASSET-PROMPTS.md C5) slides under the record
+  // when it lands; the code vinyl keeps spinning on top either way.
+  const deckSrc = aiAsset("artifacts/vinyl-player");
   const isStub = track?._mock === true || (track?.title?.includes("Stub") ?? false);
 
   return (
@@ -78,6 +82,15 @@ export function NowPlaying() {
             aria-label="Flick the record to spin it faster"
             className="relative shrink-0 cursor-pointer rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
           >
+            {deckSrc && (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={deckSrc}
+                alt=""
+                loading="lazy"
+                className="pointer-events-none absolute top-1/2 left-1/2 size-[140%] max-w-none -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-xl"
+              />
+            )}
             <span
               aria-hidden
               className="relative grid size-60 place-items-center rounded-full sm:size-72"

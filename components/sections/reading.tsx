@@ -7,6 +7,7 @@ import { Kicker } from "@/components/ui/kicker";
 import { Reveal } from "@/components/ui/reveal";
 import { springs } from "@/lib/motion";
 import { BOOKS, BIBLE, type Book } from "@/data/books";
+import { aiAsset } from "@/lib/ai-assets";
 
 const SPINE_STYLES: Record<Book["spine"], { bg: string; ink: string }> = {
   azure: { bg: "#2B5DF2", ink: "#F7F5F0" },
@@ -84,6 +85,9 @@ function BibleArtifact() {
   const verse = BIBLE.verse;
   const hi = verse.indexOf(HIGHLIGHT_PHRASE);
   const swap = reduce ? { duration: 0.01 } : springs.soft;
+  // AI Bible object (AI-ASSET-PROMPTS.md C3) replaces the CSS closed state
+  // when it lands; the tap-to-open cream spread stays code either way.
+  const bibleSrc = aiAsset("artifacts/bible");
 
   return (
     <div className="flex flex-col items-center gap-3">
@@ -152,6 +156,16 @@ function BibleArtifact() {
               transition={swap}
               className="relative h-44 w-32 -rotate-1"
             >
+              {bibleSrc ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={bibleSrc}
+                  alt=""
+                  loading="lazy"
+                  className="size-full object-contain drop-shadow-xl"
+                />
+              ) : (
+              <>
               {/* page-edge block on the right side */}
               <span
                 aria-hidden
@@ -184,6 +198,8 @@ function BibleArtifact() {
                   Bible
                 </span>
               </span>
+              </>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
@@ -201,6 +217,9 @@ function BibleArtifact() {
  * scripture-as-object moment.
  */
 export function Reading() {
+  // AI walnut shelf photo (AI-ASSET-PROMPTS.md C2) replaces the CSS plank
+  // when it lands; the books keep standing on it in code either way.
+  const bookshelfSrc = aiAsset("artifacts/bookshelf");
   return (
     <Section
       id="reading"
@@ -217,17 +236,28 @@ export function Reading() {
                 <ShelfBook key={book.id} book={book} index={i} />
               ))}
             </ol>
-            {/* wooden plank: warm gradient, lit front edge, soft shadow under */}
-            <div
-              aria-hidden
-              className="-mx-3 h-4 rounded-[3px]"
-              style={{
-                background:
-                  "linear-gradient(180deg, #c08a5c 0%, #9c6a41 45%, #7b4f2d 100%)",
-                boxShadow:
-                  "inset 0 1.5px 0 rgb(255 220 170 / 0.55), 0 18px 26px -12px rgb(0 0 0 / 0.4)",
-              }}
-            />
+            {/* shelf plank: AI photo when present, CSS plank otherwise */}
+            {bookshelfSrc ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={bookshelfSrc}
+                alt=""
+                loading="lazy"
+                className="-mx-3 h-auto w-[calc(100%+1.5rem)] max-w-none object-contain drop-shadow-lg"
+              />
+            ) : (
+              /* wooden plank: warm gradient, lit front edge, soft shadow under */
+              <div
+                aria-hidden
+                className="-mx-3 h-4 rounded-[3px]"
+                style={{
+                  background:
+                    "linear-gradient(180deg, #c08a5c 0%, #9c6a41 45%, #7b4f2d 100%)",
+                  boxShadow:
+                    "inset 0 1.5px 0 rgb(255 220 170 / 0.55), 0 18px 26px -12px rgb(0 0 0 / 0.4)",
+                }}
+              />
+            )}
           </div>
 
           <BibleArtifact />

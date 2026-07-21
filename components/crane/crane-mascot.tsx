@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
+import { aiAsset } from "@/lib/ai-assets";
 
 /**
  * The crowned crane — Uganda's national bird and the site's playful mascot
@@ -40,6 +41,10 @@ export function CraneMascot() {
 
   if (!mounted) return null;
 
+  // AI mascot final (AI-ASSET-PROMPTS.md section B) replaces the placeholder
+  // illustration when it lands; the same peek + head-tilt behaviour stays.
+  const aiSrc = aiAsset("mascot/crane-peek-bottom") ?? aiAsset("mascot/crane-peek-side");
+
   return (
     <motion.div
       ref={ref}
@@ -49,6 +54,14 @@ export function CraneMascot() {
       transition={{ delay: 0.4, duration: 0.6 }}
       className="pointer-events-none fixed -right-2 bottom-0 z-40 w-24 translate-x-[15%] sm:w-32"
     >
+      {aiSrc ? (
+        <motion.img
+          src={aiSrc}
+          alt=""
+          style={reduce ? undefined : { rotate: tilt }}
+          className="origin-[50%_80%] w-full"
+        />
+      ) : (
       <motion.svg
         viewBox="0 0 96 120"
         style={reduce ? undefined : { rotate: tilt }}
@@ -79,6 +92,7 @@ export function CraneMascot() {
           <circle cx="58" cy="29" r="4" fill="#FCDD09" />
         </g>
       </motion.svg>
+      )}
     </motion.div>
   );
 }

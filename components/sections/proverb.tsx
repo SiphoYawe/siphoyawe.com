@@ -5,12 +5,15 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/section";
 import { Kicker } from "@/components/ui/kicker";
 import { Reveal } from "@/components/ui/reveal";
+import { aiAsset } from "@/lib/ai-assets";
 import { PROVERBS, type Proverb as ProverbType } from "@/data/proverbs";
 
 /**
  * Kitenge / barkcloth frame, woven in CSS: cream warp threads over a
  * diamond check (conic-gradient) in the brand tinctures on a warm base.
  * Fixed hexes: it is a cloth artifact, so it reads the same in both themes.
+ * The AI kitenge tile (AI-ASSET-PROMPTS.md F1) replaces it when the final
+ * lands, as a cover background on the same frame element.
  */
 const KITENGE_STYLE: React.CSSProperties = {
   background: [
@@ -21,6 +24,15 @@ const KITENGE_STYLE: React.CSSProperties = {
   backgroundSize: "auto, auto, 26px 26px",
   backgroundColor: "#a97b50",
 };
+
+/** Cover-fit the generated kitenge tile on the frame. */
+function kitengeImageStyle(src: string): React.CSSProperties {
+  return {
+    backgroundImage: `url(${src})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
+}
 
 /** Chip + proverb + English, set on the cream paper panel. */
 function ProverbText({ proverb }: { proverb: ProverbType }) {
@@ -60,6 +72,7 @@ export function Proverb() {
   }, [paused, cycle, advance]);
 
   const current = PROVERBS[index];
+  const kitengeSrc = aiAsset("textures/kitenge");
 
   return (
     <Section
@@ -71,7 +84,7 @@ export function Proverb() {
       <Reveal>
         <div
           className="mx-auto max-w-2xl rounded-[1.75rem] p-3 shadow-(--shadow-polaroid) sm:p-4"
-          style={KITENGE_STYLE}
+          style={kitengeSrc ? kitengeImageStyle(kitengeSrc) : KITENGE_STYLE}
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
           onFocusCapture={() => setPaused(true)}

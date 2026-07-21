@@ -6,6 +6,7 @@ import { Kicker } from "@/components/ui/kicker";
 import { Reveal } from "@/components/ui/reveal";
 import { Handwritten } from "@/components/ui/handwritten";
 import { springs } from "@/lib/motion";
+import { aiAsset } from "@/lib/ai-assets";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 import { LAPTOP_STICKERS, type LaptopSticker } from "@/data/laptop-stickers";
 
@@ -112,6 +113,10 @@ function Sticker({ sticker, index }: { sticker: LaptopSticker; index: number }) 
  * die-cut stickers for the stack and the loves, each one linking out.
  */
 export function StickerLaptop() {
+  // AI lid final (AI-ASSET-PROMPTS.md C7) replaces the CSS slab gradient and
+  // sheen when it lands; the crest decal and stickers stay in code.
+  const lidSrc = aiAsset("artifacts/laptop-lid");
+
   return (
     <Section
       id="stack"
@@ -124,11 +129,21 @@ export function StickerLaptop() {
           {/* lid: thin darker edge around an aluminium slab */}
           <div className="rounded-[1.6rem] bg-[linear-gradient(150deg,#8f939a,#c9ccd1_32%,#7d8187)] p-[3px] shadow-[0_18px_44px_rgb(0_0_0/0.25)] dark:shadow-[0_18px_48px_rgb(0_0_0/0.6)]">
             <div className="relative aspect-[3/2] rounded-[1.35rem] bg-[linear-gradient(160deg,#f1f2f4,#d3d6da_48%,#babec4)]">
-              {/* sheen */}
-              <div
-                aria-hidden
-                className="absolute inset-0 rounded-[inherit] bg-[radial-gradient(120%_85%_at_50%_0%,rgb(255_255_255/0.55),transparent_60%)]"
-              />
+              {lidSrc ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={lidSrc}
+                  alt=""
+                  loading="lazy"
+                  className="absolute inset-0 size-full rounded-[inherit] object-cover"
+                />
+              ) : (
+                /* sheen */
+                <div
+                  aria-hidden
+                  className="absolute inset-0 rounded-[inherit] bg-[radial-gradient(120%_85%_at_50%_0%,rgb(255_255_255/0.55),transparent_60%)]"
+                />
+              )}
               {/* centred crest decal, the "logo", peeking from under the stickers */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

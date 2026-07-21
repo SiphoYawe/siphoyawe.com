@@ -6,12 +6,20 @@ import { Kicker } from "@/components/ui/kicker";
 import { Reveal } from "@/components/ui/reveal";
 import { Handwritten } from "@/components/ui/handwritten";
 import { springs } from "@/lib/motion";
+import { aiAsset } from "@/lib/ai-assets";
 import { STAMPS, JOURNEY_NOTE, type Stamp } from "@/data/stamps";
 
 const INK: Record<Stamp["ink"], string> = {
   azure: "#2B5DF2",
   gules: "#D50000",
   sable: "#141416",
+};
+
+/** AI stamp slots (AI-ASSET-PROMPTS.md section G), keyed on the stamp id.
+ * kampala and london get the generated imprints, the rest keep the CSS stamp. */
+const STAMP_AI: Record<string, string> = {
+  kampala: "stamps/stamp-kampala",
+  london: "stamps/stamp-london",
 };
 
 /** Turns the full-colour crest into a gold foil imprint (brief 6.12). */
@@ -36,6 +44,8 @@ function InkStamp({ stamp, index }: { stamp: Stamp; index: number }) {
   const reduce = useReducedMotion();
   const ink = INK[stamp.ink];
   const circle = index % 2 === 1;
+  const slot = STAMP_AI[stamp.id];
+  const aiSrc = slot ? aiAsset(slot) : null;
 
   return (
     <motion.div
@@ -44,6 +54,10 @@ function InkStamp({ stamp, index }: { stamp: Stamp; index: number }) {
       style={{ rotate: stamp.rotate }}
       className="opacity-75 mix-blend-multiply"
     >
+      {aiSrc ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={aiSrc} alt="" loading="lazy" className="size-24 object-contain sm:size-28" />
+      ) : (
       <div
         className={`grid size-24 place-items-center border-[3px] p-1 sm:size-28 ${
           circle ? "rounded-full" : "rounded-lg"
@@ -69,6 +83,7 @@ function InkStamp({ stamp, index }: { stamp: Stamp; index: number }) {
           </div>
         </div>
       </div>
+      )}
     </motion.div>
   );
 }
@@ -76,6 +91,8 @@ function InkStamp({ stamp, index }: { stamp: Stamp; index: number }) {
 /** The Yawe wax seal: round gold blob with an SY monogram. Same press on hover. */
 function WaxSeal() {
   const reduce = useReducedMotion();
+  // AI seal stamp (AI-ASSET-PROMPTS.md G4) replaces the CSS blob when it lands.
+  const aiSrc = aiAsset("stamps/stamp-yawe-seal");
 
   return (
     <motion.div
@@ -86,6 +103,10 @@ function WaxSeal() {
       role="img"
       aria-label="The Yawe wax seal, gold, with an SY monogram"
     >
+      {aiSrc ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={aiSrc} alt="" loading="lazy" className="size-full object-contain" />
+      ) : (
       <div
         className="grid size-full place-items-center"
         style={{
@@ -112,6 +133,7 @@ function WaxSeal() {
           </span>
         </div>
       </div>
+      )}
     </motion.div>
   );
 }
@@ -210,6 +232,10 @@ function FlightMap() {
  * right, and the Kampala-to-UK flight path below.
  */
 export function Passport() {
+  // AI open-passport spread (AI-ASSET-PROMPTS.md C9) replaces the CSS page
+  // gradients when the final lands; crest, text and stamps stay in code.
+  const spreadSrc = aiAsset("artifacts/passport-spread");
+
   return (
     <Section
       id="passport"
@@ -219,11 +245,20 @@ export function Passport() {
     >
       <Reveal className="mx-auto max-w-3xl">
         <div className="relative -rotate-[0.6deg] rounded-[1.6rem] bg-night p-2.5 pb-4 shadow-(--shadow-lift) sm:p-3 sm:pb-5">
-          <div className="grid overflow-hidden rounded-[1.1rem] sm:grid-cols-2">
+          <div className={`grid overflow-hidden rounded-[1.1rem] sm:grid-cols-2 ${spreadSrc ? "relative" : ""}`}>
+            {spreadSrc && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={spreadSrc}
+                alt=""
+                loading="lazy"
+                className="absolute inset-0 size-full object-cover"
+              />
+            )}
             {/* left page: the crest in gold foil */}
             <div
               className="relative flex flex-col items-center justify-center gap-5 px-6 py-12"
-              style={{ background: LEFT_PAGE }}
+              style={{ background: spreadSrc ? "transparent" : LEFT_PAGE }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -241,7 +276,10 @@ export function Passport() {
             </div>
 
             {/* right page: travel stamps plus the wax seal */}
-            <div className="px-5 py-8 sm:py-10" style={{ background: RIGHT_PAGE }}>
+            <div
+              className={`px-5 py-8 sm:py-10 ${spreadSrc ? "relative" : ""}`}
+              style={{ background: spreadSrc ? "transparent" : RIGHT_PAGE }}
+            >
               <div className="grid grid-cols-2 justify-items-center gap-3 sm:gap-4">
                 {STAMPS.map((stamp, i) => (
                   <InkStamp key={stamp.id} stamp={stamp} index={i} />

@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/sync-ai-assets.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/sync-ai-assets.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "spotify:auth": "node scripts/spotify-auth.mjs"
+    "spotify:auth": "node scripts/spotify-auth.mjs",
+    "sync:assets": "node scripts/sync-ai-assets.mjs"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",

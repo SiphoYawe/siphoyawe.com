@@ -13,6 +13,7 @@ import { SocialDock } from "@/components/nav/social-dock";
 import { Turnstile } from "@/components/forms/turnstile";
 import { springs } from "@/lib/motion";
 import { submitSpeaking } from "@/lib/api";
+import { aiAsset } from "@/lib/ai-assets";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 import { CALCOM_CONFIRMED, CALCOM_LINK, CONTACT_EMAIL } from "@/data/socials";
 import type { SpeakingInquiry } from "@/lib/types";
@@ -419,6 +420,10 @@ function FooterBar() {
  * MICRO: rotates a degree and the shadow deepens on hover. */
 function WaxSeal() {
   const reduce = useReducedMotion();
+  // AI wax seal (AI-ASSET-PROMPTS.md C10) replaces the CSS wax body when it
+  // lands; the blob radius stays so the box shadow keeps the seal shape, and
+  // the crest impression stays overlaid in code.
+  const aiSrc = aiAsset("artifacts/wax-seal");
 
   return (
     <div className="flex flex-col items-center gap-5 px-5 py-16 sm:py-20">
@@ -428,12 +433,18 @@ function WaxSeal() {
         className="relative grid size-28 cursor-default place-items-center shadow-[0_14px_30px_rgb(20_20_22/0.35)] transition-shadow duration-300 hover:shadow-[0_22px_46px_rgb(20_20_22/0.55)] sm:size-32"
         style={{
           borderRadius: "46% 54% 51% 49% / 52% 47% 53% 48%",
-          background:
-            "radial-gradient(circle at 34% 28%, #f05545 0%, #D50000 42%, #8f0000 82%), radial-gradient(circle at 70% 82%, rgb(252 221 9 / 0.28), transparent 55%)",
+          background: aiSrc
+            ? undefined
+            : "radial-gradient(circle at 34% 28%, #f05545 0%, #D50000 42%, #8f0000 82%), radial-gradient(circle at 70% 82%, rgb(252 221 9 / 0.28), transparent 55%)",
         }}
         aria-hidden
       >
-        {/* pressed rim */}
+        {aiSrc && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={aiSrc} alt="" loading="lazy" className="absolute inset-0 size-full object-contain" />
+        )}
+        {/* pressed rim, CSS seal only; the generated wax has its own rim */}
+        {!aiSrc && (
         <span
           className="absolute inset-[7%]"
           style={{
@@ -442,6 +453,7 @@ function WaxSeal() {
               "inset 0 2px 6px rgb(0 0 0 / 0.45), inset 0 -1px 3px rgb(255 255 255 / 0.12), 0 0 0 2px rgb(252 221 9 / 0.35)",
           }}
         />
+        )}
         {/* the crest, pressed in like an impression */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/brand/crest-badge.svg" alt="" className="relative w-[52%] opacity-25 mix-blend-multiply" />

@@ -60,4 +60,25 @@ One-time setup scripts: `npm run spotify:auth` (mint the refresh token),
 - Easter eggs: per-letter hero stickers, the crane mascot, hidden dove,
   project-card stickers, and a hidden terminal (press `) with `whoami`,
   `sipho --help`, `verse`, `coram deo`, and a Konami surprise.
+
+## AI-generated assets (AI-ASSET-PROMPTS.md)
+
+Every artifact has a hand-built SVG/CSS version live NOW and an AI slot that
+replaces it when the generated final lands. Workflow:
+
+1. Finals are filed in `../content-drop/ai-assets/<section>/<name>.png`
+   (slot keys in the doc: `hero/sticker-*`, `mascot/crane-*`, `artifacts/*`,
+   `textures/kitenge`, `stamps/stamp-*`).
+2. `npm run sync:assets` (also runs on predev/prebuild) copies them to
+   `public/assets/ai/` and rebuilds `lib/generated/ai-assets.json`.
+3. Components resolve slots via `aiAsset()` from `lib/ai-assets.ts` and
+   render the image when present, the fallback otherwise. No code changes
+   needed per drop.
+4. Commit `public/assets/ai/**` and `lib/generated/ai-assets.json` so the
+   Vercel build carries the finals.
+
+Wired slots: 7 hero stickers (hello tag overlays "Yawe" in code), crane
+mascot (peek-bottom/peek-side), bookshelf, bible, watch roll, vinyl deck,
+fridge, corkboard, laptop lid, passport spread + kampala/london/yawe-seal
+stamps, kitenge texture, lanyard, ticket stub, wax seal.
 - Reduced motion is respected everywhere; test with an OS reduce-motion flag.

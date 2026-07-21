@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { springs } from "@/lib/motion";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
+import { aiAsset } from "@/lib/ai-assets";
 import {
   AnkoleCattle,
   CoffeeSticker,
@@ -24,6 +25,9 @@ type StickerSpec = {
   size: string;
   /** Lift above the letter, as a fraction of letter height. */
   lift?: number;
+  /** AI-ASSET-PROMPTS.md slot; the generated sticker replaces the SVG when
+   * the final lands in content-drop (synced by scripts/sync-ai-assets.mjs). */
+  ai?: string;
 };
 
 /**
@@ -33,13 +37,13 @@ type StickerSpec = {
  * crown. This is the easter-egg benchmark — the site's second loud moment.
  */
 const LETTERS: { char: string; sticker: StickerSpec; egg: string }[] = [
-  { char: "S", sticker: { Art: CraneFeather, rotate: -12, size: "size-14 sm:size-20" }, egg: "hero-sticker:crane-feather" },
-  { char: "I", sticker: { Art: HelloTag, rotate: 7, size: "h-11 w-16 sm:h-16 sm:w-24" }, egg: "hero-sticker:hello-tag" },
-  { char: "P", sticker: { Art: LedgerNod, rotate: -7, size: "h-12 w-16 sm:h-16 sm:w-24" }, egg: "hero-sticker:ledger" },
-  { char: "H", sticker: { Art: AnkoleCattle, rotate: 10, size: "size-14 sm:size-20" }, egg: "hero-sticker:ankole" },
-  { char: "O", sticker: { Art: UgandaPin, rotate: -9, size: "size-14 sm:size-20" }, egg: "hero-sticker:uganda-pin" },
-  { char: "Y", sticker: { Art: LionSticker, rotate: 6, size: "size-14 sm:size-20" }, egg: "hero-sticker:lion" },
-  { char: "A", sticker: { Art: DoveSticker, rotate: -10, size: "size-14 sm:size-20", lift: 0.85 }, egg: "hero-sticker:hidden-dove" },
+  { char: "S", sticker: { Art: CraneFeather, rotate: -12, size: "size-14 sm:size-20", ai: "hero/sticker-crane-feather" }, egg: "hero-sticker:crane-feather" },
+  { char: "I", sticker: { Art: HelloTag, rotate: 7, size: "h-11 w-16 sm:h-16 sm:w-24", ai: "hero/sticker-hello-name-tag" }, egg: "hero-sticker:hello-tag" },
+  { char: "P", sticker: { Art: LedgerNod, rotate: -7, size: "h-12 w-16 sm:h-16 sm:w-24", ai: "hero/sticker-keyboard-key" }, egg: "hero-sticker:ledger" },
+  { char: "H", sticker: { Art: AnkoleCattle, rotate: 10, size: "size-14 sm:size-20", ai: "hero/sticker-ankole" }, egg: "hero-sticker:ankole" },
+  { char: "O", sticker: { Art: UgandaPin, rotate: -9, size: "size-14 sm:size-20", ai: "hero/sticker-uganda-flag-pin" }, egg: "hero-sticker:uganda-pin" },
+  { char: "Y", sticker: { Art: LionSticker, rotate: 6, size: "size-14 sm:size-20", ai: "hero/sticker-lion" }, egg: "hero-sticker:lion" },
+  { char: "A", sticker: { Art: DoveSticker, rotate: -10, size: "size-14 sm:size-20", lift: 0.85, ai: "hero/sticker-dove" }, egg: "hero-sticker:hidden-dove" },
   { char: "W", sticker: { Art: CoffeeSticker, rotate: 11, size: "size-14 sm:size-20" }, egg: "hero-sticker:coffee" },
   { char: "E", sticker: { Art: CrownSticker, rotate: -6, size: "size-14 sm:size-20" }, egg: "hero-sticker:crown" },
 ];
@@ -57,7 +61,8 @@ function StickerLetter({
 }) {
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
-  const { Art, rotate, size, lift = 0.72 } = sticker;
+  const { Art, rotate, size, lift = 0.72, ai } = sticker;
+  const aiSrc = ai ? aiAsset(ai) : null;
 
   const reveal = () => {
     setOpen((was) => {
@@ -88,9 +93,21 @@ function StickerLetter({
             style={{ bottom: `${lift * 100}%` }}
             className={`pointer-events-none absolute left-1/2 z-20 -translate-x-1/2 ${
               round ? "rounded-full" : "rounded-xl"
-            } border border-line bg-white p-1.5 shadow-(--shadow-lift) ${size}`}
+            } ${aiSrc ? "bg-transparent" : "border border-line bg-white p-1.5 shadow-(--shadow-lift)"} ${size}`}
           >
-            <Art className="size-full" />
+            {aiSrc ? (
+              <span className="relative block size-full">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={aiSrc} alt="" className="size-full object-contain drop-shadow-lg" />
+                {ai === "hero/sticker-hello-name-tag" && (
+                  <span className="absolute inset-x-0 bottom-[18%] text-center font-hand text-lg font-bold text-[#141416] sm:text-2xl">
+                    Yawe
+                  </span>
+                )}
+              </span>
+            ) : (
+              <Art className="size-full" />
+            )}
           </motion.span>
         )}
       </AnimatePresence>
