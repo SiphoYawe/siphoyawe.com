@@ -18,13 +18,12 @@ export type LaptopSticker = {
 
 export const LAPTOP_STICKERS: LaptopSticker[] = [
   { id: "lifi", label: "LI.FI", href: "https://li.fi", color: "sable", rotate: -5, col: 1, row: 1 },
-  { id: "nextjs", label: "Next.js", href: "https://nextjs.org", color: "paper", rotate: 4, col: 2, row: 1 },
-  { id: "vercel", label: "Vercel", href: "https://vercel.com", color: "sable", rotate: -3, col: 3, row: 1 },
+  { id: "vercel", label: "Vercel", href: "https://vercel.com", color: "sable", rotate: -3, col: 2, row: 1 },
+  { id: "solana", label: "Solana", href: "https://solana.com", color: "gules", rotate: 5, col: 3, row: 1 },
   { id: "supabase", label: "Supabase", href: "https://supabase.com", color: "mint", rotate: 6, col: 4, row: 1 },
   { id: "claude", label: "Claude", href: "https://claude.ai", color: "or", rotate: -6, col: 1, row: 2 },
   { id: "typescript", label: "TypeScript", href: "https://www.typescriptlang.org", color: "azure", rotate: 3, col: 2, row: 2 },
   // col 3, row 2 is left open for the crest decal
-  { id: "solana", label: "Solana", href: "https://solana.com", color: "gules", rotate: 5, col: 4, row: 2 },
   { id: "usdc", label: "USDC", href: "https://www.circle.com/usdc", color: "azure", rotate: 7, col: 1, row: 3 },
   // TODO(Sipho): swap for real logo assets if you get them.
   { id: "phaneroo", label: "Phaneroo", href: "https://phaneroo.org", color: "gules", rotate: -7, col: 2, row: 3 },
