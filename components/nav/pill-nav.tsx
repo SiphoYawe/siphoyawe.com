@@ -90,6 +90,24 @@ export function PillNav() {
           </Link>
         ))}
 
+        <Link
+          href="/blog"
+          className={`relative hidden rounded-full px-3 py-1.5 text-sm font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent sm:block ${
+            pathname.startsWith("/blog") ? "text-ink" : "text-ink-soft hover:text-ink"
+          }`}
+        >
+          Blog
+          {pathname.startsWith("/blog") && (
+            <motion.span
+              layoutId="nav-squiggle"
+              transition={springs.bouncy}
+              className="absolute inset-x-2 -bottom-0.5"
+            >
+              <SquiggleUnderline gradient className="h-1.5 w-full" />
+            </motion.span>
+          )}
+        </Link>
+
         <LanguageToggle />
         <ThemeToggle />
 

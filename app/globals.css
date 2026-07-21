@@ -85,6 +85,84 @@ body {
   color: var(--color-sable);
 }
 
+/* ---------------------------------------------------------------------------
+ * MDX body styles (blog posts). Hand-rolled against the design tokens; a
+ * quiet, typographic reading space (brief section 6, Blog).
+ * ------------------------------------------------------------------------- */
+.mdx-body {
+  font-size: 1.075rem;
+  line-height: 1.8;
+  color: var(--ink);
+}
+.mdx-body > * + * {
+  margin-top: 1.25em;
+}
+.mdx-body h2 {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-top: 2.2em;
+}
+.mdx-body h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-top: 1.8em;
+}
+.mdx-body a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+.mdx-body a:hover {
+  text-decoration-thickness: 2.5px;
+}
+.mdx-body blockquote {
+  border-left: 3px solid var(--color-or);
+  padding-left: 1.25em;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+.mdx-body code:not(pre code) {
+  background: var(--canvas-raised);
+  border: 1px solid var(--line);
+  border-radius: 0.375rem;
+  padding: 0.1em 0.35em;
+  font-size: 0.875em;
+}
+.mdx-body pre {
+  background: var(--color-night);
+  color: #f4f2ec;
+  border-radius: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.mdx-body ul,
+.mdx-body ol {
+  padding-left: 1.5em;
+}
+.mdx-body ul {
+  list-style: disc;
+}
+.mdx-body ol {
+  list-style: decimal;
+}
+.mdx-body li + li {
+  margin-top: 0.4em;
+}
+.mdx-body hr {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 2.5em 0;
+}
+.mdx-body strong {
+  font-weight: 650;
+}
+
 /* Hard rule (brief section 4): honor reduced motion globally for CSS-driven
  * flourishes; Framer Motion springs are gated per-component. */
 @media (prefers-reduced-motion: reduce) {
