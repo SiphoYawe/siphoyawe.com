@@ -25,9 +25,8 @@ export const LAPTOP_STICKERS: LaptopSticker[] = [
   { id: "typescript", label: "TypeScript", href: "https://www.typescriptlang.org", color: "azure", rotate: 3, col: 2, row: 2 },
   // col 3, row 2 is left open for the crest decal
   { id: "solana", label: "Solana", href: "https://solana.com", color: "gules", rotate: 5, col: 4, row: 2 },
-  { id: "tailwind", label: "Tailwind", href: "https://tailwindcss.com", color: "azure", rotate: -4, col: 1, row: 3 },
-  { id: "usdc", label: "USDC", href: "https://www.circle.com/usdc", color: "azure", rotate: 7, col: 2, row: 3 },
+  { id: "usdc", label: "USDC", href: "https://www.circle.com/usdc", color: "azure", rotate: 7, col: 1, row: 3 },
   // TODO(Sipho): swap for real logo assets if you get them.
-  { id: "phaneroo", label: "Phaneroo", href: "https://phaneroo.org", color: "gules", rotate: -7, col: 3, row: 3 },
+  { id: "phaneroo", label: "Phaneroo", href: "https://phaneroo.org", color: "gules", rotate: -7, col: 2, row: 3 },
   { id: "zion", label: "Zion", href: "https://zionapp.co", color: "or", rotate: 2, col: 4, row: 3 },
 ];
