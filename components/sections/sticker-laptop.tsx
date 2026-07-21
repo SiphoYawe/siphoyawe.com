@@ -144,15 +144,15 @@ export function StickerLaptop() {
                   className="absolute inset-0 rounded-[inherit] bg-[radial-gradient(120%_85%_at_50%_0%,rgb(255_255_255/0.55),transparent_60%)]"
                 />
               )}
-              {/* centred crest decal, the "logo", peeking from under the stickers */}
+              {/* crest decal, the "logo", peeking through the open grid cell */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/brand/crest-badge.svg"
                 alt=""
                 aria-hidden
-                className="absolute top-1/2 left-1/2 size-16 -translate-x-1/2 -translate-y-1/2 opacity-85 sm:size-20"
+                className="absolute top-1/2 left-[64%] size-14 -translate-x-1/2 -translate-y-1/2 opacity-85 sm:size-16"
               />
-              <ul className="absolute inset-0 grid grid-cols-3 grid-rows-3 p-6 sm:p-8">
+              <ul className="absolute inset-0 grid grid-cols-4 grid-rows-3 p-5 sm:p-7">
                 {LAPTOP_STICKERS.map((sticker, i) => (
                   <Sticker key={sticker.id} sticker={sticker} index={i} />
                 ))}

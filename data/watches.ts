@@ -4,33 +4,34 @@ export type Watch = {
   model: string;
   /** One line of why. */
   why: string;
-  /** Placeholder photo until Sipho shoots the roll. */
-  photo?: string;
-  /** Strap/dial colour for the placeholder render. */
+  /** Strap/dial colour for the render. */
   tone: "azure" | "or" | "sable" | "steel";
+  /** On the wishlist, not the wrist: rendered greyed out. */
+  wishlist?: boolean;
 };
 
-/** TODO(Sipho): the real collection. All entries are labelled placeholders. */
+/** The collection, per Sipho. The last one is a hint, not a possession. */
 export const WATCHES: Watch[] = [
   {
-    id: "placeholder-1",
-    brand: "Watch one",
-    model: "Brand & model TBD",
-    why: "the daily wearer, tell its story here",
+    id: "seiko-skx",
+    brand: "Seiko",
+    model: "SKX (black dial)",
+    why: "the classic. Goes anywhere, forgives everything.",
     tone: "sable",
   },
   {
-    id: "placeholder-2",
-    brand: "Watch two",
-    model: "Brand & model TBD",
-    why: "the occasion piece, tell its story here",
-    tone: "steel",
+    id: "opulens-spirit",
+    brand: "Opulens",
+    model: "Spirit (blue)",
+    why: "blue dial, quiet flex. My everyday lift.",
+    tone: "azure",
   },
   {
-    id: "placeholder-3",
-    brand: "Watch three",
-    model: "Brand & model TBD",
-    why: "the one with a story, tell it here",
-    tone: "azure",
+    id: "cartier-tank",
+    brand: "Cartier",
+    model: "Tank",
+    why: "one day. Someone reading this can buy it for me.",
+    tone: "steel",
+    wishlist: true,
   },
 ];

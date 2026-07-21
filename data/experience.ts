@@ -2,7 +2,7 @@ export type Experience = {
   id: string;
   company: string;
   role: string;
-  /** Display dates — TODO(Sipho): confirm exact years for the early roles. */
+  /** Display dates. */
   start: string;
   end: string;
   /** Enamel pin face colour. */
@@ -13,65 +13,40 @@ export type Experience = {
 };
 
 /**
- * The enamel-pin timeline, 2020 to now (brief section 6.4).
- * Grounded in Sipho's CV; early dates are best-effort until confirmed.
+ * The enamel-pin timeline (brief section 6.4): three roles, Kampala (March
+ * 2023) to now. Grounded in Sipho's CV (WORK-HISTORY-AUTHORITATIVE). Newest
+ * last so the pins read left-to-right as a journey; the first pin sits in
+ * Uganda. Kampala 2023 → Sheffield 2025 → LI.FI 2026.
  */
 export const EXPERIENCE: Experience[] = [
   {
     id: "pegasus",
-    company: "Pegasus Technologies",
-    role: "Web Developer",
-    start: "2020",
-    end: "2021",
+    company: "Pegasus Technologies Ltd.",
+    role: "Web Developer Intern",
+    start: "Mar 2023",
+    end: "May 2023",
     pinColor: "sable",
     monogram: "PT",
-    note: "Kampala, Uganda. Where it all started.",
-  },
-  {
-    id: "skybound",
-    company: "SkyBound Studios",
-    role: "Full-Stack Developer",
-    start: "2021",
-    end: "2022",
-    pinColor: "azure",
-    monogram: "SB",
-  },
-  {
-    id: "nutritoken",
-    company: "Nutritoken",
-    role: "UI/UX Design Lead",
-    start: "2022",
-    end: "2023",
-    pinColor: "mint",
-    monogram: "NT",
-  },
-  {
-    id: "homei",
-    company: "HOMEi Student",
-    role: "App Developer & Designer",
-    start: "2023",
-    end: "2024",
-    pinColor: "or",
-    monogram: "HO",
+    note: "Kampala, Uganda. Where it all started: a full website redesign and rebuild.",
   },
   {
     id: "sheffield-su",
     company: "Sheffield Students' Union",
-    role: "Web Developer",
-    start: "2024",
-    end: "2026",
+    role: "Web Developer & Digital Support",
+    start: "Sep 2025",
+    end: "Jun 2026",
     pinColor: "gules",
     monogram: "SU",
-    note: "The big website redesign, for 30,000+ students.",
+    note: "The big website redesign in React and Next.js, for tens of thousands of students.",
   },
   {
     id: "lifi",
     company: "LI.FI",
     role: "DevRel Engineer",
-    start: "2026",
+    start: "Jun 2026",
     end: "now",
     pinColor: "azure",
     monogram: "LI",
-    note: "Cross-chain everything. The dream gig.",
+    note: "Docs, integration guides, and developer content for cross-chain bridging. The dream gig.",
   },
 ];

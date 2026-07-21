@@ -1,12 +1,9 @@
-/**
- * Site-wide links. GitHub + LinkedIn confirmed from Sipho's CV.
- * TODO(Sipho): confirm X handle, preferred contact email, cal.com link,
- * and the Ready Scribe URL.
- */
+/** Site-wide links, all confirmed by Sipho. */
 export const SOCIALS = [
   { label: "X", href: "https://x.com/SiphoYawe", icon: "x" },
   { label: "GitHub", href: "https://github.com/SiphoYawe", icon: "github" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/sipho-yawe-669406231/", icon: "linkedin" },
+  { label: "Ready Scribe", href: "https://readyscribe17.substack.com", icon: "substack" },
 ] as const;
 
 export const CONTACT_EMAIL = "yawephillip@gmail.com";

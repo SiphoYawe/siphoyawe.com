@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/section";
 import { Kicker } from "@/components/ui/kicker";
@@ -110,6 +111,7 @@ function Lanyard({ talk, index }: { talk: Talk; index: number }) {
             <p className="mt-1 font-heraldic text-[10px] tracking-[0.25em] text-accent uppercase">
               {talk.date}
             </p>
+            {talk.note && <p className="mt-1.5 text-xs text-ink-soft">{talk.note}</p>}
           </div>
         </div>
           </>
@@ -180,6 +182,7 @@ function Stub({ talk, index }: { talk: Talk; index: number }) {
             <p className="mt-1.5 font-heraldic text-[10px] tracking-[0.25em] text-accent uppercase">
               {talk.date}
             </p>
+            {talk.note && <p className="mt-1.5 text-xs text-ink-soft">{talk.note}</p>}
           </div>
         </motion.div>
         )}
@@ -197,7 +200,24 @@ export function Talks() {
   const stubs = TALKS.filter((talk) => talk.kind === "stub");
 
   return (
-    <Section id="talks" kicker={<Kicker k="talks" />} title="Talks & media" aside="stages so far">
+    <Section id="talks" kicker={<Kicker k="talks" />} title="Talks & media" aside="stages & hackathons so far">
+      <Reveal className="mb-12">
+        <figure className="mx-auto max-w-xl">
+          <div className="relative aspect-[3/2] w-full overflow-hidden rounded-2xl border border-line bg-canvas-raised shadow-(--shadow-polaroid)">
+            <Image
+              src="/images/sipho-talk-2400.webp"
+              alt="Sipho Yawe mid-talk, gesturing to the room"
+              fill
+              sizes="(max-width: 640px) 90vw, 36rem"
+              className="object-cover"
+            />
+          </div>
+          <figcaption className="mt-3 text-center font-hand text-lg text-ink-soft">
+            mid-flow, doing the thing I love
+          </figcaption>
+        </figure>
+      </Reveal>
+
       <Reveal>
         <div className="flex flex-wrap items-start justify-center gap-10 sm:gap-14">
           {lanyards.map((talk, i) => (
@@ -213,7 +233,7 @@ export function Talks() {
           ))}
         </div>
         <Handwritten className="mt-7 text-center" rotate={-1}>
-          the stubs I kept from pitching nights
+          the hackathon stubs I kept
         </Handwritten>
       </Reveal>
     </Section>

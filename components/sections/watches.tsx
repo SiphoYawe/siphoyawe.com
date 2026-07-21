@@ -37,7 +37,9 @@ function WatchPiece({ watch }: { watch: Watch }) {
         <motion.div
           whileHover={reduce ? undefined : { y: -8, rotate: 2 }}
           transition={springs.bouncy}
-          className="flex cursor-default flex-col items-center"
+          className={`flex cursor-default flex-col items-center ${
+            watch.wishlist ? "opacity-45 grayscale" : ""
+          }`}
         >
           <span aria-hidden className="h-8 w-12 rounded-t-md" style={{ background: strapBg }} />
           {/* dial */}
@@ -89,7 +91,14 @@ function WatchPiece({ watch }: { watch: Watch }) {
       </div>
 
       {/* caption on the leather, cream ink so both themes read */}
-      <p className="mt-4 font-display text-sm font-semibold text-[#f6efe1]">{watch.brand}</p>
+      <p className="mt-4 font-display text-sm font-semibold text-[#f6efe1]">
+        {watch.brand}
+        {watch.wishlist && (
+          <span className="ml-1.5 align-middle text-[10px] font-normal tracking-wide text-[#d8c9ae] uppercase">
+            wishlist
+          </span>
+        )}
+      </p>
       <p className="mt-0.5 text-xs text-[#d8c9ae]">{watch.model}</p>
       <p className="mt-2 max-w-52 -rotate-1 font-hand text-lg leading-tight text-[#efe3c8]">
         {watch.why}

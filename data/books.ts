@@ -10,35 +10,41 @@ export type Book = {
 };
 
 /**
- * The shelf. TODO(Sipho): replace the placeholder reads with your real list.
- * The Bible is permanent (brief section 6.6: scripture-as-object).
+ * The shelf (brief section 6.6): Sipho's real reading list. No cover art is
+ * fabricated; the shelf renders each book from its title and author. The Bible
+ * is permanent (scripture-as-object).
  */
 export const BOOKS: Book[] = [
   {
-    id: "placeholder-1",
-    title: "Your current read",
-    author: "TBD (Sipho)",
-    spine: "azure",
+    id: "weight-of-glory",
+    title: "The Weight of Glory",
+    author: "C.S. Lewis",
+    spine: "sable",
     current: true,
-    note: "placeholder book, swap me out",
   },
   {
-    id: "placeholder-2",
-    title: "A book you love",
-    author: "TBD (Sipho)",
+    id: "david-perceived",
+    title: "And David Perceived He Was King",
+    author: "Dale L. Mast",
+    spine: "gules",
+  },
+  {
+    id: "the-scribe",
+    title: "The Scribe",
+    author: "James Goll",
     spine: "or",
   },
   {
-    id: "placeholder-3",
-    title: "What shaped you",
-    author: "TBD (Sipho)",
-    spine: "mint",
+    id: "on-writing-lewis",
+    title: "On Writing (and Writers)",
+    author: "C.S. Lewis",
+    spine: "azure",
   },
 ];
 
 export const BIBLE = {
   title: "The Bible",
-  /** TODO(Sipho): your life verse + reference for the openable moment. */
+  /** TODO(Sipho): swap for your life verse + reference if you'd like a different one. */
   verse:
     "Commit to the Lord whatever you do, and he will establish your plans.",
   reference: "Proverbs 16:3",

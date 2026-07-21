@@ -14,7 +14,7 @@ export const NOW = {
     {
       id: "reading",
       label: "reading",
-      text: "TBD: the current read from the shelf, plus the daily chapter.",
+      text: "The Weight of Glory by C.S. Lewis, plus the daily chapter.",
       rotate: 1.5,
     },
     {

@@ -11,16 +11,16 @@ export type Stamp = {
 };
 
 /**
- * Travel stamps, Kampala to the UK (brief section 6.12). Grounded in real
- * journeys (including the Madrid layover saga). TODO(Sipho): confirm dates.
+ * Passport stamps (brief section 6.12): the places Sipho has been, Uganda home
+ * first. Per Sipho: UK, USA, Dubai, South Africa, Kenya.
  */
 export const STAMPS: Stamp[] = [
-  { id: "kampala", place: "ENTEBBE", caption: "home", date: "origin", ink: "sable", rotate: -8 },
-  { id: "sheffield", place: "SHEFFIELD", caption: "uni years", date: "2022", ink: "azure", rotate: 5 },
-  { id: "london", place: "LONDON", caption: "hackathon city", date: "2025", ink: "gules", rotate: -4 },
-  { id: "madrid", place: "MADRID", caption: "the layover lesson", date: "2025", ink: "gules", rotate: 9 },
-  { id: "dublin", place: "DUBLIN", caption: "legal transit, phew", date: "2026", ink: "azure", rotate: -6 },
-  { id: "usa", place: "USA", caption: "first stateside trip", date: "2026", ink: "sable", rotate: 7 },
+  { id: "uganda", place: "UGANDA", caption: "home", date: "origin", ink: "sable", rotate: -8 },
+  { id: "uk", place: "UNITED KINGDOM", caption: "where I live and build", date: "", ink: "azure", rotate: 5 },
+  { id: "usa", place: "USA", caption: "first stateside trip", date: "", ink: "gules", rotate: -5 },
+  { id: "dubai", place: "DUBAI", caption: "desert stopover", date: "", ink: "azure", rotate: 9 },
+  { id: "south-africa", place: "SOUTH AFRICA", caption: "down south", date: "", ink: "gules", rotate: -6 },
+  { id: "kenya", place: "KENYA", caption: "neighbours up north", date: "", ink: "sable", rotate: 7 },
 ];
 
 /** Journey note next to the map. */
