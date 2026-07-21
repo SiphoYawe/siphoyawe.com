@@ -26,12 +26,10 @@ export function PillNav() {
   const [active, setActive] = useState<string | null>(null);
 
   // Scroll-spy: a section counts as active while it crosses the viewport's
-  // middle band. Only meaningful on the homepage.
+  // middle band. Only meaningful on the homepage; the underline render is
+  // gated on pathname below, so no state reset is needed on route change.
   useEffect(() => {
-    if (pathname !== "/") {
-      setActive(null);
-      return;
-    }
+    if (pathname !== "/") return;
     const sections = NAV_LINKS.map(({ id }) => document.getElementById(id)).filter(
       (el): el is HTMLElement => el !== null,
     );
@@ -69,26 +67,29 @@ export function PillNav() {
           <img src="/brand/crest-badge.svg" alt="" className="size-7" />
         </Link>
 
-        {NAV_LINKS.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={`relative hidden rounded-full px-3 py-1.5 text-sm font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent sm:block ${
-              active === link.id ? "text-ink" : "text-ink-soft hover:text-ink"
-            }`}
-          >
-            {link.label}
-            {active === link.id && (
-              <motion.span
-                layoutId="nav-squiggle"
-                transition={springs.bouncy}
-                className="absolute inset-x-2 -bottom-0.5"
-              >
-                <SquiggleUnderline gradient className="h-1.5 w-full" />
-              </motion.span>
-            )}
-          </Link>
-        ))}
+        {NAV_LINKS.map((link) => {
+          const isActive = pathname === "/" && active === link.id;
+          return (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`relative hidden rounded-full px-3 py-1.5 text-sm font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent sm:block ${
+                isActive ? "text-ink" : "text-ink-soft hover:text-ink"
+              }`}
+            >
+              {link.label}
+              {isActive && (
+                <motion.span
+                  layoutId="nav-squiggle"
+                  transition={springs.bouncy}
+                  className="absolute inset-x-2 -bottom-0.5"
+                >
+                  <SquiggleUnderline gradient className="h-1.5 w-full" />
+                </motion.span>
+              )}
+            </Link>
+          );
+        })}
 
         <Link
           href="/blog"

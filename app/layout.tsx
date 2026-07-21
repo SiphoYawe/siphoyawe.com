@@ -58,6 +58,12 @@ export default function RootLayout({
       <body className="min-h-full bg-canvas text-ink">
         <ThemeProvider>
           <LocaleProvider>
+            <a
+              href="#main-content"
+              className="sr-only z-[110] rounded-full bg-sable px-4 py-2 text-sm font-semibold text-paper focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
+            >
+              Skip to content
+            </a>
             <PillNav />
             {children}
           </LocaleProvider>

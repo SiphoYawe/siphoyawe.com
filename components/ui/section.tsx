@@ -1,4 +1,5 @@
 import { Reveal } from "./reveal";
+import { SectionTracker } from "./section-tracker";
 
 type SectionProps = {
   id?: string;
@@ -34,6 +35,7 @@ export function Section({
         bleed ? "" : "mx-auto max-w-5xl"
       } ${className}`}
     >
+      {id && <SectionTracker id={id} />}
       {(kicker || title) && (
         <Reveal className="mb-10 sm:mb-14">
           {kicker && (

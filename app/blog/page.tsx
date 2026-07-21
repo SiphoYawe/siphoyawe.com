@@ -25,7 +25,7 @@ export default function BlogIndex() {
   const posts = getAllPosts();
 
   return (
-    <main className="mx-auto max-w-2xl px-5 pt-32 pb-24 sm:px-8">
+    <main id="main-content" className="mx-auto max-w-2xl px-5 pt-32 pb-24 sm:px-8">
       <header className="mb-14">
         <p className="mb-3 font-heraldic text-xs tracking-[0.3em] text-accent uppercase">
           The desk

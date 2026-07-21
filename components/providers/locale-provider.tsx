@@ -41,10 +41,14 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored && (LOCALES as readonly string[]).includes(stored)) {
-      setLocaleState(stored as Locale);
-    }
+    // Async state update only (lint: no synchronous setState in effects).
+    const id = window.setTimeout(() => {
+      const stored = window.localStorage.getItem(STORAGE_KEY);
+      if (stored && (LOCALES as readonly string[]).includes(stored)) {
+        setLocaleState(stored as Locale);
+      }
+    }, 0);
+    return () => window.clearTimeout(id);
   }, []);
 
   const setLocale = useCallback((next: Locale) => {

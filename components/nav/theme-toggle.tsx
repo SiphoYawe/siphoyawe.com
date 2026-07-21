@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
 import { springs } from "@/lib/motion";
+import { useMounted } from "@/lib/use-mounted";
 
 /**
  * Theme toggle with the danielsun sun-glyph morph: on hover the glyph's rays
@@ -11,9 +11,7 @@ import { springs } from "@/lib/motion";
  */
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
+  const mounted = useMounted();
 
   const isDark = mounted && resolvedTheme === "dark";
 

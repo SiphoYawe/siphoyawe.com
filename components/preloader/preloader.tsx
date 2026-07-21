@@ -17,20 +17,22 @@ export function Preloader() {
 
   useEffect(() => {
     if (reduce || window.sessionStorage.getItem(SESSION_KEY)) return;
-    setShow(true);
-    const timer = window.setTimeout(dismiss, 1900);
+    // Async state updates only (lint: no synchronous setState in effects).
+    const openTimer = window.setTimeout(() => setShow(true), 0);
+    const closeTimer = window.setTimeout(dismiss, 1900);
     const onKey = () => dismiss();
     window.addEventListener("keydown", onKey);
     return () => {
-      window.clearTimeout(timer);
+      window.clearTimeout(openTimer);
+      window.clearTimeout(closeTimer);
       window.removeEventListener("keydown", onKey);
     };
   }, [reduce]);
 
-  const dismiss = () => {
+  function dismiss() {
     window.sessionStorage.setItem(SESSION_KEY, "1");
     setShow(false);
-  };
+  }
 
   return (
     <AnimatePresence>
@@ -65,7 +67,6 @@ export function Preloader() {
               />
             </motion.svg>
             {/* the lion wakes */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <motion.img
               src="/brand/crest-badge.svg"
               alt=""

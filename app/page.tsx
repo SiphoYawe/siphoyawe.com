@@ -25,7 +25,7 @@ import { Connect } from "@/components/sections/connect";
  */
 export default function Home() {
   return (
-    <main>
+    <main id="main-content">
       <Preloader />
       <Hero />
       <About />

@@ -56,7 +56,7 @@ export default async function BlogPost({
   if (!post) notFound();
 
   return (
-    <main className="mx-auto max-w-2xl px-5 pt-32 pb-24 sm:px-8">
+    <main id="main-content" className="mx-auto max-w-2xl px-5 pt-32 pb-24 sm:px-8">
       <Link
         href="/blog"
         className="inline-flex items-center gap-1.5 rounded-md text-sm text-ink-soft outline-none transition-colors hover:text-ink focus-visible:ring-2 focus-visible:ring-accent"
