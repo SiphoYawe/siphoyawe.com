@@ -35,6 +35,15 @@
   "mascot/crane-pointing": "/assets/ai/mascot/crane-pointing.webp",
   "mascot/crane-sleeping": "/assets/ai/mascot/crane-sleeping.webp",
   "mascot/crane-standing": "/assets/ai/mascot/crane-standing.webp",
+  "pins/pin-lifi": "/assets/ai/pins/pin-lifi.webp",
+  "stamps/stamp-dubai": "/assets/ai/stamps/stamp-dubai.webp",
+  "stamps/stamp-generic-plane": "/assets/ai/stamps/stamp-generic-plane.webp",
+  "stamps/stamp-kampala": "/assets/ai/stamps/stamp-kampala.webp",
+  "stamps/stamp-kenya": "/assets/ai/stamps/stamp-kenya.webp",
+  "stamps/stamp-london": "/assets/ai/stamps/stamp-london.webp",
+  "stamps/stamp-south-africa": "/assets/ai/stamps/stamp-south-africa.webp",
+  "stamps/stamp-usa": "/assets/ai/stamps/stamp-usa.webp",
+  "stamps/stamp-yawe-seal": "/assets/ai/stamps/stamp-yawe-seal.webp",
   "textures/hero-rays": "/assets/ai/textures/hero-rays.webp",
   "textures/map-kampala-uk": "/assets/ai/textures/map-kampala-uk.webp"
 }
