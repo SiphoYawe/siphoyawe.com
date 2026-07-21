@@ -36,6 +36,8 @@
   "mascot/crane-sleeping": "/assets/ai/mascot/crane-sleeping.webp",
   "mascot/crane-standing": "/assets/ai/mascot/crane-standing.webp",
   "pins/pin-lifi": "/assets/ai/pins/pin-lifi.webp",
+  "pins/pin-pegasus": "/assets/ai/pins/pin-pegasus.webp",
+  "pins/pin-sheffield-su": "/assets/ai/pins/pin-sheffield-su.webp",
   "stamps/stamp-dubai": "/assets/ai/stamps/stamp-dubai.webp",
   "stamps/stamp-generic-plane": "/assets/ai/stamps/stamp-generic-plane.webp",
   "stamps/stamp-kampala": "/assets/ai/stamps/stamp-kampala.webp",
@@ -44,6 +46,14 @@
   "stamps/stamp-south-africa": "/assets/ai/stamps/stamp-south-africa.webp",
   "stamps/stamp-usa": "/assets/ai/stamps/stamp-usa.webp",
   "stamps/stamp-yawe-seal": "/assets/ai/stamps/stamp-yawe-seal.webp",
+  "stickers-brand/sticker-claude": "/assets/ai/stickers-brand/sticker-claude.webp",
+  "stickers-brand/sticker-phaneroo": "/assets/ai/stickers-brand/sticker-phaneroo.webp",
+  "stickers-brand/sticker-solana": "/assets/ai/stickers-brand/sticker-solana.webp",
+  "stickers-brand/sticker-supabase": "/assets/ai/stickers-brand/sticker-supabase.webp",
+  "stickers-brand/sticker-typescript": "/assets/ai/stickers-brand/sticker-typescript.webp",
+  "stickers-brand/sticker-usdc": "/assets/ai/stickers-brand/sticker-usdc.webp",
+  "stickers-brand/sticker-vercel": "/assets/ai/stickers-brand/sticker-vercel.webp",
+  "stickers-brand/sticker-zion": "/assets/ai/stickers-brand/sticker-zion.webp",
   "textures/hero-rays": "/assets/ai/textures/hero-rays.webp",
   "textures/map-kampala-uk": "/assets/ai/textures/map-kampala-uk.webp"
 }
