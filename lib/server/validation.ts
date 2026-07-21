@@ -1,25 +1,15 @@
 import { z } from "zod";
 
+// The speaking schema is isomorphic and shared with the client form so the two
+// can never drift. See lib/speaking-schema.ts.
+export { speakingSchema } from "@/lib/speaking-schema";
+export type { SpeakingInput } from "@/lib/speaking-schema";
+
 const honeypot = z
   .string()
   .max(0, "honeypot must be empty")
   .optional()
   .or(z.literal(""));
-
-export const speakingSchema = z.object({
-  name: z.string().trim().min(1).max(100),
-  email: z.string().trim().email().max(254),
-  org: z.string().trim().max(200).optional(),
-  eventName: z.string().trim().max(200).optional(),
-  eventDate: z.string().trim().max(100).optional(),
-  audienceSize: z.string().trim().max(100).optional(),
-  budget: z.string().trim().max(100).optional(),
-  message: z.string().trim().min(10).max(5000),
-  website: honeypot,
-  turnstileToken: z.string().optional(),
-});
-
-export type SpeakingInput = z.infer<typeof speakingSchema>;
 
 export const guestbookSchema = z.object({
   name: z.string().trim().min(1).max(50),
@@ -32,7 +22,7 @@ export type GuestbookInput = z.infer<typeof guestbookSchema>;
 
 export const moderateActionSchema = z.object({
   token: z.string().min(1),
-  id: z.string().uuid(),
+  id: z.uuid(),
   action: z.enum(["approve", "reject"]),
 });
 

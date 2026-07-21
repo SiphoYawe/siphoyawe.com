@@ -3,7 +3,8 @@
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { z } from "zod";
+import type { z } from "zod";
+import { speakingSchema } from "@/lib/speaking-schema";
 import { Section } from "@/components/ui/section";
 import { Kicker } from "@/components/ui/kicker";
 import { ConnectButton } from "@/components/ui/connect-button";
@@ -25,27 +26,6 @@ const Cal = dynamic(() => import("@calcom/embed-react").then((m) => m.default), 
 
 const INPUT_CLASS =
   "w-full rounded-xl border border-line bg-canvas px-4 py-2.5 text-sm outline-none placeholder:text-ink-soft/60 focus-visible:ring-2 focus-visible:ring-accent";
-
-const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-
-const speakingSchema = z.object({
-  name: z.string().trim().min(1, "your name, so I know who I am talking to"),
-  email: z
-    .string()
-    .trim()
-    .min(1, "I need an email to reply to")
-    .regex(EMAIL_RE, "that email looks a little off"),
-  org: z.string().trim().optional(),
-  eventName: z.string().trim().min(1, "what is the event called?"),
-  eventDate: z.string().optional(),
-  audienceSize: z.string().optional(),
-  budget: z.string().trim().optional(),
-  message: z
-    .string()
-    .trim()
-    .min(10, "a sentence or two helps me say yes well"),
-  website: z.string().optional(),
-});
 
 type SpeakingValues = z.infer<typeof speakingSchema>;
 type FieldErrors = Partial<Record<keyof SpeakingValues, string>>;
@@ -338,7 +318,7 @@ function SpeakingForm() {
             {...props}
             required
             rows={5}
-            maxLength={2000}
+            maxLength={5000}
             value={values.message}
             onChange={(e) => set("message")(e.target.value)}
             placeholder="what is it, who is coming, and what would you like me to talk about?"
