@@ -1,7 +1,13 @@
+import type { GuestbookInput, SpeakingInput } from "@/lib/server/validation";
+
 /**
- * Shared content + API types. Content lives as typed data files in the repo
- * (brief section 10: no CMS, Sipho fills the data).
+ * Shared content + API types. The form payload types come straight from the
+ * backend's zod schemas (lib/server/validation.ts, type-only import) so the
+ * frontend and route handlers can never drift.
  */
+
+export type SpeakingInquiry = SpeakingInput;
+export type GuestbookSignature = GuestbookInput;
 
 export type NowPlaying = {
   isPlaying: boolean;
@@ -10,21 +16,15 @@ export type NowPlaying = {
   album?: string;
   albumArtUrl?: string;
   songUrl?: string;
-};
-
-export type SpeakingInquiry = {
-  name: string;
-  email: string;
-  org?: string;
-  eventName: string;
-  eventDate?: string;
-  audienceSize?: string;
-  budget?: string;
-  message: string;
-  /** Honeypot — must stay empty. */
-  website?: string;
-  /** Cloudflare Turnstile token (Claude provides the site key). */
-  turnstileToken?: string;
+  lastPlayed?: {
+    title: string;
+    artist: string;
+    album?: string;
+    albumArtUrl?: string;
+    songUrl?: string;
+  };
+  /** Present when the backend is running its dev/mock mode. */
+  _mock?: true;
 };
 
 export type GuestbookEntry = {
@@ -32,13 +32,9 @@ export type GuestbookEntry = {
   name: string;
   message: string;
   createdAt: string;
-  approved: boolean;
+  approved?: boolean;
 };
 
-export type GuestbookSignature = {
-  name: string;
-  message: string;
-  /** Honeypot — must stay empty. */
-  website?: string;
-  turnstileToken?: string;
-};
+/** POST /api/guestbook answer: entries are pre-moderated (brief section 10),
+ * so a successful sign comes back pending, never instantly public. */
+export type GuestbookSignResult = { ok: boolean; pending?: boolean };

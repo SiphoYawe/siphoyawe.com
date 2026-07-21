@@ -38,7 +38,7 @@ function TalkShell({
         rel="noopener noreferrer"
         aria-label={`${talk.title}, ${talk.venue} (opens in a new tab)`}
         onClick={() =>
-          trackEvent(AnalyticsEvents.OutboundClick, { target: href, cta: talk.title })
+          trackEvent(AnalyticsEvents.OutboundLink, { destination: href })
         }
         className={`block rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent ${className}`}
       >

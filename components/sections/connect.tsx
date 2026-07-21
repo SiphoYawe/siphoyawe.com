@@ -10,6 +10,7 @@ import { ConnectButton } from "@/components/ui/connect-button";
 import { Reveal } from "@/components/ui/reveal";
 import { Handwritten } from "@/components/ui/handwritten";
 import { SocialDock } from "@/components/nav/social-dock";
+import { Turnstile } from "@/components/forms/turnstile";
 import { springs } from "@/lib/motion";
 import { submitSpeaking } from "@/lib/api";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
@@ -38,7 +39,10 @@ const speakingSchema = z.object({
   eventDate: z.string().optional(),
   audienceSize: z.string().optional(),
   budget: z.string().trim().optional(),
-  message: z.string().trim().min(1, "tell me a bit about the event"),
+  message: z
+    .string()
+    .trim()
+    .min(10, "a sentence or two helps me say yes well"),
   website: z.string().optional(),
 });
 
@@ -116,7 +120,7 @@ function BookingBlock() {
           <div className="overflow-hidden rounded-2xl border border-line bg-canvas-raised p-2 shadow-(--shadow-polaroid) sm:p-3">
             <div
               className="h-[620px]"
-              onClick={() => trackEvent(AnalyticsEvents.CalcomClick, { target: CALCOM_LINK })}
+              onClick={() => trackEvent(AnalyticsEvents.CalBooking)}
             >
               <Cal calLink={CALCOM_LINK} style={{ width: "100%", height: "100%" }} />
             </div>
@@ -133,7 +137,7 @@ function BookingBlock() {
             </p>
             <a
               href={`mailto:${CONTACT_EMAIL}?subject=20 minutes?`}
-              onClick={() => trackEvent(AnalyticsEvents.CalcomClick, { target: "mailto-fallback" })}
+              onClick={() => trackEvent(AnalyticsEvents.CalBooking)}
               className="inline-flex items-center gap-2 rounded-full bg-sable px-5 py-2 text-sm font-semibold text-paper shadow-md transition-shadow hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:bg-paper dark:text-sable"
             >
               email me instead
@@ -150,6 +154,7 @@ function SpeakingForm() {
   const [values, setValues] = useState<SpeakingValues>(EMPTY_VALUES);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   const set = (key: keyof SpeakingValues) => (value: string) =>
     setValues((prev) => ({ ...prev, [key]: value }));
@@ -187,6 +192,7 @@ function SpeakingForm() {
       budget: parsed.data.budget || undefined,
       message: parsed.data.message,
       website: parsed.data.website,
+      turnstileToken: turnstileToken ?? undefined,
     };
     try {
       const res = await submitSpeaking(inquiry);
@@ -354,9 +360,7 @@ function SpeakingForm() {
         />
       </div>
 
-      <div className="rounded-xl border border-dashed border-line px-4 py-3 text-center text-xs text-ink-soft">
-        turnstile lands here (claude brings the site key)
-      </div>
+      <Turnstile onToken={setTurnstileToken} />
 
       {status === "error" && (
         <p role="alert" className="text-sm text-gules">
@@ -385,7 +389,7 @@ function FooterBar() {
         <a
           href={`mailto:${CONTACT_EMAIL}`}
           onClick={() =>
-            trackEvent(AnalyticsEvents.OutboundClick, { target: "email", cta: "footer mailto" })
+            trackEvent(AnalyticsEvents.OutboundLink, { destination: "mailto:" + CONTACT_EMAIL })
           }
           className="group inline-flex items-center gap-2.5 rounded-sm text-sm font-medium underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-or"
         >

@@ -47,7 +47,7 @@ export function SocialDock({ className = "" }: { className?: string }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${label} (opens in a new tab)`}
-            onClick={() => trackEvent(AnalyticsEvents.OutboundClick, { target: label })}
+            onClick={() => trackEvent(AnalyticsEvents.OutboundLink, { destination: href })}
             whileHover={reduce ? undefined : { y: -10, scale: 1.22 }}
             whileFocus={reduce ? undefined : { y: -10, scale: 1.22 }}
             whileTap={reduce ? undefined : { scale: 0.94 }}

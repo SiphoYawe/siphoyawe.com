@@ -69,7 +69,7 @@ export function PillButton({
         href={href}
         onClick={() => {
           if (external) {
-            trackEvent(AnalyticsEvents.OutboundClick, { target: href, cta: label });
+            trackEvent(AnalyticsEvents.OutboundLink, { destination: href });
           }
           onClick?.();
         }}

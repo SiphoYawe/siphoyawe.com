@@ -32,19 +32,22 @@ node scripts/screenshot.mjs http://localhost:3000 out.png [w] [h] [full] [dark] 
 - `lib/api.ts` — the backend seam. Mocks until Claude's route handlers land.
 - `lib/analytics.ts` — PostHog seam, no-ops without env keys.
 
-## Backend seams (Claude owns the server side)
+## Backend (ported from Claude's staging package, backend/WIRING.md)
 
-Four surfaces, contracted in `lib/api.ts` + `lib/types.ts`:
+Route handlers in `app/api/` + server modules in `lib/server/`. All four
+surfaces run in a labelled dev/mock mode with zero env vars and go live when
+the matching secrets are set (`.env.example`):
 
-1. `GET /api/now-playing` — Spotify; drives the vinyl (`isPlaying` = spin).
-2. `POST /api/speaking` — speaking form; zod-validated client-side already,
-   honeypot field `website`, Turnstile placeholder in the UI.
-3. `GET|POST /api/guestbook` — wall renders `approved` only; seed + client
-   refetch keeps the page SSG.
-4. PostHog — event names in `lib/analytics.ts`; hooks already fire on outbound
-   links, cal.com, form submits, section views.
+1. `GET /api/now-playing` — Spotify; `_mock: true` while unconfigured.
+2. `POST /api/speaking` — zod + honeypot + Turnstile + rate limit + Resend.
+3. `GET|POST /api/guestbook` — Neon (or in-memory store); POST returns
+   `{ ok, pending: true }`, entries are pre-moderated.
+   `GET|POST /api/guestbook/moderate` — token-gated approval (404 when wrong).
+4. PostHog EU — client taxonomy in `lib/analytics.ts` (frozen with
+   `lib/server/analytics.ts` CLIENT_EVENTS); route handlers emit server events.
 
-Env vars: `.env.example`.
+One-time setup scripts: `npm run spotify:auth` (mint the refresh token),
+`psql "$DATABASE_URL" -f db/schema.sql` (guestbook table).
 
 ## Flags and decisions
 
@@ -54,4 +57,7 @@ Env vars: `.env.example`.
   with v1/v3 from `../brand-assets/exports/wordmark/` to change.
 - Two loud moments only (hard rule): the neon Connect button and the
   per-letter hero stickers. Everything else stays quiet.
+- Easter eggs: per-letter hero stickers, the crane mascot, hidden dove,
+  project-card stickers, and a hidden terminal (press `) with `whoami`,
+  `sipho --help`, `verse`, `coram deo`, and a Konami surprise.
 - Reduced motion is respected everywhere; test with an OS reduce-motion flag.

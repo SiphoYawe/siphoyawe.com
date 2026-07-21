@@ -5,6 +5,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { LocaleProvider } from "@/components/providers/locale-provider";
 import { PillNav } from "@/components/nav/pill-nav";
+import { HiddenTerminal } from "@/components/terminal/hidden-terminal";
 
 const clash = localFont({
   src: "./fonts/ClashDisplay-Variable.woff2",
@@ -41,6 +42,7 @@ export const metadata: Metadata = {
     url: "https://siphoyawe.com",
     siteName: "Sipho Yawe",
     type: "website",
+    images: [{ url: "/images/sipho-talk-2400.webp", width: 2400, height: 1600, alt: "Sipho Yawe mid-talk, gesturing" }],
   },
 };
 
@@ -66,6 +68,7 @@ export default function RootLayout({
             </a>
             <PillNav />
             {children}
+            <HiddenTerminal />
           </LocaleProvider>
         </ThemeProvider>
       </body>

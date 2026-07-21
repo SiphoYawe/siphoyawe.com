@@ -22,7 +22,7 @@ function initials(name: string): string {
 }
 
 /** Small arrow out to the quote's source, where one exists (tracked). */
-function SourceLink({ href, name, id }: { href: string; name: string; id: string }) {
+function SourceLink({ href, name }: { href: string; name: string }) {
   return (
     <a
       href={href}
@@ -30,7 +30,7 @@ function SourceLink({ href, name, id }: { href: string; name: string; id: string
       rel="noopener noreferrer"
       aria-label={`Source for the quote from ${name} (opens in a new tab)`}
       onClick={() =>
-        trackEvent(AnalyticsEvents.OutboundClick, { target: href, cta: `testimonial:${id}` })
+        trackEvent(AnalyticsEvents.OutboundLink, { destination: href })
       }
       className="ml-auto grid size-8 shrink-0 place-items-center rounded-full border border-line text-ink-soft hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
     >
@@ -79,7 +79,7 @@ function QuoteCard({ item, index }: { item: Testimonial; index: number }) {
             <span className="block font-display text-sm font-semibold">{item.name}</span>
             <span className="block text-xs text-ink-soft">{item.role}</span>
           </span>
-          {item.href && <SourceLink href={item.href} name={item.name} id={item.id} />}
+          {item.href && <SourceLink href={item.href} name={item.name} />}
         </figcaption>
       </figure>
     </TiltedCard>

@@ -58,10 +58,7 @@ function Sticker({ sticker, index }: { sticker: LaptopSticker; index: number }) 
         rel="noopener noreferrer"
         aria-label={`${sticker.label} website (opens in a new tab)`}
         onClick={() =>
-          trackEvent(AnalyticsEvents.OutboundClick, {
-            target: sticker.href,
-            sticker: sticker.id,
-          })
+          trackEvent(AnalyticsEvents.OutboundLink, { destination: sticker.href })
         }
         initial={reduce ? false : "hidden"}
         whileInView={reduce ? undefined : "visible"}

@@ -4,6 +4,7 @@ import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
 import { springs } from "@/lib/motion";
 import { useMounted } from "@/lib/use-mounted";
+import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 
 /**
  * Theme toggle with the danielsun sun-glyph morph: on hover the glyph's rays
@@ -18,7 +19,11 @@ export function ThemeToggle() {
   return (
     <motion.button
       type="button"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+      onClick={() => {
+        const next = isDark ? "light" : "dark";
+        setTheme(next);
+        trackEvent(AnalyticsEvents.ThemeToggle, { theme: next });
+      }}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       initial="rest"
       animate="rest"

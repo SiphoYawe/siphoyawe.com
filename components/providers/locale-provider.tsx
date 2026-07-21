@@ -14,6 +14,7 @@ import {
   MESSAGES,
   type Locale,
 } from "@/lib/i18n";
+import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 
 const STORAGE_KEY = "sy-locale";
 
@@ -54,6 +55,7 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
   const setLocale = useCallback((next: Locale) => {
     setLocaleState(next);
     window.localStorage.setItem(STORAGE_KEY, next);
+    trackEvent(AnalyticsEvents.LanguageToggle, { lang: next });
   }, []);
 
   return (

@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Reveal } from "@/components/ui/reveal";
 import { springs } from "@/lib/motion";
 import { getGuestbook, signGuestbook } from "@/lib/api";
+import { Turnstile } from "@/components/forms/turnstile";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 import type { GuestbookEntry } from "@/lib/types";
 
@@ -72,7 +73,8 @@ type FormErrors = { name?: string; message?: string };
  */
 export function GuestbookWall({ initialEntries }: { initialEntries: GuestbookEntry[] }) {
   const [entries, setEntries] = useState(initialEntries);
-  const [freshId, setFreshId] = useState<string | null>(null);
+  const [pendingNote, setPendingNote] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   // Swap the static seed for live entries once /api/guestbook exists
   // (getGuestbook falls back to the same mock while it doesn't).
@@ -114,20 +116,19 @@ export function GuestbookWall({ initialEntries }: { initialEntries: GuestbookEnt
 
     setStatus("submitting");
     try {
-      const res = await signGuestbook({ name: name.trim(), message: message.trim(), website });
+      const res = await signGuestbook({
+        name: name.trim(),
+        message: message.trim(),
+        website,
+        turnstileToken: turnstileToken ?? undefined,
+      });
       if (!res.ok) {
         setStatus("error");
         return;
       }
-      const note: GuestbookEntry = {
-        id: `local-${Date.now()}`,
-        name: name.trim(),
-        message: message.trim(),
-        createdAt: new Date().toISOString(),
-        approved: true,
-      };
-      setEntries((prev) => [note, ...prev]);
-      setFreshId(note.id);
+      // Entries are pre-moderated: the note queues for approval instead of
+      // sticking straight onto the public wall.
+      setPendingNote(res.pending !== false);
       setName("");
       setMessage("");
       setErrors({});
@@ -142,13 +143,19 @@ export function GuestbookWall({ initialEntries }: { initialEntries: GuestbookEnt
     <div>
       {/* The wall */}
       <Reveal>
-        <ul className="grid list-none gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {entries.map((entry, i) => (
-            <li key={entry.id}>
-              <StickyNote entry={entry} index={i} fresh={entry.id === freshId} />
-            </li>
-          ))}
-        </ul>
+        {entries.length === 0 ? (
+          <p className="py-6 text-center font-hand text-2xl text-ink-soft">
+            the wall is bare, be the first to stick one up
+          </p>
+        ) : (
+          <ul className="grid list-none gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {entries.map((entry, i) => (
+              <li key={entry.id}>
+                <StickyNote entry={entry} index={i} fresh={false} />
+              </li>
+            ))}
+          </ul>
+        )}
       </Reveal>
 
       {/* Sign form */}
@@ -226,9 +233,7 @@ export function GuestbookWall({ initialEntries }: { initialEntries: GuestbookEnt
             />
           </div>
 
-          <div className="rounded-xl border border-dashed border-line px-4 py-3 text-center text-xs text-ink-soft">
-            turnstile lands here (claude brings the site key)
-          </div>
+          <Turnstile onToken={setTurnstileToken} />
 
           <motion.button
             type="submit"
@@ -242,7 +247,11 @@ export function GuestbookWall({ initialEntries }: { initialEntries: GuestbookEnt
 
           <p aria-live="polite" className="min-h-5 text-sm">
             {status === "success" && (
-              <span className="text-ink-soft">stuck to the wall. thanks for saying hi =)</span>
+              <span className="text-ink-soft">
+                {pendingNote
+                  ? "your note is in the queue, it sticks once approved. thanks =)"
+                  : "stuck to the wall. thanks for saying hi =)"}
+              </span>
             )}
             {status === "error" && (
               <span role="alert" className="text-gules">

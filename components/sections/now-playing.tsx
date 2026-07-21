@@ -59,7 +59,7 @@ export function NowPlaying() {
   };
 
   const spinning = Boolean(track?.isPlaying) && !reduce;
-  const isStub = track?.title?.includes("Stub") ?? false;
+  const isStub = track?._mock === true || (track?.title?.includes("Stub") ?? false);
 
   return (
     <Section

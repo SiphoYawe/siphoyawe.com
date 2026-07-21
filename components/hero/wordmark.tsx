@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { springs } from "@/lib/motion";
+import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 import {
   AnkoleCattle,
   CoffeeSticker,
@@ -31,38 +32,47 @@ type StickerSpec = {
  * Uganda flag pin, gold lion crest, the hidden dove, Kampala coffee, YHWH
  * crown. This is the easter-egg benchmark — the site's second loud moment.
  */
-const LETTERS: { char: string; sticker: StickerSpec }[] = [
-  { char: "S", sticker: { Art: CraneFeather, rotate: -12, size: "size-14 sm:size-20" } },
-  { char: "I", sticker: { Art: HelloTag, rotate: 7, size: "h-11 w-16 sm:h-16 sm:w-24" } },
-  { char: "P", sticker: { Art: LedgerNod, rotate: -7, size: "h-12 w-16 sm:h-16 sm:w-24" } },
-  { char: "H", sticker: { Art: AnkoleCattle, rotate: 10, size: "size-14 sm:size-20" } },
-  { char: "O", sticker: { Art: UgandaPin, rotate: -9, size: "size-14 sm:size-20" } },
-  { char: "Y", sticker: { Art: LionSticker, rotate: 6, size: "size-14 sm:size-20" } },
-  { char: "A", sticker: { Art: DoveSticker, rotate: -10, size: "size-14 sm:size-20", lift: 0.85 } },
-  { char: "W", sticker: { Art: CoffeeSticker, rotate: 11, size: "size-14 sm:size-20" } },
-  { char: "E", sticker: { Art: CrownSticker, rotate: -6, size: "size-14 sm:size-20" } },
+const LETTERS: { char: string; sticker: StickerSpec; egg: string }[] = [
+  { char: "S", sticker: { Art: CraneFeather, rotate: -12, size: "size-14 sm:size-20" }, egg: "hero-sticker:crane-feather" },
+  { char: "I", sticker: { Art: HelloTag, rotate: 7, size: "h-11 w-16 sm:h-16 sm:w-24" }, egg: "hero-sticker:hello-tag" },
+  { char: "P", sticker: { Art: LedgerNod, rotate: -7, size: "h-12 w-16 sm:h-16 sm:w-24" }, egg: "hero-sticker:ledger" },
+  { char: "H", sticker: { Art: AnkoleCattle, rotate: 10, size: "size-14 sm:size-20" }, egg: "hero-sticker:ankole" },
+  { char: "O", sticker: { Art: UgandaPin, rotate: -9, size: "size-14 sm:size-20" }, egg: "hero-sticker:uganda-pin" },
+  { char: "Y", sticker: { Art: LionSticker, rotate: 6, size: "size-14 sm:size-20" }, egg: "hero-sticker:lion" },
+  { char: "A", sticker: { Art: DoveSticker, rotate: -10, size: "size-14 sm:size-20", lift: 0.85 }, egg: "hero-sticker:hidden-dove" },
+  { char: "W", sticker: { Art: CoffeeSticker, rotate: 11, size: "size-14 sm:size-20" }, egg: "hero-sticker:coffee" },
+  { char: "E", sticker: { Art: CrownSticker, rotate: -6, size: "size-14 sm:size-20" }, egg: "hero-sticker:crown" },
 ];
 
 function StickerLetter({
   char,
   sticker,
   round,
+  egg,
 }: {
   char: string;
   sticker: StickerSpec;
   round: boolean;
+  egg: string;
 }) {
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
   const { Art, rotate, size, lift = 0.72 } = sticker;
 
+  const reveal = () => {
+    setOpen((was) => {
+      if (!was) trackEvent(AnalyticsEvents.EasterEgg, { egg });
+      return true;
+    });
+  };
+
   return (
     <span
       className="relative inline-block outline-none"
-      onMouseEnter={() => setOpen(true)}
+      onMouseEnter={reveal}
       onMouseLeave={() => setOpen(false)}
       onClick={() => setOpen((v) => !v)} // touch support
-      onFocus={() => setOpen(true)}
+      onFocus={reveal}
       onBlur={() => setOpen(false)}
       tabIndex={0}
       aria-label={`Letter ${char}, hides a sticker`}
@@ -95,12 +105,12 @@ export function Wordmark() {
       className="relative z-10 w-screen max-w-none -translate-x-[2%] text-center font-display text-[clamp(4.5rem,18vw,21rem)] leading-[0.82] font-semibold tracking-[-0.03em] whitespace-nowrap text-sable select-none dark:text-paper"
     >
       <span aria-hidden className="inline-flex items-baseline justify-center">
-        {LETTERS.slice(0, 5).map(({ char, sticker }) => (
-          <StickerLetter key={char} char={char} sticker={sticker} round={char !== "I" && char !== "P"} />
+        {LETTERS.slice(0, 5).map(({ char, sticker, egg }) => (
+          <StickerLetter key={char} char={char} sticker={sticker} egg={egg} round={char !== "I" && char !== "P"} />
         ))}
         <span className="inline-block w-[0.28em]" />
-        {LETTERS.slice(5).map(({ char, sticker }) => (
-          <StickerLetter key={char} char={char} sticker={sticker} round={char !== "W"} />
+        {LETTERS.slice(5).map(({ char, sticker, egg }) => (
+          <StickerLetter key={char} char={char} sticker={sticker} egg={egg} round={char !== "W"} />
         ))}
       </span>
     </h1>

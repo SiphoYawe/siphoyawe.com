@@ -36,8 +36,18 @@ await page.evaluate(async () => {
   });
 });
 await page.waitForTimeout(600);
-await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
-await page.waitForTimeout(400);
+// Honor a #fragment in the URL; otherwise settle back at the top.
+const anchored = await page.evaluate(() => {
+  const id = window.location.hash.slice(1);
+  const el = id && document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: "instant", block: "start" });
+    return true;
+  }
+  window.scrollTo({ top: 0, behavior: "instant" });
+  return false;
+});
+await page.waitForTimeout(anchored ? 700 : 400);
 
 if (hoverSel) {
   await page.hover(hoverSel);

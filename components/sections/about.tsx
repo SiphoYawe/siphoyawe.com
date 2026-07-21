@@ -7,12 +7,8 @@ import { Reveal } from "@/components/ui/reveal";
 import { DoodleArrow } from "@/components/ui/doodles";
 import { BIO, FACTS, IDENTITY_CHIPS, POLAROID_CAPTION } from "@/data/about";
 
-// TODO(Sipho): real headshot. Placeholder silhouette until then.
-const HEADSHOT_PLACEHOLDER =
-  "data:image/svg+xml," +
-  encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><rect width="400" height="400" fill="#2B5DF2"/><circle cx="200" cy="155" r="72" fill="#F7F5F0"/><ellipse cx="200" cy="335" rx="125" ry="95" fill="#F7F5F0"/><text x="200" y="388" font-family="sans-serif" font-size="17" fill="#FCDD09" text-anchor="middle">headshot placeholder</text></svg>`,
-  );
+/** The main headshot (content-drop/images: Sipho speaking, black hoodie). */
+const HEADSHOT = { src: "/images/sipho-main-1200.webp", alt: "Sipho Yawe speaking into a microphone" };
 
 /**
  * About (brief section 6.2): tilted polaroid with status pill and scattered
@@ -25,8 +21,8 @@ export function About() {
         {/* Polaroid + scattered chips */}
         <Reveal className="relative mx-auto w-fit lg:mx-0">
           <Polaroid
-            src={HEADSHOT_PLACEHOLDER}
-            alt="Portrait of Sipho Yawe (placeholder)"
+            src={HEADSHOT.src}
+            alt={HEADSHOT.alt}
             caption={POLAROID_CAPTION}
             status="Open to talks"
             rotate={-4}
