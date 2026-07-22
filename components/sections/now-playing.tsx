@@ -65,6 +65,16 @@ export function NowPlaying() {
   const deckSrc = aiAsset("artifacts/vinyl-player");
   const isStub = track?._mock === true || (track?.title?.includes("Stub") ?? false);
 
+  // When paused, the API returns the last played track additively; surface it
+  // so the section reads "Last played …" with real art instead of empty copy.
+  const playing = Boolean(track?.isPlaying);
+  const last = !playing ? track?.lastPlayed : undefined;
+  const art = playing ? track?.albumArtUrl : last?.albumArtUrl;
+  const title = playing ? track?.title : last?.title;
+  const artist = playing ? track?.artist : last?.artist;
+  const album = playing ? track?.album : last?.album;
+  const songUrl = playing ? track?.songUrl : last?.songUrl;
+
   return (
     <Section
       id="now-playing"
@@ -74,12 +84,15 @@ export function NowPlaying() {
       <style>{`@keyframes vinyl-spin { to { transform: rotate(360deg); } }`}</style>
       <Reveal>
         <div className="flex flex-col items-center gap-10 sm:flex-row sm:gap-14">
-          {/* the record */}
+          {/* the record player: the deck asset with the vinyl seated on its
+              platter (platter centre measured on artifacts/vinyl-player). */}
           <button
             type="button"
             onClick={handleFlick}
             aria-label="Flick the record to spin it faster"
-            className="relative shrink-0 cursor-pointer rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+            className={`relative w-72 shrink-0 cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:w-96 ${
+              deckSrc ? "aspect-[952/871]" : "aspect-square"
+            }`}
           >
             {deckSrc && (
               /* eslint-disable-next-line @next/next/no-img-element */
@@ -87,54 +100,65 @@ export function NowPlaying() {
                 src={deckSrc}
                 alt=""
                 loading="lazy"
-                className="pointer-events-none absolute top-1/2 left-1/2 size-[140%] max-w-none -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-xl"
+                className="pointer-events-none absolute inset-0 size-full object-contain drop-shadow-xl"
               />
             )}
+            {/* positioned wrapper: seats the disc on the platter, no spin here */}
             <span
               aria-hidden
-              className="relative grid size-60 place-items-center rounded-full sm:size-72"
+              className="absolute aspect-square -translate-x-1/2 -translate-y-1/2"
               style={{
-                background:
-                  "repeating-radial-gradient(circle at 50% 50%, #101012 0px, #101012 2px, #1d1d21 3px, #101012 4px)",
-                boxShadow:
-                  "0 20px 40px -14px rgb(0 0 0 / 0.55), inset 0 0 0 1px rgb(255 255 255 / 0.06)",
-                animation: reduce
-                  ? "none"
-                  : `vinyl-spin ${flick ? FLICK_SECONDS : SPIN_SECONDS}s linear infinite`,
-                animationPlayState: spinning ? "running" : "paused",
+                left: deckSrc ? "41%" : "50%",
+                top: deckSrc ? "43%" : "50%",
+                width: deckSrc ? "62%" : "80%",
               }}
             >
-              {/* centre label: the album art, spins with the record */}
-              {track?.albumArtUrl ? (
-                <Image
-                  src={track.albumArtUrl}
-                  alt=""
-                  width={112}
-                  height={112}
-                  sizes="(max-width: 640px) 96px, 112px"
-                  className="size-24 rounded-full border-4 border-black/70 object-cover sm:size-28"
-                />
-              ) : (
-                <span className="size-24 rounded-full border-4 border-black/70 bg-azure sm:size-28" />
-              )}
-              {/* spindle hole */}
-              <span className="absolute top-1/2 left-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-paper shadow" />
+              {/* the spinning grooved disc, true-centre origin */}
+              <span
+                className="absolute inset-0 grid place-items-center rounded-full"
+                style={{
+                  transformOrigin: "center",
+                  background:
+                    "repeating-radial-gradient(circle at 50% 50%, #101012 0px, #101012 2px, #1d1d21 3px, #101012 4px)",
+                  boxShadow:
+                    "0 20px 40px -14px rgb(0 0 0 / 0.55), inset 0 0 0 1px rgb(255 255 255 / 0.06)",
+                  animation: reduce
+                    ? "none"
+                    : `vinyl-spin ${flick ? FLICK_SECONDS : SPIN_SECONDS}s linear infinite`,
+                  animationPlayState: spinning ? "running" : "paused",
+                }}
+              >
+                {/* centre label: the album art, spins with the record */}
+                {art ? (
+                  <Image
+                    src={art}
+                    alt=""
+                    width={160}
+                    height={160}
+                    sizes="(max-width: 640px) 72px, 96px"
+                    className="size-[34%] rounded-full border-4 border-black/70 object-cover"
+                  />
+                ) : (
+                  <span className="size-[34%] rounded-full border-4 border-black/70 bg-azure" />
+                )}
+                {/* spindle hole */}
+                <span className="absolute top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-paper shadow" />
+              </span>
+              {/* room light sheen, stays put while the grooves turn */}
+              <span
+                className="pointer-events-none absolute inset-0 rounded-full"
+                style={{
+                  background:
+                    "conic-gradient(from 210deg, transparent 0deg, rgb(255 255 255 / 0.09) 20deg, transparent 60deg, transparent 180deg, rgb(255 255 255 / 0.06) 200deg, transparent 240deg)",
+                }}
+              />
             </span>
-            {/* room light sheen, stays put while the grooves turn */}
-            <span
-              aria-hidden
-              className="pointer-events-none absolute inset-0 rounded-full"
-              style={{
-                background:
-                  "conic-gradient(from 210deg, transparent 0deg, rgb(255 255 255 / 0.09) 20deg, transparent 60deg, transparent 180deg, rgb(255 255 255 / 0.06) 200deg, transparent 240deg)",
-              }}
-            />
           </button>
 
           {/* track info */}
           <div className="max-w-md text-center sm:text-left" aria-live="polite">
             <p className="flex items-center justify-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase sm:justify-start">
-              {track?.isPlaying ? (
+              {playing ? (
                 <>
                   <span className="relative flex size-2">
                     <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#22c55e] opacity-60 motion-reduce:animate-none" />
@@ -145,23 +169,25 @@ export function NowPlaying() {
               ) : (
                 <>
                   <span className="inline-flex size-2 rounded-full bg-steel" />
-                  <span className="text-ink-soft">{track ? "Paused" : "Tuning in"}</span>
+                  <span className="text-ink-soft">
+                    {last ? "Last played" : track ? "Paused" : "Tuning in"}
+                  </span>
                 </>
               )}
             </p>
             <h3 className="mt-3 font-display text-3xl font-semibold tracking-tight text-balance">
-              {track?.title ?? "Warming up the needle"}
+              {title ?? "Warming up the needle"}
             </h3>
-            {track?.artist && <p className="mt-1 text-lg text-ink-soft">{track.artist}</p>}
-            {track?.album && <p className="mt-0.5 text-sm text-ink-soft/80">{track.album}</p>}
+            {artist && <p className="mt-1 text-lg text-ink-soft">{artist}</p>}
+            {album && <p className="mt-0.5 text-sm text-ink-soft/80">{album}</p>}
             {isStub && (
               <p className="mt-3 inline-block rounded-full border border-line px-3 py-1 text-xs text-ink-soft">
                 dev stub until Spotify is wired
               </p>
             )}
-            {track?.songUrl && (
+            {songUrl && (
               <div className="mt-5 flex justify-center sm:justify-start">
-                <PillButton label="Open in Spotify" href={track.songUrl} external badge="or" />
+                <PillButton label="Open in Spotify" href={songUrl} external badge="or" />
               </div>
             )}
             <p aria-hidden className="mt-6 -rotate-2 font-hand text-lg text-ink-soft">
