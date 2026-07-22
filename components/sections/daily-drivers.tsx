@@ -20,10 +20,11 @@ type App = { name: string; file: string; href: string };
 
 /**
  * The daily drivers (the apps actually opened, not the ones on the résumé).
- * Icons live at public/images/dock/. Note: superhuman.png is labelled
- * "Superhuman" per the brief.
+ * Icons live at public/images/dock/. Finder + Notes lead, macOS-style.
  */
 const APPS: readonly App[] = [
+  { name: "Finder", file: "finder.png", href: "https://www.apple.com/macos/" },
+  { name: "Notes", file: "notes.png", href: "https://www.icloud.com/notes" },
   { name: "Spark", file: "spark.png", href: "https://sparkmailapp.com" },
   { name: "Zen", file: "zen.png", href: "https://zen-browser.app" },
   { name: "Figma", file: "figma.png", href: "https://figma.com" },
@@ -31,8 +32,10 @@ const APPS: readonly App[] = [
   { name: "Linear", file: "linear.png", href: "https://linear.app" },
   { name: "Notion", file: "notion.png", href: "https://notion.so" },
   { name: "Slack", file: "slack.png", href: "https://slack.com" },
-  { name: "Superhuman", file: "superhuman.png", href: "https://superhuman.com" },
+  { name: "Superset", file: "superset.png", href: "https://superset.sh" },
   { name: "Signal", file: "signal.png", href: "https://signal.org" },
+  { name: "Telegram", file: "telegram.png", href: "https://telegram.org" },
+  { name: "Asana", file: "asana.png", href: "https://asana.com" },
 ] as const;
 
 /** Resting icon edge (px), magnified edge, and the cursor falloff window. */
@@ -123,35 +126,15 @@ function DockIcon({
           className="pointer-events-none size-full object-contain drop-shadow-[0_6px_10px_rgb(0_0_0/0.22)] select-none"
         />
       )}
-
-      {/* reflection on the dock glass */}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-full h-1/2 overflow-hidden [mask-image:linear-gradient(to_bottom,rgb(0_0_0/0.55),transparent_75%)]"
-      >
-        {broken ? (
-          <span className="block size-full -scale-y-100 opacity-25">
-            <Placeholder name={app.name} />
-          </span>
-        ) : (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={`/images/dock/${app.file}`}
-            alt=""
-            draggable={false}
-            className="absolute bottom-0 left-0 w-full -scale-y-100 object-contain opacity-25 select-none"
-          />
-        )}
-      </span>
     </motion.a>
   );
 }
 
 /**
- * A macOS dock of daily-driver apps: a frosted, translucent bar with a soft
- * reflection under each icon. Hovering an icon magnifies it and its neighbours
- * with a genie falloff and floats the app name above. Reduced motion drops the
- * magnify and just shows labels on hover/focus.
+ * A macOS dock of daily-driver apps: a frosted, translucent bar. Hovering an
+ * icon magnifies it and its neighbours with a genie falloff and floats the app
+ * name above. Reduced motion drops the magnify and just shows labels on
+ * hover/focus.
  */
 export function DailyDrivers() {
   const reduce = useReducedMotion();

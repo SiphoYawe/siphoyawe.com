@@ -15,7 +15,7 @@ export const BIO = {
 export const IDENTITY_CHIPS = [
   { label: "DeFi", color: "blue" as const, rotate: -4 },
   { label: "Web3", color: "purple" as const, rotate: 3 },
-  { label: "DevRel", color: "pink" as const, rotate: -2 },
+  { label: "UI/UX", color: "pink" as const, rotate: -2 },
   { label: "Builder", color: "orange" as const, rotate: 5 },
   { label: "Writer", color: "mint" as const, rotate: -5 },
 ];

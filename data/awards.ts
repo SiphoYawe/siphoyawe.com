@@ -30,12 +30,4 @@ export const AWARDS: Award[] = [
     detail: "Top academic performance",
     color: "azure",
   },
-  {
-    id: "first-class",
-    name: "First Class Honours",
-    issuer: "BSc Computer Science, University of Sheffield",
-    year: "2026",
-    detail: "Software Engineering",
-    color: "mint",
-  },
 ];

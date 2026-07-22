@@ -1,6 +1,5 @@
 import { Hero } from "@/components/hero/hero";
 import { Preloader } from "@/components/preloader/preloader";
-import { CraneMascot } from "@/components/crane/crane-mascot";
 import { About } from "@/components/sections/about";
 import { Projects } from "@/components/sections/projects";
 import { WorkExperience } from "@/components/sections/work-experience";
@@ -46,7 +45,6 @@ export default function Home() {
       <Testimonials />
       <Guestbook />
       <Connect />
-      <CraneMascot />
     </main>
   );
 }

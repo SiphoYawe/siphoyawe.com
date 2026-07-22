@@ -54,9 +54,8 @@ export const BOOKS: Book[] = [
 
 export const BIBLE = {
   title: "The Bible",
-  /** TODO(Sipho): swap for your life verse + reference if you'd like a different one. */
   verse:
-    "Commit to the Lord whatever you do, and he will establish your plans.",
-  reference: "Proverbs 16:3",
-  translation: "NIV",
+    "For the LORD gives wisdom; from his mouth come knowledge and understanding.",
+  reference: "Proverbs 2:6",
+  translation: "ESV",
 };

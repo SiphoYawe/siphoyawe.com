@@ -9,8 +9,6 @@ import { Section } from "@/components/ui/section";
 import { ConnectButton } from "@/components/ui/connect-button";
 import { Reveal } from "@/components/ui/reveal";
 import { Handwritten } from "@/components/ui/handwritten";
-import { AiDoodle } from "@/components/ui/doodles";
-import { Crane } from "@/components/crane/crane-mascot";
 import { SocialDock } from "@/components/nav/social-dock";
 import { springs } from "@/lib/motion";
 import { submitSpeaking } from "@/lib/api";
@@ -470,19 +468,6 @@ export function Connect() {
       <Section id="connect">
         {/* (a) the marquee button */}
         <Reveal className="relative py-8 sm:py-12">
-          {/* ambient hand-drawn bursts framing the finale CTA */}
-          <AiDoodle name="burst-left" className="absolute top-1 left-3 hidden w-16 opacity-45 sm:block lg:left-[12%]" />
-          <AiDoodle name="burst-right" className="absolute right-3 bottom-1 hidden w-16 -scale-x-100 opacity-45 sm:block lg:right-[12%]" />
-          {/* a crane pointing straight at the button, with a curly arrow */}
-          <Crane
-            pose="pointing"
-            phase={0.7}
-            className="absolute bottom-1 left-[6%] z-10 hidden w-20 lg:block"
-          />
-          <AiDoodle
-            name="arrow-curly"
-            className="absolute bottom-16 left-[18%] hidden w-14 rotate-[8deg] opacity-70 lg:block"
-          />
           <ConnectButton onClick={scrollToBooking} />
         </Reveal>
 

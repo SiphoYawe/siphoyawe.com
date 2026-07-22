@@ -217,7 +217,12 @@ export function Passport() {
                 <p className="font-heraldic text-base tracking-[0.45em] text-[#8a6d03] sm:text-lg">
                   PASSPORT
                 </p>
-                <p className="mt-2 font-hand text-xl text-[#3c3a36]">Sipho Yawe</p>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/brand/signature-black.png"
+                  alt="Sipho Yawe signature"
+                  className="mx-auto mt-3 h-9 w-auto opacity-90 mix-blend-multiply"
+                />
               </div>
             </div>
 

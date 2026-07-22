@@ -8,13 +8,6 @@ import { springs } from "@/lib/motion";
 import { WATCHES, type Watch } from "@/data/watches";
 import { aiAsset } from "@/lib/ai-assets";
 
-/** Slight natural lean per slot so the watches don't line up like a catalogue. */
-const WATCH_TILTS: Record<string, number> = {
-  "seiko-5-snxs79": -4,
-  "opulens-spirit": 3,
-  "cartier-tank": -2,
-};
-
 const TONES: Record<Watch["tone"], { face: string; strap: string; hand: string }> = {
   azure: { face: "#2B5DF2", strap: "#1e46c8", hand: "#F7F5F0" },
   or: { face: "#FCDD09", strap: "#b89307", hand: "#141416" },
@@ -37,7 +30,6 @@ function WatchPiece({ watch, slotX }: { watch: Watch; slotX?: string }) {
   const [imgError, setImgError] = useState(false);
   const tone = TONES[watch.tone];
   const strapBg = `linear-gradient(90deg, rgb(0 0 0 / 0.35), transparent 30%, rgb(255 255 255 / 0.12) 50%, transparent 70%, rgb(0 0 0 / 0.35)), ${tone.strap}`;
-  const tilt = WATCH_TILTS[watch.id] ?? 0;
   const showImg = Boolean(watch.image) && !imgError;
 
   return (
@@ -58,10 +50,9 @@ function WatchPiece({ watch, slotX }: { watch: Watch; slotX?: string }) {
         />
         {showImg ? (
           <motion.div
-            whileHover={reduce ? undefined : { y: -8, rotate: tilt + 2 }}
+            whileHover={reduce ? undefined : { y: -8 }}
             transition={springs.bouncy}
             className={`relative cursor-default ${watch.wishlist ? "opacity-50 grayscale" : ""}`}
-            style={{ rotate: `${tilt}deg` }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
