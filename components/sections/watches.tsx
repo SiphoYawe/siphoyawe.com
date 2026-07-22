@@ -180,12 +180,13 @@ export function Watches() {
                 <WatchPiece key={watch.id} watch={watch} slotX={SLOT_X[i]} index={i} />
               ))}
             </ol>
-            {/* Sipho designed the Opulens Spirit Blue in the centre slot */}
-            <div className="pointer-events-none absolute top-[19%] left-[48%] hidden -translate-x-1/2 flex-col items-center sm:flex">
-              <p className="-rotate-2 font-hand text-lg text-[#f3e8cf] [text-shadow:0_1px_3px_rgb(20_20_22/0.6)] sm:text-xl">
+            {/* Sipho designed the Opulens Spirit Blue in the centre slot.
+                Shown on every width; smaller on mobile so it fits the flap. */}
+            <div className="pointer-events-none absolute top-[15%] left-[48%] flex -translate-x-1/2 flex-col items-center sm:top-[19%]">
+              <p className="-rotate-2 font-hand text-[11px] text-[#f3e8cf] [text-shadow:0_1px_3px_rgb(20_20_22/0.6)] sm:text-xl">
                 I designed this one
               </p>
-              <svg viewBox="0 0 44 48" className="mt-0.5 h-9 w-8 text-[#f3e8cf]" fill="none" aria-hidden>
+              <svg viewBox="0 0 44 48" className="mt-0.5 h-6 w-5 text-[#f3e8cf] sm:h-9 sm:w-8" fill="none" aria-hidden>
                 <path d="M24 4 C 33 17, 11 25, 20 40" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
                 <path d="M12 33 L20 41 L29 35" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>

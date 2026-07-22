@@ -27,7 +27,7 @@ export const PROJECTS: Project[] = [
       { label: "SaaS", color: "purple" },
     ],
     links: { live: "https://zionapp.co" },
-    year: "2025",
+    year: "2026",
   },
   {
     id: "chariot",

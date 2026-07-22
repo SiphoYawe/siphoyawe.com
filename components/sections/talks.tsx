@@ -232,7 +232,8 @@ export function Talks() {
           {lanyards.map((talk, i) => (
             <Lanyard key={talk.id} talk={talk} index={i} />
           ))}
-          {/* a humorous nod to the 160k views on the Arc spotlight talk */}
+          {/* a humorous nod to the 160k views on the Arc spotlight talk.
+              Desktop: floats to the right of the lanyard with an arrow in. */}
           <div className="pointer-events-none absolute top-10 left-1/2 ml-24 hidden w-44 -rotate-2 lg:block xl:ml-32">
             <p className="font-hand text-lg leading-snug text-ink-soft">
               160k+ views on this one. yes, I bring it up at parties.
@@ -241,6 +242,17 @@ export function Talks() {
               <path d="M52 6 C 36 9, 10 13, 6 32" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
               <path d="M2 24 L6 34 L15 29" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
+          </div>
+          {/* Mobile: the same nod, dropped full-width below the lanyard with an
+              arrow pointing back up to it (no room to float beside it). */}
+          <div className="pointer-events-none flex w-full flex-col items-center lg:hidden">
+            <svg viewBox="0 0 44 48" className="h-11 w-10 text-ink-soft/70" fill="none" aria-hidden>
+              <path d="M22 44 C 14 32, 30 20, 22 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+              <path d="M15 13 L22 5 L29 13" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <p className="mt-1 max-w-[16rem] -rotate-1 text-center font-hand text-lg leading-snug text-ink-soft">
+              160k+ views on this one. yes, I bring it up at parties.
+            </p>
           </div>
         </div>
       </Reveal>
