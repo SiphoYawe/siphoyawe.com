@@ -1,10 +1,21 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { motion, useReducedMotion } from "framer-motion";
 import { RayShader } from "./ray-shader";
 import { Wordmark } from "./wordmark";
 import { springs } from "@/lib/motion";
+
+/** First visit: the greeting cascade waits for the preloader curtain. */
+function startsUnderPreloader() {
+  if (typeof window === "undefined") return false;
+  try {
+    return !window.sessionStorage.getItem("sy-preloaded");
+  } catch {
+    return false;
+  }
+}
 
 /**
  * Hero: shader ray fan, a warm greeting above the giant wordmark, and Coram
@@ -15,10 +26,11 @@ import { springs } from "@/lib/motion";
 export function Hero() {
   const t = useTranslations("hero");
   const reduce = useReducedMotion();
+  const [handoff] = useState(startsUnderPreloader);
 
   const cascade = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.14, delayChildren: 0.25 } },
+    visible: { transition: { staggerChildren: 0.14, delayChildren: handoff ? 2.1 : 0.25 } },
   };
   const line = {
     hidden: { opacity: 0, y: 18 },
