@@ -138,7 +138,7 @@ export function WorkExperience() {
             />
           </svg>
 
-          <ol className="flex snap-x snap-mandatory gap-6 overflow-x-auto pt-14 pb-4 md:justify-between md:overflow-visible md:pt-16">
+          <ol className="flex flex-wrap justify-center gap-x-6 gap-y-10 pt-14 pb-4 md:flex-nowrap md:justify-between md:gap-6 md:pt-16">
             {EXPERIENCE.map((job, i) => (
               <EnamelPin key={job.id} job={job} index={i} />
             ))}

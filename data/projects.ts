@@ -17,6 +17,7 @@ export type Project = {
 export const PROJECTS: Project[] = [
   {
     id: "chariot",
+    image: "/images/projects/chariot.webp",
     name: "Chariot",
     oneLiner:
       "Crosschain collateral lending on Arc: deposit ETH, borrow USDC at dynamic rates, and earn dual yield from lending and tokenized T-bills.",
@@ -32,6 +33,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "zion",
+    image: "/images/projects/zion.webp",
     name: "Zion",
     oneLiner:
       "A comprehensive school-management platform for ACE curriculum schools: administration, records, and reporting in one place.",
@@ -45,6 +47,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "spica",
+    image: "/images/projects/spica.webp",
     name: "Spica",
     oneLiner:
       "Build DeFi workflows with AI: turn plain English into executable, autonomous blockchain automation.",
@@ -59,6 +62,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "mina",
+    image: "/images/projects/mina.webp",
     name: "Mina",
     oneLiner:
       "Bridge from 40+ chains and trade on Hyperliquid: pair trading, basket trades, and leverage, with an open SDK and CLI.",
@@ -72,6 +76,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "cardpass",
+    image: "/images/projects/cardpass.webp",
     name: "CardPass",
     oneLiner:
       "My first shipped app, now live. Full write-up coming soon.",
