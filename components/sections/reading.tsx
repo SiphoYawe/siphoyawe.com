@@ -44,7 +44,7 @@ function ShelfBook({ book, index }: { book: Book; index: number }) {
       className="relative z-10 -mx-1 cursor-default"
     >
       <div
-        className="relative h-44 w-28 overflow-hidden rounded-[2px] rounded-r-[4px] shadow-[0_10px_18px_-8px_rgb(0_0_0/0.55)]"
+        className="relative h-28 w-[4.5rem] overflow-hidden rounded-[2px] rounded-r-[4px] shadow-[0_10px_18px_-8px_rgb(0_0_0/0.55)] sm:h-44 sm:w-28"
         style={{ background: bg }}
       >
         {book.coverImage ? (
@@ -52,11 +52,11 @@ function ShelfBook({ book, index }: { book: Book; index: number }) {
           <img src={book.coverImage} alt={`${book.title} cover`} loading="lazy" className="size-full object-cover" />
         ) : (
           /* typographic placeholder cover */
-          <div className="flex h-full flex-col justify-between p-4" style={{ color: ink }}>
-            <p className="text-[13px] leading-tight font-bold" style={{ fontFamily: "var(--font-display)" }}>
+          <div className="flex h-full flex-col justify-between p-2.5 sm:p-4" style={{ color: ink }}>
+            <p className="text-[9px] leading-tight font-bold sm:text-[13px]" style={{ fontFamily: "var(--font-display)" }}>
               {book.title}
             </p>
-            <p className="text-[9px] font-semibold tracking-[0.14em] uppercase opacity-85">{book.author}</p>
+            <p className="text-[7px] font-semibold tracking-[0.14em] uppercase opacity-85 sm:text-[9px]">{book.author}</p>
           </div>
         )}
         {/* spine shadow at the binding + cover sheen */}
@@ -194,7 +194,7 @@ function BibleArtifact() {
                 <svg viewBox="0 0 24 24" aria-hidden className="size-4 text-or/90">
                   <path d="M11 2h2v6h6v2h-6v12h-2V10H5V8h6z" fill="currentColor" />
                 </svg>
-                <span className="px-3 text-center font-heraldic text-[11px] leading-relaxed tracking-[0.28em] text-or uppercase">
+                <span className="px-3 text-center font-display text-[11px] leading-relaxed font-bold tracking-[0.28em] text-or uppercase">
                   Holy
                   <br />
                   Bible
@@ -231,7 +231,7 @@ export function Reading() {
         <div className="flex flex-col items-center gap-14 sm:flex-row sm:items-end sm:justify-center sm:gap-20">
           {/* the shelf */}
           <div className="relative">
-            <ol className="flex items-end gap-2.5 px-3">
+            <ol className="flex items-end gap-1.5 px-2 sm:gap-2.5 sm:px-3">
               {BOOKS.map((book, i) => (
                 <ShelfBook key={book.id} book={book} index={i} />
               ))}

@@ -76,7 +76,7 @@ export function Preloader() {
               transition={{ type: "spring", stiffness: 200, damping: 18, delay: 0.15 }}
             />
             <motion.p
-              className="absolute -bottom-14 font-heraldic text-sm tracking-[0.5em] text-ink"
+              className="absolute -bottom-14 font-display text-sm font-semibold tracking-[0.5em] text-ink"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.5 }}

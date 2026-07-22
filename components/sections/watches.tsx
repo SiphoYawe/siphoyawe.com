@@ -124,7 +124,7 @@ function WatchPiece({ watch }: { watch: Watch }) {
       </div>
 
       {/* caption on the leather, cream ink so both themes read */}
-      <p className="mt-4 font-display text-sm font-semibold text-[#f6efe1]">
+      <p className="mt-3 font-display text-sm font-semibold text-[#f6efe1] [text-shadow:0_1px_2px_rgb(20_20_22/0.4)]">
         {watch.brand}
         {watch.wishlist && (
           <span className="ml-1.5 align-middle text-[10px] font-normal tracking-wide text-[#d8c9ae] uppercase">
@@ -132,8 +132,8 @@ function WatchPiece({ watch }: { watch: Watch }) {
           </span>
         )}
       </p>
-      <p className="mt-0.5 text-xs text-[#d8c9ae]">{watch.model}</p>
-      <p className="mt-2 max-w-52 -rotate-1 font-hand text-lg leading-tight text-[#efe3c8]">
+      <p className="mt-0.5 text-xs text-[#d8c9ae] [text-shadow:0_1px_2px_rgb(20_20_22/0.4)]">{watch.model}</p>
+      <p className="mt-1.5 max-w-52 -rotate-1 font-hand text-lg leading-tight text-[#efe3c8] [text-shadow:0_1px_2px_rgb(20_20_22/0.45)] sm:line-clamp-2">
         {watch.why}
       </p>
     </li>
@@ -199,7 +199,7 @@ export function Watches() {
             </>
           )}
 
-          <ol className="relative grid gap-8 px-6 pt-16 pb-8 sm:grid-cols-3 sm:gap-6 sm:px-8">
+          <ol className="relative grid gap-8 px-6 pt-16 pb-8 sm:grid-cols-3 sm:gap-6 sm:px-8 sm:pt-9 sm:pb-6">
             {WATCHES.map((watch) => (
               <WatchPiece key={watch.id} watch={watch} />
             ))}

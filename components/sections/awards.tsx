@@ -132,8 +132,8 @@ export function Awards() {
                 WebkitMaskImage: "linear-gradient(to bottom, #000 82%, transparent 100%)",
               }}
             />
-            {/* magnets scattered across the door */}
-            <ul className="absolute inset-0 flex flex-wrap content-start justify-center gap-x-4 gap-y-6 px-[11%] pt-[16%] pb-[24%]">
+            {/* magnets scattered across the door, kept clear of the handle */}
+            <ul className="absolute inset-0 flex flex-wrap content-start justify-center gap-x-4 gap-y-6 pt-[16%] pr-[22%] pb-[24%] pl-[10%]">
               {magnets}
             </ul>
           </div>

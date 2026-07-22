@@ -12,7 +12,7 @@ import { PROJECTS, type Project } from "@/data/projects";
 const SHOT_PLACEHOLDER = (name: string, hue: string) =>
   "data:image/svg+xml," +
   encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400"><rect width="640" height="400" fill="${hue}"/><rect x="60" y="60" width="520" height="280" rx="14" fill="#F7F5F0" opacity="0.92"/><rect x="90" y="95" width="300" height="18" rx="9" fill="#141416" opacity="0.85"/><rect x="90" y="130" width="420" height="10" rx="5" fill="#141416" opacity="0.25"/><rect x="90" y="152" width="380" height="10" rx="5" fill="#141416" opacity="0.25"/><rect x="90" y="186" width="130" height="34" rx="17" fill="#141416"/><text x="320" y="370" font-family="sans-serif" font-size="18" fill="#F7F5F0" text-anchor="middle">${name} screenshot placeholder</text></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400"><rect width="640" height="400" fill="${hue}"/><rect x="26" y="26" width="588" height="348" rx="18" fill="none" stroke="#F7F5F0" stroke-opacity="0.4" stroke-width="2.5" stroke-dasharray="2 11" stroke-linecap="round"/><text x="320" y="242" font-family="sans-serif" font-size="168" font-weight="700" fill="#F7F5F0" fill-opacity="0.22" text-anchor="middle">${name[0]}</text><text x="320" y="330" font-family="sans-serif" font-size="16" font-weight="600" letter-spacing="4.5" fill="#F7F5F0" fill-opacity="0.9" text-anchor="middle">SCREENSHOT COMING SOON</text></svg>`,
   );
 
 const CARD_HUES: Record<string, string> = {

@@ -83,11 +83,12 @@ function Lanyard({ talk, index }: { talk: Talk; index: number }) {
                 <p className="font-sans text-[10px] font-bold tracking-[0.35em] text-[#F7F5F0]">SPEAKER</p>
               </div>
               <div className="px-4 py-4 text-center">
-                <p className="line-clamp-2 font-display text-sm leading-snug font-semibold text-ink">{talk.title}</p>
-                <p className="mt-1 line-clamp-1 text-xs text-ink-soft">{talk.venue}</p>
+                <p className="font-display text-sm leading-snug font-semibold text-ink">{talk.title}</p>
+                <p className="mt-1 text-xs leading-tight text-ink-soft">{talk.venue}</p>
                 <p className="mt-1.5 font-sans text-[10px] font-semibold tracking-[0.22em] text-accent uppercase">
                   {talk.date}
                 </p>
+                {talk.note && <p className="mt-1.5 text-[11px] leading-tight text-ink-soft">{talk.note}</p>}
               </div>
             </div>
           </div>
@@ -149,14 +150,19 @@ function Stub({ talk, index }: { talk: Talk; index: number }) {
             <img src={aiSrc} alt="" loading="lazy" className="w-full" />
             {/* text kept inside the ticket's cream safe area: the ornamental
                 border and torn stub start near 78% width, so cap the right. */}
-            <div className="absolute inset-y-[15%] left-[9%] right-[27%] flex flex-col justify-center">
+            <div className="absolute inset-y-[12%] left-[9%] right-[24%] flex flex-col justify-center">
               <p className="line-clamp-2 font-display text-sm leading-snug font-semibold text-[#141416] sm:text-base">
                 {talk.title}
               </p>
-              <p className="mt-1 line-clamp-1 text-xs text-[#55534e] sm:text-sm">{talk.venue}</p>
+              <p className="mt-1 text-xs leading-tight text-[#55534e] sm:text-sm">{talk.venue}</p>
               <p className="mt-1.5 font-sans text-[10px] font-semibold tracking-[0.22em] text-accent uppercase">
                 {talk.date}
               </p>
+              {talk.note && (
+                <p className="mt-1 -rotate-1 font-hand text-sm leading-tight text-[#55534e] sm:text-base">
+                  {talk.note}
+                </p>
+              )}
             </div>
           </motion.div>
         ) : (
