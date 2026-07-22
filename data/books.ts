@@ -20,24 +20,35 @@ export const BOOKS: Book[] = [
     title: "The Weight of Glory",
     author: "C.S. Lewis",
     spine: "sable",
+    coverImage: "/images/books/weight-of-glory.webp",
   },
   {
     id: "david-perceived",
     title: "And David Perceived He Was King",
     author: "Dale L. Mast",
     spine: "gules",
+    coverImage: "/images/books/david-perceived.webp",
   },
   {
     id: "the-scribe",
     title: "The Scribe",
     author: "James Goll",
     spine: "or",
+    coverImage: "/images/books/the-scribe.webp",
   },
   {
-    id: "on-writing-lewis",
-    title: "On Writing (and Writers)",
-    author: "C.S. Lewis",
+    id: "saas-playbook",
+    title: "The SaaS Playbook",
+    author: "Rob Walling",
     spine: "azure",
+    coverImage: "/images/books/saas-playbook.webp",
+  },
+  {
+    id: "great-wealth-transfer",
+    title: "The Great Wealth Transfer",
+    author: "Peter Wagner",
+    spine: "mint",
+    coverImage: "/images/books/great-wealth-transfer.webp",
   },
 ];
 
