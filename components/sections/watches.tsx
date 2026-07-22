@@ -1,11 +1,19 @@
 "use client";
 
+import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
 import { springs } from "@/lib/motion";
 import { WATCHES, type Watch } from "@/data/watches";
 import { aiAsset } from "@/lib/ai-assets";
+
+/** Slight natural lean per slot so the watches don't line up like a catalogue. */
+const WATCH_TILTS: Record<string, number> = {
+  "seiko-5-snxs79": -4,
+  "opulens-spirit": 3,
+  "cartier-tank": -2,
+};
 
 const TONES: Record<Watch["tone"], { face: string; strap: string; hand: string }> = {
   azure: { face: "#2B5DF2", strap: "#1e46c8", hand: "#F7F5F0" },
@@ -26,13 +34,38 @@ const SECOND_DEG = 170;
  */
 function WatchPiece({ watch }: { watch: Watch }) {
   const reduce = useReducedMotion();
+  const [imgError, setImgError] = useState(false);
   const tone = TONES[watch.tone];
   const strapBg = `linear-gradient(90deg, rgb(0 0 0 / 0.35), transparent 30%, rgb(255 255 255 / 0.12) 50%, transparent 70%, rgb(0 0 0 / 0.35)), ${tone.strap}`;
+  const tilt = WATCH_TILTS[watch.id] ?? 0;
+  const showImg = Boolean(watch.image) && !imgError;
 
   return (
     <li className="flex flex-col items-center text-center">
-      {/* recessed slot in the leather */}
-      <div className="w-full rounded-2xl bg-black/25 px-4 py-6 shadow-[inset_0_3px_10px_rgb(0_0_0/0.5)] ring-1 ring-white/10">
+      {/* the watch seated in its slot on the leather */}
+      <div className="relative flex h-44 w-full items-center justify-center sm:h-48">
+        {/* soft contact shadow on the leather */}
+        <span
+          aria-hidden
+          className="absolute bottom-4 h-3.5 w-24 rounded-[50%] bg-black/45 blur-md"
+        />
+        {showImg ? (
+          <motion.div
+            whileHover={reduce ? undefined : { y: -8, rotate: tilt + 2 }}
+            transition={springs.bouncy}
+            className={`relative cursor-default ${watch.wishlist ? "opacity-50 grayscale" : ""}`}
+            style={{ rotate: `${tilt}deg` }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={watch.image}
+              alt={`${watch.brand} ${watch.model}`}
+              loading="lazy"
+              onError={() => setImgError(true)}
+              className="h-40 w-auto object-contain drop-shadow-[0_10px_14px_rgb(0_0_0/0.5)] sm:h-44"
+            />
+          </motion.div>
+        ) : (
         <motion.div
           whileHover={reduce ? undefined : { y: -8, rotate: 2 }}
           transition={springs.bouncy}
@@ -87,6 +120,7 @@ function WatchPiece({ watch }: { watch: Watch }) {
           </span>
           <span aria-hidden className="h-8 w-12 rounded-b-md" style={{ background: strapBg }} />
         </motion.div>
+        )}
       </div>
 
       {/* caption on the leather, cream ink so both themes read */}
@@ -119,7 +153,7 @@ export function Watches() {
     <Section
       id="watches"
       title="The watch roll"
-      aside="placeholders until the real roll is shot"
+      aside="the rotation, such as it is"
     >
       <Reveal>
         <div

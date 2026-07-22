@@ -4,8 +4,10 @@ export type Watch = {
   model: string;
   /** One line of why. */
   why: string;
-  /** Strap/dial colour for the render. */
+  /** Strap/dial colour for the CSS-face fallback render. */
   tone: "azure" | "or" | "sable" | "steel";
+  /** Transparent product photo; renders in the slot when present. */
+  image?: string;
   /** On the wishlist, not the wrist: rendered greyed out. */
   wishlist?: boolean;
 };
@@ -18,6 +20,7 @@ export const WATCHES: Watch[] = [
     model: "5 (SNXS79)",
     why: "the everyday classic. Goes anywhere, forgives everything.",
     tone: "sable",
+    image: "/images/watches/seiko-5-snxs79.webp",
   },
   {
     id: "opulens-spirit",
@@ -25,6 +28,7 @@ export const WATCHES: Watch[] = [
     model: "Spirit (blue)",
     why: "blue dial, quiet flex. My everyday lift.",
     tone: "azure",
+    image: "/images/watches/opulens-spirit.webp",
   },
   {
     id: "cartier-tank",
@@ -32,6 +36,7 @@ export const WATCHES: Watch[] = [
     model: "Tank",
     why: "one day. Someone reading this can buy it for me.",
     tone: "steel",
+    image: "/images/watches/cartier-tank.webp",
     wishlist: true,
   },
 ];
