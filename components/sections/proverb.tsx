@@ -68,7 +68,7 @@ export function Proverb() {
   if (!current) return null; // hidden until PROVERBS is repopulated
 
   return (
-    <Section id="proverb" title="Wise sayings from home" aside="luganda & runyankole">
+    <Section id="proverb" title="Wise sayings from home" aside="luganda">
       <Reveal>
         <div
           className="mx-auto max-w-xl"
