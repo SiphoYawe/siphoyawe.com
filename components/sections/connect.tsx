@@ -448,7 +448,6 @@ function WaxSeal() {
       <img src="/brand/signature-black.png" alt="Sipho Yawe signature" className="w-48 dark:hidden" />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/brand/signature-white.png" alt="" aria-hidden className="hidden w-48 dark:block" />
-      <p className="text-xs text-ink-soft">© 2026 Sipho Yawe</p>
     </div>
   );
 }

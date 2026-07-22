@@ -75,15 +75,16 @@ function Lanyard({ talk, index }: { talk: Talk; index: number }) {
             {/* the strap + clip (cleaned asset), hanging from the top */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={aiSrc} alt="" loading="lazy" className="w-16 object-contain drop-shadow-sm sm:w-20" />
-            {/* the badge card, hooked onto the clip */}
-            <div className="relative -mt-7 w-44 overflow-hidden rounded-xl border border-line bg-canvas-raised shadow-(--shadow-polaroid)">
+            {/* the badge card, hung so its top slot engages the clip with no gap
+                or floating line (the clip's tongue tucks behind the card top). */}
+            <div className="relative -mt-16 w-44 overflow-hidden rounded-xl border border-line bg-canvas-raised pt-2 shadow-(--shadow-polaroid) sm:-mt-[4.5rem]">
               {/* the slot the clip hooks through */}
               <span aria-hidden className="mx-auto mt-2.5 block h-1.5 w-9 rounded-full bg-sable/25" />
               <div className="mt-2 px-4 py-1.5 text-center" style={{ background: strip }}>
                 <p className="font-sans text-[10px] font-bold tracking-[0.35em] text-[#F7F5F0]">SPEAKER</p>
               </div>
               <div className="px-4 py-4 text-center">
-                <p className="font-display text-sm leading-snug font-semibold text-ink">{talk.title}</p>
+                <p className="font-display text-sm leading-snug font-semibold text-ink capitalize">{talk.title}</p>
                 <p className="mt-1 text-xs leading-tight text-ink-soft">{talk.venue}</p>
                 <p className="mt-1.5 font-sans text-[10px] font-semibold tracking-[0.22em] text-accent uppercase">
                   {talk.date}
