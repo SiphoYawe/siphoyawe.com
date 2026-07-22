@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Caveat, Cinzel, DM_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { LocaleProvider } from "@/components/providers/locale-provider";
 import { PillNav } from "@/components/nav/pill-nav";
 import { HiddenTerminal } from "@/components/terminal/hidden-terminal";
+import { JsonLd, siteJsonLd } from "@/components/seo/json-ld";
 
 const satoshi = localFont({
   src: "./fonts/Satoshi-Variable.woff2",
@@ -18,14 +19,40 @@ const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans" });
 const cinzel = Cinzel({ subsets: ["latin"], variable: "--font-cinzel" });
 const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
 
+const TITLE = "Sipho Yawe — Builder in DeFi, writer, speaker";
+const DESCRIPTION =
+  "The personal corner of Sipho Yawe: building in DeFi at LI.FI, writing, and speaking. Come in, look around, say hello.";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://siphoyawe.com"),
   title: {
-    default: "Sipho Yawe — Builder in DeFi, writer, speaker",
+    default: TITLE,
     template: "%s — Sipho Yawe",
   },
-  description:
-    "The personal corner of Sipho Yawe: building in DeFi at LI.FI, writing, and speaking. Come in, look around, say hello.",
+  description: DESCRIPTION,
+  applicationName: "Sipho Yawe",
+  authors: [{ name: "Sipho Yawe", url: "https://siphoyawe.com" }],
+  creator: "Sipho Yawe",
+  publisher: "Sipho Yawe",
+  category: "technology",
+  keywords: [
+    "Sipho Yawe",
+    "DeFi",
+    "DevRel",
+    "LI.FI",
+    "Web3",
+    "blockchain",
+    "tokenization",
+    "RWA",
+    "Solidity",
+    "crosschain",
+    "Uganda",
+    "Sheffield",
+    "developer relations",
+  ],
+  alternates: {
+    canonical: "/",
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -36,14 +63,43 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   openGraph: {
-    title: "Sipho Yawe — Builder in DeFi, writer, speaker",
+    title: TITLE,
     description:
       "The personal corner of Sipho Yawe: building in DeFi at LI.FI, writing, and speaking.",
     url: "https://siphoyawe.com",
     siteName: "Sipho Yawe",
     type: "website",
-    images: [{ url: "/images/sipho-talk-2400.webp", width: 2400, height: 1600, alt: "Sipho Yawe mid-talk, gesturing" }],
+    locale: "en_GB",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+    creator: "@SiphoYawe",
+    site: "@SiphoYawe",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GSC_VERIFICATION,
+  },
+};
+
+export const viewport: Viewport = {
+  colorScheme: "light dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F7F5F0" },
+    { media: "(prefers-color-scheme: dark)", color: "#141416" },
+  ],
 };
 
 export default function RootLayout({
@@ -58,6 +114,7 @@ export default function RootLayout({
       className={`${satoshi.variable} ${dmSans.variable} ${cinzel.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-canvas text-ink">
+        <JsonLd data={siteJsonLd} />
         <ThemeProvider>
           <LocaleProvider>
             <a
