@@ -6,7 +6,7 @@ export const SOCIALS = [
   { label: "Ready Scribe", href: "https://readyscribe17.substack.com", icon: "substack" },
 ] as const;
 
-export const CONTACT_EMAIL = "yawephillip@gmail.com";
+export const CONTACT_EMAIL = "sipho@li.finance";
 /** cal.com booking handle. Comes from NEXT_PUBLIC_CAL_LINK, with Sipho's
  * confirmed link as the build-time fallback. */
 export const CALCOM_LINK = process.env.NEXT_PUBLIC_CAL_LINK || "sipho-yawe/30min";
