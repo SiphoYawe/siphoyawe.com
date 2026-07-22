@@ -28,7 +28,7 @@ export const WATCHES: Watch[] = [
     model: "Spirit (blue)",
     why: "blue dial, quiet flex. My everyday lift.",
     tone: "azure",
-    image: "/images/watches/opulens-spirit.webp",
+    image: "/images/watches/opulens-spirit-v2.webp",
   },
   {
     id: "cartier-tank",
