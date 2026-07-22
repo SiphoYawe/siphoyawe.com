@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Caveat, Cinzel, DM_Sans } from "next/font/google";
 import localFont from "next/font/local";
+import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { LocaleProvider } from "@/components/providers/locale-provider";
@@ -21,6 +23,10 @@ const satoshi = localFont({
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans" });
 const cinzel = Cinzel({ subsets: ["latin"], variable: "--font-cinzel" });
 const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
+
+/** GA4 measurement ID (public). Loaded only in production so local dev and
+ * preview traffic never lands in the analytics property. */
+const GA_ID = "G-0TT8KPC3R9";
 
 const TITLE = "Sipho Yawe | Builder in Web3, Writer, Speaker";
 const DESCRIPTION =
@@ -131,6 +137,22 @@ export default function RootLayout({
             <HiddenTerminal />
           </LocaleProvider>
         </ThemeProvider>
+        <Analytics />
+        {process.env.NODE_ENV === "production" && (
+          <>
+            {/* Google Analytics (gtag.js) */}
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga-init" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_ID}');`}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );
