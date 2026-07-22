@@ -27,6 +27,7 @@ export const PROVERBS: Proverb[] = [
     id: "rum-1",
     lang: "Runyankole",
     text: "Enyamaisha eteekateeka eri amaisho gabo",
-    english: "Every herd has its own keeper. (confirm wording)",
+    // TODO(Sipho): confirm the exact wording of this Runyankole translation.
+    english: "Every herd has its own keeper.",
   },
 ];

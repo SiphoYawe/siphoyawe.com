@@ -4,33 +4,51 @@ import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
+import { springs } from "@/lib/motion";
 import { PROVERBS, type Proverb as ProverbType } from "@/data/proverbs";
 
-/** Language label, proverb in the handwritten script, a thin gold rule, then
- * the English beneath in the body face. Minimalist, theme-aware. */
-function ProverbText({ proverb }: { proverb: ProverbType }) {
+/** Warm legal-pad surface: yellow paper, ruled blue-grey lines, a red margin
+ * rule down the left. Shared by the live top card and the peeking stack. */
+const PAD_STYLE: React.CSSProperties = {
+  backgroundColor: "#f6e6a0",
+  backgroundImage:
+    "repeating-linear-gradient(to bottom, transparent 0 31px, rgb(70 104 168 / 0.28) 31px 32px), linear-gradient(90deg, transparent 0 2.5rem, rgb(213 0 0 / 0.4) 2.5rem calc(2.5rem + 1.5px), transparent calc(2.5rem + 1.5px))",
+  backgroundPosition: "0 3.25rem, 0 0",
+};
+
+/** The proverb written on the ruled lines, translation beneath, a thin gold
+ * rule, and the language noted like a pencil scribble in the corner. */
+function PadFace({ proverb }: { proverb: ProverbType }) {
   return (
-    <>
-      <span className="font-sans font-semibold text-[10px] tracking-[0.32em] text-ink-soft uppercase">
-        {proverb.lang}
+    <div
+      className="relative min-h-[15rem] overflow-hidden rounded-md shadow-(--shadow-lift) sm:min-h-[16rem]"
+      style={PAD_STYLE}
+    >
+      {/* torn/glued top edge hint */}
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-3 bg-[repeating-linear-gradient(90deg,rgb(0_0_0/0.06)_0_6px,transparent_6px_12px)]"
+      />
+      {/* language pencil note, top-right corner */}
+      <span className="absolute top-4 right-5 -rotate-3 font-hand text-base text-[#6b5a1e]">
+        {proverb.lang.toLowerCase()}
       </span>
-      <p className="mt-6 font-hand text-3xl leading-tight text-balance text-ink sm:text-4xl">
-        {proverb.text}
-      </p>
-      {/* one thin gold rule */}
-      <span aria-hidden className="mx-auto my-7 block h-px w-16 bg-[#FCDD09]" />
-      <p className="mx-auto max-w-md leading-relaxed text-ink-soft">
-        {proverb.english}
-      </p>
-    </>
+      <div className="px-8 pt-14 pb-9 pl-14 text-center sm:px-12 sm:pl-16">
+        <p className="font-hand text-[2rem] leading-[2rem] text-[#2c2a20] sm:text-4xl sm:leading-[2.05rem]">
+          {proverb.text}
+        </p>
+        <span aria-hidden className="mx-auto my-6 block h-px w-16 bg-[#caa300]" />
+        <p className="mx-auto max-w-md leading-relaxed text-[#5a5330]">{proverb.english}</p>
+      </div>
+    </div>
   );
 }
 
 /**
- * Proverb card (brief section 6.13): a rotating Luganda / Runyankole proverb,
- * set as a pure typographic card on the warm paper surface. MICRO: gentle
- * cross-fade (AnimatePresence mode="wait"), auto-advances every 8s, pauses on
- * hover, click advances. Reduced motion swaps instantly.
+ * Proverb rolodex (brief section 6.13): a stack of yellow legal-pad cards, the
+ * active one on top with two more peeking behind. Tap flicks the top card up
+ * and off, revealing the next; it cycles and auto-advances every 8s (pauses on
+ * hover). Reduced motion swaps with a plain cross-fade.
  */
 export function Proverb() {
   const reduce = useReducedMotion();
@@ -49,14 +67,10 @@ export function Proverb() {
   const current = PROVERBS[index];
 
   return (
-    <Section
-      id="proverb"
-      title="A word from home"
-      aside="luganda & runyankole"
-    >
+    <Section id="proverb" title="A word from home" aside="luganda & runyankole">
       <Reveal>
         <div
-          className="mx-auto max-w-2xl rounded-3xl border border-line bg-canvas-raised shadow-(--shadow-polaroid)"
+          className="mx-auto max-w-xl"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
           onFocusCapture={() => setPaused(true)}
@@ -69,38 +83,54 @@ export function Proverb() {
               setCycle((c) => c + 1);
             }}
             aria-label="Show another proverb"
-            className="block w-full cursor-pointer rounded-3xl px-6 py-16 text-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:px-14 sm:py-20"
+            className="block w-full cursor-pointer rounded-xl focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-accent"
           >
-            {reduce ? (
-              <ProverbText proverb={current} />
-            ) : (
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.span
-                  key={current.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.35, ease: "easeInOut" }}
-                  className="block"
-                >
-                  <ProverbText proverb={current} />
-                </motion.span>
-              </AnimatePresence>
-            )}
-            <span className="mt-10 flex items-center justify-center gap-2" aria-hidden>
-              {PROVERBS.map((p, i) => (
-                <span
-                  key={p.id}
-                  className={`size-1.5 rounded-full transition-colors ${
-                    i === index ? "bg-ink" : "bg-ink/25"
-                  }`}
-                />
-              ))}
-            </span>
-            <span className="mt-4 block font-hand text-lg text-ink-soft" aria-hidden>
-              tap for another
-            </span>
+            {/* the stack: two static cards peeking behind the live one */}
+            <div className="relative">
+              <span
+                aria-hidden
+                className="absolute inset-x-3 top-3 -bottom-3 rotate-[3deg] rounded-md shadow-(--shadow-polaroid)"
+                style={PAD_STYLE}
+              />
+              <span
+                aria-hidden
+                className="absolute inset-x-1.5 top-1.5 -bottom-1.5 -rotate-[2deg] rounded-md shadow-(--shadow-polaroid)"
+                style={PAD_STYLE}
+              />
+
+              {reduce ? (
+                <PadFace proverb={current} />
+              ) : (
+                <AnimatePresence initial={false} mode="popLayout">
+                  <motion.div
+                    key={current.id}
+                    initial={{ opacity: 0, y: 24, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+                    exit={{ opacity: 0, y: -150, rotate: -9, transition: { ...springs.snappy } }}
+                    transition={springs.soft}
+                    className="relative"
+                  >
+                    <PadFace proverb={current} />
+                  </motion.div>
+                </AnimatePresence>
+              )}
+            </div>
           </button>
+
+          {/* progress dots */}
+          <span className="mt-8 flex items-center justify-center gap-2" aria-hidden>
+            {PROVERBS.map((p, i) => (
+              <span
+                key={p.id}
+                className={`size-1.5 rounded-full transition-colors ${
+                  i === index ? "bg-ink" : "bg-ink/25"
+                }`}
+              />
+            ))}
+          </span>
+          <p className="mt-3 text-center font-hand text-lg text-ink-soft" aria-hidden>
+            tap for another
+          </p>
         </div>
       </Reveal>
     </Section>
