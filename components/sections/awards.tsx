@@ -37,7 +37,7 @@ function Certificate({ award, index }: { award: Award; index: number }) {
       initial={reduce ? false : "hidden"}
       whileInView={reduce ? undefined : "visible"}
       viewport={{ once: true, margin: "-40px" }}
-      className="relative w-[42%] max-w-52 shrink-0"
+      className="relative w-[42%] max-w-44 shrink-0"
     >
       {/* drop shadow stays on the door while the certificate lifts */}
       <motion.span
@@ -59,15 +59,15 @@ function Certificate({ award, index }: { award: Award; index: number }) {
           <div className="aspect-[916/1350] w-full rounded-sm border-[3px] border-or/70 bg-[#f6efdd] shadow-sm" />
         )}
         {/* the award, set into the certificate's blank centre */}
-        <div className="absolute inset-x-[13%] top-[12%] text-center">
-          <p className="font-display text-[clamp(0.62rem,2.4vw,0.95rem)] leading-tight font-bold text-[#3a2f14]">
+        <div className="absolute inset-x-[13%] top-[11%] text-center">
+          <p className="font-display text-[clamp(0.6rem,2vw,0.82rem)] leading-tight font-bold text-[#3a2f14]">
             {award.name}
           </p>
-          <p className="mt-[0.6em] text-[clamp(0.5rem,1.8vw,0.68rem)] font-medium tracking-[0.14em] text-[#6b5a2a] uppercase">
+          <p className="mt-[0.6em] text-[clamp(0.48rem,1.6vw,0.58rem)] font-medium tracking-[0.12em] text-[#6b5a2a] uppercase">
             {award.issuer} · {award.year}
           </p>
           {award.detail && (
-            <p className="mt-[0.9em] -rotate-1 font-hand text-[clamp(0.6rem,2.2vw,0.85rem)] leading-tight text-[#7a6430]">
+            <p className="mt-[0.8em] -rotate-1 font-hand text-[clamp(0.55rem,1.9vw,0.72rem)] leading-tight text-[#7a6430]">
               {award.detail}
             </p>
           )}
