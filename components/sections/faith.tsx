@@ -17,7 +17,7 @@ export function Faith() {
   const marginalia = (
     <>
       {FAITH.marginalia.verse}
-      <span className="mt-1 block text-base">{FAITH.marginalia.reference}</span>
+      <span className="mt-1.5 block text-lg">{FAITH.marginalia.reference}</span>
     </>
   );
 
@@ -26,14 +26,14 @@ export function Faith() {
       <Reveal>
         <div className="relative mx-auto max-w-2xl">
           {/* Verse marginalia, tucked in the side margin on desktop */}
-          <aside className="absolute top-4 -right-56 hidden w-44 lg:block xl:-right-64">
+          <aside className="absolute top-1/2 -right-56 hidden w-48 -translate-y-1/2 lg:block xl:-right-64">
             <Handwritten rotate={3}>{marginalia}</Handwritten>
           </aside>
 
           <p className="text-lg leading-relaxed">
             <span
               aria-hidden="true"
-              className="float-left mt-1.5 mr-3 font-heraldic text-6xl leading-[0.75] text-or sm:text-7xl"
+              className="float-left m-0 mr-2.5 font-display text-[3.9rem] leading-[0.78] font-semibold text-or sm:text-7xl"
             >
               {firstLetter}
             </span>
