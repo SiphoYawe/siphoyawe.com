@@ -7,7 +7,6 @@ export type PublicEntry = {
   name: string;
   message: string;
   createdAt: string;
-  _mock?: true;
 };
 
 export type PendingEntry = PublicEntry & { ipHash: string | null };
@@ -114,11 +113,7 @@ type MemRow = {
 };
 
 export class InMemoryStore implements GuestbookStore {
-  private readonly rows: MemRow[];
-
-  constructor(seed = true) {
-    this.rows = seed ? seedRows() : [];
-  }
+  private readonly rows: MemRow[] = [];
 
   async listApproved(limit: number): Promise<PublicEntry[]> {
     return this.rows
@@ -130,7 +125,6 @@ export class InMemoryStore implements GuestbookStore {
         name: r.name,
         message: r.message,
         createdAt: r.createdAt,
-        _mock: true as const,
       }));
   }
 
@@ -145,7 +139,6 @@ export class InMemoryStore implements GuestbookStore {
         message: r.message,
         createdAt: r.createdAt,
         ipHash: r.ipHash,
-        _mock: true as const,
       }));
   }
 
@@ -173,37 +166,6 @@ export class InMemoryStore implements GuestbookStore {
     }
     return true;
   }
-}
-
-function seedRows(): MemRow[] {
-  const now = Date.now();
-  const iso = (offsetMs: number) => new Date(now - offsetMs).toISOString();
-  return [
-    {
-      id: randomUUID(),
-      name: "Amara",
-      message: "Love the coat of arms energy. Coram Deo!",
-      approved: true,
-      createdAt: iso(0),
-      ipHash: null,
-    },
-    {
-      id: randomUUID(),
-      name: "Dev from Lagos",
-      message: "The hidden terminal made my day. whoami is gold.",
-      approved: true,
-      createdAt: iso(3_600_000),
-      ipHash: null,
-    },
-    {
-      id: randomUUID(),
-      name: "Ssebo Musisi",
-      message: "Webale nnyo, this site feels like home.",
-      approved: true,
-      createdAt: iso(7_200_000),
-      ipHash: null,
-    },
-  ];
 }
 
 let store: GuestbookStore | null = null;

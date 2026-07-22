@@ -11,7 +11,7 @@ const { listPendingGuestbook, moderateGuestbook } = await import(
 const { InMemoryStore } = await import("../../lib/server/db");
 
 test("listPending returns 404 on missing or wrong token", async () => {
-  const store = new InMemoryStore(false);
+  const store = new InMemoryStore();
   assert.equal((await listPendingGuestbook(null, { store })).status, 404);
   assert.equal((await listPendingGuestbook("", { store })).status, 404);
   assert.equal(
@@ -28,7 +28,7 @@ test("listPending returns 404 on missing or wrong token", async () => {
 });
 
 test("listPending returns pending entries with the correct token", async () => {
-  const store = new InMemoryStore(false);
+  const store = new InMemoryStore();
   await store.insert({ name: "P", message: "waiting", ipHash: null });
   const result = await listPendingGuestbook(
     "super-secret-moderation-token",
@@ -39,7 +39,7 @@ test("listPending returns pending entries with the correct token", async () => {
 });
 
 test("moderate returns 404 on wrong token and works with the right one", async () => {
-  const store = new InMemoryStore(false);
+  const store = new InMemoryStore();
   const { id } = await store.insert({ name: "P", message: "hi", ipHash: null });
 
   const denied = await moderateGuestbook(
