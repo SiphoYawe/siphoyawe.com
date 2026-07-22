@@ -228,10 +228,20 @@ export function Talks() {
       </Reveal>
 
       <Reveal>
-        <div className="flex flex-wrap items-start justify-center gap-10 sm:gap-14">
+        <div className="relative flex flex-wrap items-start justify-center gap-10 sm:gap-14">
           {lanyards.map((talk, i) => (
             <Lanyard key={talk.id} talk={talk} index={i} />
           ))}
+          {/* a humorous nod to the 160k views on the Arc spotlight talk */}
+          <div className="pointer-events-none absolute top-3 right-[3%] hidden w-48 -rotate-2 text-right lg:block xl:right-[9%]">
+            <p className="font-hand text-lg leading-snug text-ink-soft">
+              160k+ views on this one. yes, I bring it up at parties.
+            </p>
+            <svg viewBox="0 0 60 44" className="mt-1 ml-auto h-10 w-16 text-ink-soft/70" fill="none" aria-hidden>
+              <path d="M56 6 C 40 4, 12 8, 7 30" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+              <path d="M3 22 L7 32 L16 27" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
         </div>
       </Reveal>
 

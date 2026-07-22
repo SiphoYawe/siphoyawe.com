@@ -53,20 +53,6 @@ function formatDate(iso: string): string {
   });
 }
 
-/** Illuminated drop cap on the post title's first letter (heraldic gold). */
-function IlluminatedTitle({ title }: { title: string }) {
-  const [first, ...rest] = title;
-  return (
-    <h1 className="font-display text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-      <span aria-hidden className="mr-1 font-heraldic text-or drop-shadow-sm">
-        {first}
-      </span>
-      <span className="sr-only">{first}</span>
-      {rest.join("")}
-    </h1>
-  );
-}
-
 export default async function BlogPost({
   params,
 }: {
@@ -106,7 +92,7 @@ export default async function BlogPost({
         href="/blog"
         className="inline-flex items-center gap-1.5 rounded-md text-sm text-ink-soft outline-none transition-colors hover:text-ink focus-visible:ring-2 focus-visible:ring-accent"
       >
-        <span aria-hidden>&larr;</span> all notes
+        <span aria-hidden>&larr;</span> All notes
       </Link>
 
       <header className="mt-8 mb-12">
@@ -114,7 +100,9 @@ export default async function BlogPost({
           {formatDate(post.date)}
           <span className="ml-3">{post.readingTime}</span>
         </p>
-        <IlluminatedTitle title={post.title} />
+        <h1 className="font-display text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+          {post.title}
+        </h1>
         {post.tags.length > 0 && (
           <p className="mt-4 flex flex-wrap gap-2">
             {post.tags.map((tag) => (
@@ -133,10 +121,12 @@ export default async function BlogPost({
         <MDXRemote source={post.content} />
       </article>
 
-      {post.gatedPdf && <EmailGate pdf={post.gatedPdf} note={post.gateNote} />}
+      {post.gatedPdf && (
+        <EmailGate pdf={post.gatedPdf} note={post.gateNote} cover={post.gateCover} />
+      )}
 
       <footer className="mt-16 border-t border-line pt-8">
-        <p className="-rotate-2 font-hand text-xl text-ink-soft">coram deo</p>
+        <p className="-rotate-2 font-hand text-xl text-ink-soft">Coram Deo</p>
       </footer>
     </main>
   );

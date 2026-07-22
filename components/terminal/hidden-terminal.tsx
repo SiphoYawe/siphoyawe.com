@@ -26,7 +26,7 @@ const HELP = [
   "available commands:",
   "  whoami          a short bio",
   "  sipho --help    this list",
-  "  coram deo       the motto",
+  "  Coram Deo       the motto",
   "  verse           scripture, random-ish",
   "  socials         where to find me",
   "  konami          try the classic code instead",
@@ -82,10 +82,10 @@ export function HiddenTerminal() {
         return;
       }
       if (cmd === "whoami") {
-        print("a man building, writing, living coram deo.");
+        print("a man building, writing, living Coram Deo.");
       } else if (cmd === "sipho --help" || cmd === "help") {
         print(HELP);
-      } else if (cmd === "coram deo") {
+      } else if (cmd.toLowerCase() === "coram deo") {
         print("before the face of God. it is how the work gets done.");
       } else if (cmd === "verse") {
         const v = VERSES[Math.floor(Math.random() * VERSES.length)];
@@ -135,7 +135,7 @@ export function HiddenTerminal() {
             setOpen(true);
             print([
               "KONAMI ACCEPTED. achievement unlocked: legendary dev.",
-              "the crane salutes you. coram deo, player one.",
+              "the crane salutes you. Coram Deo, player one.",
             ]);
           }
         } else {

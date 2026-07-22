@@ -22,7 +22,7 @@ export const TALKS: Talk[] = [
     venue: "Arc Enterprise & DeFi Hackathon Spotlight",
     date: "May 2026",
     href: "https://community.arc.network/home/events/arc-enterprise-and-defi-hackathon-spotlight-chariot-crosschain-collateral-lending-protocol-on-arc-umne213eet",
-    note: "With Sam Sealey. 160k+ views.",
+    note: "With Sam Sealey.",
     kind: "lanyard",
   },
   {

@@ -26,6 +26,8 @@ export type PostMeta = {
   gatedPdf?: string;
   /** Optional note shown above the newsletter gate (frontmatter `gateNote`). */
   gateNote?: string;
+  /** Optional cover image for the gated document (frontmatter `gateCover`). */
+  gateCover?: string;
 };
 
 export type Post = PostMeta & { content: string };
@@ -48,6 +50,7 @@ function toMeta(slug: string, data: Record<string, unknown>, content: string): P
     updated: data.updated ? String(data.updated) : undefined,
     gatedPdf: data.gatedPdf ? String(data.gatedPdf) : undefined,
     gateNote: data.gateNote ? String(data.gateNote) : undefined,
+    gateCover: data.gateCover ? String(data.gateCover) : undefined,
   };
 }
 
