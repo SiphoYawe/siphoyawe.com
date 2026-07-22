@@ -44,7 +44,7 @@ function EnamelPin({ job, index }: { job: Experience; index: number }) {
             src={pinSrc}
             alt=""
             loading="lazy"
-            className="size-full object-contain drop-shadow-[0_6px_10px_rgb(0_0_0/0.35)]"
+            className="size-full object-contain drop-shadow-[0_6px_10px_rgb(0_0_0/0.35)] isolate [transform:translateZ(0)]"
           />
         ) : (
           <span
