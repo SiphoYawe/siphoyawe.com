@@ -25,7 +25,7 @@ const HIGHLIGHT_PHRASE = "he will establish your plans";
 /**
  * One front-facing book cover standing on the shelf. Micro-interaction (brief
  * section 6.6): eases forward off the shelf on hover, a small lift and tilt on
- * a soft spring. The current read wears the red ribbon bookmark past the top.
+ * a soft spring.
  * Renders a real cover image when present, a typographic placeholder otherwise.
  */
 function ShelfBook({ book, index }: { book: Book; index: number }) {
@@ -43,16 +43,6 @@ function ShelfBook({ book, index }: { book: Book; index: number }) {
       style={{ rotate: `${tilt}deg` }}
       className="relative z-10 -mx-1 cursor-default"
     >
-      {book.current && (
-        <span
-          aria-hidden
-          className="absolute top-[-10px] left-6 z-20 w-2 bg-gules shadow-sm"
-          style={{
-            height: "calc(100% + 4px)",
-            clipPath: "polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 5px), 0 100%)",
-          }}
-        />
-      )}
       <div
         className="relative h-44 w-28 overflow-hidden rounded-[2px] rounded-r-[4px] shadow-[0_10px_18px_-8px_rgb(0_0_0/0.55)]"
         style={{ background: bg }}
@@ -225,8 +215,7 @@ function BibleArtifact() {
 
 /**
  * Currently Reading (brief section 6.6): 3D book mockups on a wooden shelf,
- * the current read ribboned in red, and the Bible beside it as the
- * scripture-as-object moment.
+ * with the Bible beside it as the scripture-as-object moment.
  */
 export function Reading() {
   // AI walnut shelf photo (AI-ASSET-PROMPTS.md C2) replaces the CSS plank
