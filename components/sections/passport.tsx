@@ -6,7 +6,6 @@ import { Reveal } from "@/components/ui/reveal";
 import { springs } from "@/lib/motion";
 import { aiAsset } from "@/lib/ai-assets";
 import { Crane } from "@/components/crane/crane-mascot";
-import { AiDoodle } from "@/components/ui/doodles";
 import { STAMPS, type Stamp } from "@/data/stamps";
 
 const INK: Record<Stamp["ink"], string> = {
@@ -186,10 +185,6 @@ export function Passport() {
           phase={1.1}
           className="absolute -top-12 right-6 z-20 hidden w-24 sm:block xl:right-0"
         />
-        {/* travel doodles: a bird trailing the crane and a wave line below */}
-        <AiDoodle name="bird" className="absolute -top-6 right-32 z-20 hidden w-10 -rotate-6 opacity-70 xl:block" />
-        <AiDoodle name="waves" className="absolute -bottom-8 left-6 z-0 hidden w-28 opacity-60 lg:block" />
-
         <div className="relative z-10 -rotate-[0.6deg] rounded-[1.6rem] bg-night p-2.5 pb-4 shadow-(--shadow-lift) sm:p-3 sm:pb-5">
           <div className={`grid overflow-hidden rounded-[1.1rem] sm:grid-cols-2 ${spreadSrc ? "relative" : ""}`}>
             {spreadSrc && (
