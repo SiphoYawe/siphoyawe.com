@@ -6,11 +6,11 @@ import { springs } from "@/lib/motion";
 export type ChipColor = "blue" | "pink" | "orange" | "purple" | "mint";
 
 const CHIP_STYLES: Record<ChipColor, string> = {
-  blue: "bg-chip-blue text-azure-deep dark:bg-chip-blue/15 dark:text-azure-bright",
-  pink: "bg-chip-pink text-[#a4134f] dark:bg-chip-pink/15 dark:text-[#ff9cc2]",
-  orange: "bg-chip-orange text-[#8a4d00] dark:bg-chip-orange/15 dark:text-[#ffc069]",
-  purple: "bg-chip-purple text-[#5b21b6] dark:bg-chip-purple/15 dark:text-[#c4a8f5]",
-  mint: "bg-chip-mint text-[#0f6b3a] dark:bg-chip-mint/15 dark:text-[#7de3a8]",
+  blue: "bg-chip-blue text-azure-deep dark:bg-chip-blue/30 dark:text-azure-bright",
+  pink: "bg-chip-pink text-[#a4134f] dark:bg-chip-pink/30 dark:text-[#ff9cc2]",
+  orange: "bg-chip-orange text-[#8a4d00] dark:bg-chip-orange/30 dark:text-[#ffc069]",
+  purple: "bg-chip-purple text-[#5b21b6] dark:bg-chip-purple/30 dark:text-[#c4a8f5]",
+  mint: "bg-chip-mint text-[#0f6b3a] dark:bg-chip-mint/30 dark:text-[#7de3a8]",
 };
 
 type TagChipProps = {
