@@ -5,6 +5,14 @@ import { springs } from "@/lib/motion";
 import { SOCIALS } from "@/data/socials";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 
+/** Platform brand tint that floods the chip on hover. */
+const BRAND: Record<string, string> = {
+  x: "#000000",
+  github: "#24292f",
+  linkedin: "#0a66c2",
+  substack: "#ff6719",
+};
+
 function SocialGlyph({ icon, className }: { icon: string; className?: string }) {
   switch (icon) {
     case "x":
@@ -58,7 +66,8 @@ export function SocialDock({ className = "" }: { className?: string }) {
             whileFocus={reduce ? undefined : { y: -10, scale: 1.22 }}
             whileTap={reduce ? undefined : { scale: 0.94 }}
             transition={springs.bouncy}
-            className="group grid size-11 place-items-center rounded-2xl border border-line bg-canvas-raised text-ink shadow-md outline-none focus-visible:ring-2 focus-visible:ring-accent sm:size-12"
+            style={{ ["--brand" as string]: BRAND[icon] ?? "var(--accent)" }}
+            className="group grid size-11 place-items-center rounded-full border border-line bg-canvas-raised text-ink shadow-md outline-none transition-colors duration-200 hover:border-transparent hover:bg-[var(--brand)] hover:text-white focus-visible:bg-[var(--brand)] focus-visible:text-white focus-visible:ring-2 focus-visible:ring-accent sm:size-12"
           >
             <SocialGlyph icon={icon} className="size-5" />
             {/* label revealed beneath */}

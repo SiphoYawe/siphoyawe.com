@@ -361,35 +361,37 @@ function SpeakingForm() {
   );
 }
 
-/** (d) Footer bar: dark band in both themes, email left, dock right. */
+/** (d) Footer bar: a soft rounded paper card, inset from the edges, with the
+ * email on the left and the macOS-style social dock on the right. */
 function FooterBar() {
   return (
-    <div className="bg-sable text-paper">
-      <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-6 px-5 py-7 sm:flex-row sm:px-8">
+    <div className="px-5 pb-6 sm:px-8">
+      <div className="mx-auto flex max-w-4xl flex-col items-center justify-between gap-7 rounded-3xl border border-line bg-canvas-raised px-6 py-6 shadow-(--shadow-polaroid) sm:flex-row sm:px-8 sm:py-7">
         <a
           href={`mailto:${CONTACT_EMAIL}`}
           onClick={() =>
             trackEvent(AnalyticsEvents.OutboundLink, { destination: "mailto:" + CONTACT_EMAIL })
           }
-          className="group inline-flex items-center gap-2.5 rounded-sm text-sm font-medium underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-or"
+          className="group inline-flex items-center gap-2.5 rounded-sm text-sm font-medium text-ink decoration-accent decoration-2 underline-offset-4 transition-colors hover:text-accent hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
         >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden
-            className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-          >
-            <path d="M22 2 11 13" />
-            <path d="M22 2 15 22l-4-9-9-4 20-7z" />
-          </svg>
+          <span className="grid size-8 place-items-center rounded-full bg-accent/10 text-accent transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+              className="size-4"
+            >
+              <path d="M22 2 11 13" />
+              <path d="M22 2 15 22l-4-9-9-4 20-7z" />
+            </svg>
+          </span>
           {CONTACT_EMAIL}
         </a>
-        {/* Dock recoloured for the dark band (light theme needs it; dark is a no-op) */}
-        <SocialDock className="[&_a]:border-white/25! [&_a]:bg-white/10! [&_a]:text-paper! [&_span]:bg-paper! [&_span]:text-sable!" />
+        <SocialDock />
       </div>
     </div>
   );
@@ -437,8 +439,14 @@ function WaxSeal() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/brand/crest-badge.svg" alt="" className="relative w-[52%] opacity-25 mix-blend-multiply" />
       </motion.div>
-      <p className="font-heraldic text-sm tracking-[0.45em] text-ink">CORAM DEO</p>
-      <p className="-rotate-2 font-hand text-xl text-ink-soft">coram deo</p>
+      <p className="font-sans text-xs font-semibold tracking-[0.4em] text-ink uppercase">
+        Coram Deo
+      </p>
+      {/* the real hand signature, theme-swapped */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/brand/signature-black.png" alt="Sipho Yawe signature" className="w-48 dark:hidden" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/brand/signature-white.png" alt="" aria-hidden className="hidden w-48 dark:block" />
       <p className="text-xs text-ink-soft">© 2026 Sipho Yawe</p>
     </div>
   );
