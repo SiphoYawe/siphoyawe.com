@@ -123,22 +123,22 @@ function WatchPiece({ watch, slotX, index = 0 }: { watch: Watch; slotX?: string;
           <span aria-hidden className="h-8 w-12 rounded-b-md" style={{ background: strapBg }} />
         </motion.div>
         )}
-      </div>
-
-      {/* caption on the leather; only appears on hover for a cleaner roll */}
-      <div className="mt-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100">
-        <p className="font-display text-sm font-semibold text-[#f6efe1] [text-shadow:0_1px_2px_rgb(20_20_22/0.4)]">
-          {watch.brand}
-          {watch.wishlist && (
-            <span className="ml-1.5 align-middle text-[10px] font-normal tracking-wide text-[#d8c9ae] uppercase">
-              wishlist
-            </span>
-          )}
-        </p>
-        <p className="mt-0.5 text-xs text-[#d8c9ae] [text-shadow:0_1px_2px_rgb(20_20_22/0.4)]">{watch.model}</p>
-        <p className="mt-1.5 max-w-52 -rotate-1 font-hand text-lg leading-tight text-[#efe3c8] [text-shadow:0_1px_2px_rgb(20_20_22/0.45)] sm:line-clamp-2">
-          {watch.why}
-        </p>
+        {/* proper tooltip with the watch details, floats above the dial on hover */}
+        <div className="pointer-events-none absolute bottom-full left-1/2 z-30 mb-1.5 w-max max-w-[13rem] -translate-x-1/2 scale-95 rounded-xl border border-line bg-canvas-raised px-3 py-2 text-left opacity-0 shadow-[var(--shadow-lift)] transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 group-focus-within:scale-100 group-focus-within:opacity-100">
+          <p className="font-display text-sm font-semibold text-ink">
+            {watch.brand} <span className="font-normal text-ink-soft">{watch.model}</span>
+            {watch.wishlist && (
+              <span className="ml-1.5 align-middle text-[9px] font-semibold tracking-wide text-accent uppercase">
+                wishlist
+              </span>
+            )}
+          </p>
+          <p className="mt-1 text-xs leading-snug text-ink-soft">{watch.why}</p>
+          <span
+            aria-hidden
+            className="absolute top-full left-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rotate-45 border-r border-b border-line bg-canvas-raised"
+          />
+        </div>
       </div>
     </motion.li>
   );
@@ -179,7 +179,7 @@ export function Watches() {
               ))}
             </ol>
             {/* Sipho designed the Opulens Spirit Blue in the centre slot */}
-            <div className="pointer-events-none absolute top-[1%] left-[45%] hidden -translate-x-1/2 flex-col items-center sm:flex">
+            <div className="pointer-events-none absolute top-[19%] left-[45%] hidden -translate-x-1/2 flex-col items-center sm:flex">
               <p className="-rotate-2 font-hand text-lg text-[#f3e8cf] [text-shadow:0_1px_3px_rgb(20_20_22/0.6)] sm:text-xl">
                 I designed this watch
               </p>
