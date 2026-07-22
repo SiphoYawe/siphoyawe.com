@@ -17,6 +17,10 @@ export type PostMeta = {
   tags: string[];
   draft: boolean;
   readingTime: string;
+  /** Optional cover image (frontmatter `cover`), used as the OG/article image. */
+  cover?: string;
+  /** Optional last-modified date (frontmatter `updated`), ISO yyyy-mm-dd. */
+  updated?: string;
 };
 
 export type Post = PostMeta & { content: string };
@@ -35,6 +39,8 @@ function toMeta(slug: string, data: Record<string, unknown>, content: string): P
     tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
     draft: Boolean(data.draft),
     readingTime: readingTime(content),
+    cover: data.cover ? String(data.cover) : undefined,
+    updated: data.updated ? String(data.updated) : undefined,
   };
 }
 

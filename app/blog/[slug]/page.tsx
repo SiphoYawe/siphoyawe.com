@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllSlugs, getPost } from "@/lib/blog";
+import { JsonLd, SITE_URL } from "@/components/seo/json-ld";
 
 export function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -16,9 +17,28 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = getPost(slug);
   if (!post) return {};
+  const publishedTime = post.date ? `${post.date}T12:00:00Z` : undefined;
   return {
     title: post.title,
     description: post.excerpt,
+    alternates: { canonical: `/blog/${slug}` },
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.excerpt,
+      url: `${SITE_URL}/blog/${slug}`,
+      siteName: "Sipho Yawe",
+      locale: "en_GB",
+      publishedTime,
+      authors: ["Sipho Yawe"],
+      // A per-post cover wins; otherwise fall back to the site card (overriding
+      // openGraph drops the inherited opengraph-image.png file convention).
+      images: [
+        post.cover
+          ? { url: post.cover }
+          : { url: "/opengraph-image.png", width: 1200, height: 630, alt: "Sipho Yawe" },
+      ],
+    },
   };
 }
 
@@ -55,8 +75,32 @@ export default async function BlogPost({
   const post = getPost(slug);
   if (!post) notFound();
 
+  const url = `${SITE_URL}/blog/${slug}`;
+  const datePublished = post.date ? `${post.date}T12:00:00Z` : undefined;
+  const dateModified = post.updated
+    ? `${post.updated}T12:00:00Z`
+    : datePublished;
+  const image = post.cover
+    ? new URL(post.cover, SITE_URL).toString()
+    : `${SITE_URL}/opengraph-image.png`;
+
+  const blogPostingLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished,
+    dateModified,
+    image,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    author: { "@type": "Person", name: "Sipho Yawe", url: SITE_URL },
+    publisher: { "@type": "Person", name: "Sipho Yawe", url: SITE_URL },
+    inLanguage: "en-GB",
+  };
+
   return (
     <main id="main-content" className="mx-auto max-w-2xl px-5 pt-32 pb-24 sm:px-8">
+      <JsonLd data={blogPostingLd} />
       <Link
         href="/blog"
         className="inline-flex items-center gap-1.5 rounded-md text-sm text-ink-soft outline-none transition-colors hover:text-ink focus-visible:ring-2 focus-visible:ring-accent"

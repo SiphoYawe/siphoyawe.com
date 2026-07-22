@@ -1,10 +1,39 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
+import { JsonLd, SITE_URL } from "@/components/seo/json-ld";
+
+const BLOG_DESCRIPTION =
+  "Build notes, cross-chain musings, and slow writing from Sipho Yawe: DeFi, DevRel, and the occasional slower note on faith and work.";
 
 export const metadata: Metadata = {
   title: "Blog",
-  description: "Build notes, cross-chain musings, and slow writing from Sipho Yawe.",
+  description: BLOG_DESCRIPTION,
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    type: "website",
+    title: "Blog — Sipho Yawe",
+    description: BLOG_DESCRIPTION,
+    url: `${SITE_URL}/blog`,
+    siteName: "Sipho Yawe",
+    locale: "en_GB",
+    // Overriding openGraph drops the inherited opengraph-image.png file, so
+    // point back at the site card explicitly.
+    images: [
+      { url: "/opengraph-image.png", width: 1200, height: 630, alt: "Sipho Yawe" },
+    ],
+  },
+};
+
+const blogLd = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "@id": `${SITE_URL}/blog#blog`,
+  name: "Notes, by hand",
+  description: BLOG_DESCRIPTION,
+  url: `${SITE_URL}/blog`,
+  inLanguage: "en-GB",
+  author: { "@type": "Person", name: "Sipho Yawe", url: SITE_URL },
 };
 
 function formatDate(iso: string): string {
@@ -26,6 +55,7 @@ export default function BlogIndex() {
 
   return (
     <main id="main-content" className="mx-auto max-w-2xl px-5 pt-32 pb-24 sm:px-8">
+      <JsonLd data={blogLd} />
       <header className="mb-14">
         <p className="mb-3 font-sans font-semibold text-xs tracking-[0.3em] text-accent uppercase">
           The desk
