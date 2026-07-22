@@ -144,6 +144,31 @@ function WaxSeal() {
  */
 function FlightMap() {
   const reduce = useReducedMotion();
+  // Embroidered-hoop map (textures/map-kampala-uk): the illustrated centrepiece
+  // when present; the CSS dotted arc is the fallback.
+  const mapSrc = aiAsset("textures/map-kampala-uk");
+
+  if (mapSrc) {
+    return (
+      <Reveal className="mx-auto mt-12 max-w-xl">
+        <figure className="flex flex-col items-center">
+          <motion.img
+            src={mapSrc}
+            alt="Embroidered hoop map of the journey from Kampala to the UK"
+            loading="lazy"
+            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 26 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="w-full max-w-md drop-shadow-[0_18px_30px_rgb(0_0_0/0.28)]"
+          />
+          <figcaption className="mt-6 max-w-sm -rotate-1 text-center font-hand text-xl text-ink-soft sm:text-2xl">
+            {JOURNEY_NOTE}
+          </figcaption>
+        </figure>
+      </Reveal>
+    );
+  }
 
   return (
     <Reveal className="mx-auto mt-12 max-w-3xl">
