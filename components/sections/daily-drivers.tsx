@@ -22,7 +22,6 @@ type App = { name: string; file: string; href: string };
  * Icons live at public/images/dock/. Finder + Notes lead, macOS-style.
  */
 const APPS: readonly App[] = [
-  { name: "Finder", file: "finder.png", href: "https://www.apple.com/macos/" },
   { name: "Notes", file: "notes.png", href: "https://www.icloud.com/notes" },
   { name: "Spark", file: "spark.png", href: "https://sparkmailapp.com" },
   { name: "Zen", file: "zen.png", href: "https://zen-browser.app" },
