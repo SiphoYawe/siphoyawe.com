@@ -150,7 +150,7 @@ function WatchPiece({ watch, slotX, index = 0 }: { watch: Watch; slotX?: string;
  * an honest placeholder until the real roll is shot.
  */
 /** Horizontal centre of each velvet slot, as a fraction of the roll asset. */
-const SLOT_X = ["19%", "48%", "75.5%"];
+const SLOT_X = ["19%", "48%", "78%"];
 
 export function Watches() {
   // AI leather roll photo (AI-ASSET-PROMPTS.md C4). Transparent PNG: it sits
