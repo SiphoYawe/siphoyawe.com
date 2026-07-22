@@ -3,7 +3,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
-import { Handwritten } from "@/components/ui/handwritten";
 import { springs } from "@/lib/motion";
 import { aiAsset } from "@/lib/ai-assets";
 import { NOW } from "@/data/now";
@@ -100,7 +99,6 @@ function PinnedCard({
  * stamp with the last-updated date.
  */
 export function CorkboardNow() {
-  const reduce = useReducedMotion();
   // AI corkboard final (AI-ASSET-PROMPTS.md C6): a wooden-framed cork board,
   // transparent PNG. It IS the object — no extra card or frame behind it. The
   // cards, pins, string and updated stamp overlay the cork in code.
@@ -113,50 +111,6 @@ export function CorkboardNow() {
         <PinnedCard key={card.id} card={card} index={i} />
       ))}
     </ul>
-  );
-
-  // The red string between the pins (decorative, wide screens only).
-  const string = (
-    <svg
-      aria-hidden
-      viewBox="0 0 100 16"
-      preserveAspectRatio="none"
-      className="pointer-events-none absolute inset-x-[6%] top-1 hidden h-14 w-[88%] lg:block"
-    >
-      {/* twine shadow on the cork */}
-      <path
-        d="M0 5 C 16 15, 34 15, 50 7 C 66 15, 84 15, 100 6"
-        fill="none"
-        stroke="rgb(60 30 10 / 0.28)"
-        strokeWidth="5"
-        vectorEffect="non-scaling-stroke"
-        strokeLinecap="round"
-        transform="translate(0.6 1.4)"
-      />
-      {/* the red twine, drooping naturally between the tacks, drawing in on view */}
-      <motion.path
-        d="M0 5 C 16 15, 34 15, 50 7 C 66 15, 84 15, 100 6"
-        fill="none"
-        stroke="#c1121f"
-        strokeWidth="3.5"
-        vectorEffect="non-scaling-stroke"
-        strokeLinecap="round"
-        initial={reduce ? { pathLength: 1 } : { pathLength: 0 }}
-        whileInView={reduce ? undefined : { pathLength: 1 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 1.4, ease: [0.65, 0, 0.35, 1], delay: 0.3 }}
-      />
-      {/* subtle highlight along the top of the twine */}
-      <path
-        d="M0 5 C 16 15, 34 15, 50 7 C 66 15, 84 15, 100 6"
-        fill="none"
-        stroke="rgb(255 255 255 / 0.35)"
-        strokeWidth="1"
-        vectorEffect="non-scaling-stroke"
-        strokeLinecap="round"
-        transform="translate(0 -0.5)"
-      />
-    </svg>
   );
 
   // The ink stamp — knocked out on a cream chip so it reads clearly on cork.
@@ -185,9 +139,7 @@ export function CorkboardNow() {
             />
             {/* content area, inset to sit inside the wooden frame on the cork */}
             <div className="absolute inset-x-[6%] inset-y-[8%] flex flex-col justify-center">
-              {cards}
-              {string}
-              {stamp}
+              {cards}              {stamp}
             </div>
           </div>
         ) : (
@@ -202,17 +154,10 @@ export function CorkboardNow() {
                 backgroundSize: "90px 90px, 70px 70px, 50px 50px, 100% 100%",
               }}
             >
-              {cards}
-              {string}
-              {stamp}
+              {cards}              {stamp}
             </div>
           </div>
         )}
-      </Reveal>
-      <Reveal delay={0.12}>
-        <Handwritten className="mt-8 text-center" rotate={1.5}>
-          string included for drama
-        </Handwritten>
       </Reveal>
     </Section>
   );
