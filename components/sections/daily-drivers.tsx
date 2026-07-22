@@ -27,14 +27,10 @@ const APPS: readonly App[] = [
   { name: "Zen", file: "zen.png", href: "https://zen-browser.app" },
   { name: "Figma", file: "figma.png", href: "https://figma.com" },
   { name: "Bible", file: "bible.png", href: "https://bible.com" },
-  { name: "Linear", file: "linear.png", href: "https://linear.app" },
-  { name: "Notion", file: "notion.png", href: "https://notion.so" },
   { name: "Obsidian", file: "obsidian.png", href: "https://obsidian.md" },
-  { name: "Slack", file: "slack.png", href: "https://slack.com" },
+  { name: "Cursor", file: "cursor.png", href: "https://cursor.com" },
+  { name: "Claude", file: "claude-app.png", href: "https://claude.ai" },
   { name: "Superset", file: "superset.png", href: "https://superset.sh" },
-  { name: "Signal", file: "signal.png", href: "https://signal.org" },
-  { name: "Telegram", file: "telegram.png", href: "https://telegram.org" },
-  { name: "Asana", file: "asana.png", href: "https://asana.com" },
 ] as const;
 
 /** Resting icon edge (px), magnified edge, and the cursor falloff window. */
