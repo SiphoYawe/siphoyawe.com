@@ -9,29 +9,35 @@ export type Testimonial = {
 };
 
 /**
- * Kind words. Every entry is a labelled placeholder (brief: never invent
- * realistic-looking fake testimonials). TODO(Sipho): real quotes + photos.
+ * Kind words from people Sipho has worked with. Real quotes, supplied by Sipho.
  */
 export const TESTIMONIALS: Testimonial[] = [
   {
-    id: "placeholder-1",
+    id: "ronald-azairwe",
     quote:
-      "Placeholder quote. A real kind word from a collaborator goes here, with their name and a link back to the source.",
-    name: "Name TBD",
-    role: "Role, company",
+      "In my experience, I have found Sipho very serious, dexterous, and committed to his work. He has shown great self-motivation, ambition and determination to accomplish his tasks and to fulfil his obligations.",
+    name: "Ronald Azairwe",
+    role: "Pegasus Technologies Limited",
   },
   {
-    id: "placeholder-2",
+    id: "chukwudi-m",
     quote:
-      "Placeholder quote. Think of the hackathon judges, the LI.FI team, a UX School student, a Chariot user.",
-    name: "Name TBD",
-    role: "Role, company",
+      "Working with Sipho has been exceptional! Throughout his internship, he has consistently demonstrated organizational skills, delivering high-quality work promptly. His positive attitude and dedication to excellence makes him a valuable asset to any team. It's been a pleasure working with Sipho.",
+    name: "Chukwudi M.",
+    role: "Skybound Studio",
   },
   {
-    id: "placeholder-3",
+    id: "charlotte-muheki",
     quote:
-      "Placeholder quote. Two or three sentences is plenty. Specific beats glowing every time.",
-    name: "Name TBD",
-    role: "Role, company",
+      "Sipho is a dynamic individual, brimming with creativity. Sipho's commitment to excellence is unwavering, ensuring that every task is executed to the highest standard. His problem-solving skills are exceptional, often thinking beyond conventional boundaries to provide innovative solutions.",
+    name: "Charlotte Muheki",
+    role: "Dabar Schools",
+  },
+  {
+    id: "andrew-muhwezi",
+    quote:
+      "I like that Sipho has a structured approach to things, and will document things to the detail, a very scarce attribute. Sipho is keen on continuous improvement, grasps concepts very easily, and is willing to ask and research those he is unsure of. I enjoy the value he brings to meetings, beyond the scope of his assignments.",
+    name: "Andrew Muhwezi",
+    role: "Penda Capital",
   },
 ];
