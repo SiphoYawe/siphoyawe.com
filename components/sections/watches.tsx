@@ -150,7 +150,7 @@ function WatchPiece({ watch, slotX, index = 0 }: { watch: Watch; slotX?: string;
  * an honest placeholder until the real roll is shot.
  */
 /** Horizontal centre of each velvet slot, as a fraction of the roll asset. */
-const SLOT_X = ["19%", "45%", "75.5%"];
+const SLOT_X = ["19%", "48%", "75.5%"];
 
 export function Watches() {
   // AI leather roll photo (AI-ASSET-PROMPTS.md C4). Transparent PNG: it sits
@@ -179,7 +179,7 @@ export function Watches() {
               ))}
             </ol>
             {/* Sipho designed the Opulens Spirit Blue in the centre slot */}
-            <div className="pointer-events-none absolute top-[19%] left-[45%] hidden -translate-x-1/2 flex-col items-center sm:flex">
+            <div className="pointer-events-none absolute top-[19%] left-[48%] hidden -translate-x-1/2 flex-col items-center sm:flex">
               <p className="-rotate-2 font-hand text-lg text-[#f3e8cf] [text-shadow:0_1px_3px_rgb(20_20_22/0.6)] sm:text-xl">
                 I designed this watch
               </p>
