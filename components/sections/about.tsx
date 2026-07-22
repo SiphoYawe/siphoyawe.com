@@ -5,14 +5,14 @@ import { BentoCard } from "@/components/ui/bento-card";
 import { Handwritten } from "@/components/ui/handwritten";
 import { Reveal } from "@/components/ui/reveal";
 import { DoodleArrow } from "@/components/ui/doodles";
-import { BIO, FACTS, IDENTITY_CHIPS, POLAROID_CAPTION } from "@/data/about";
+import { BIO, IDENTITY_CHIPS, POLAROID_CAPTION } from "@/data/about";
 
 /** The main headshot (content-drop/images: Sipho speaking, black hoodie). */
 const HEADSHOT = { src: "/images/sipho-main-1200.webp", alt: "Sipho Yawe speaking into a microphone" };
 
 /**
  * About (brief section 6.2): tilted polaroid with status pill and scattered
- * identity chips, warm bio in bento cards, and a quiet facts grid.
+ * identity chips, and a warm bio in bento cards.
  */
 export function About() {
   return (
@@ -75,22 +75,6 @@ export function About() {
           </Reveal>
         </div>
       </div>
-
-      {/* Facts grid (Olivia pattern) */}
-      <Reveal className="mt-14">
-        <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-4">
-          {FACTS.map((fact) => (
-            <div key={fact.label} className="bg-canvas-raised p-5">
-              <dt className="font-sans font-semibold text-[11px] tracking-[0.25em] text-ink-soft uppercase">
-                {fact.label}
-              </dt>
-              <dd className="mt-2 font-display text-sm font-semibold sm:text-base">
-                {fact.value}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </Reveal>
     </Section>
   );
 }

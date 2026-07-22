@@ -20,12 +20,5 @@ export const IDENTITY_CHIPS = [
   { label: "Writer", color: "mint" as const, rotate: -5 },
 ];
 
-export const FACTS = [
-  { label: "Location", value: "Sheffield, UK (from Kampala)" },
-  { label: "Availability", value: "Open to talks and collabs" },
-  { label: "Focus", value: "DeFi, DevRel, building" },
-  { label: "Faith", value: "Christian, coram deo" },
-];
-
 /** Polaroid caption (Luganda flavour). */
 export const POLAROID_CAPTION = "nze ono (that's me)";
