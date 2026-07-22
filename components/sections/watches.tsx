@@ -7,6 +7,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { springs } from "@/lib/motion";
 import { WATCHES, type Watch } from "@/data/watches";
 import { aiAsset } from "@/lib/ai-assets";
+import { useCoarsePointer } from "@/lib/use-coarse-pointer";
 
 const TONES: Record<Watch["tone"], { face: string; strap: string; hand: string }> = {
   azure: { face: "#2B5DF2", strap: "#1e46c8", hand: "#F7F5F0" },
@@ -27,7 +28,13 @@ const SECOND_DEG = 170;
  */
 function WatchPiece({ watch, slotX, index = 0 }: { watch: Watch; slotX?: string; index?: number }) {
   const reduce = useReducedMotion();
+  const coarse = useCoarsePointer();
   const [imgError, setImgError] = useState(false);
+  const [open, setOpen] = useState(false);
+  // On touch there is no hover, so tapping the watch toggles its tooltip. On a
+  // mouse the handler is a no-op (hover already reveals it, so a click never
+  // leaves the tooltip stuck open).
+  const toggle = () => coarse && setOpen((v) => !v);
   const tone = TONES[watch.tone];
   const strapBg = `linear-gradient(90deg, rgb(0 0 0 / 0.35), transparent 30%, rgb(255 255 255 / 0.12) 50%, transparent 70%, rgb(0 0 0 / 0.35)), ${tone.strap}`;
   const showImg = Boolean(watch.image) && !imgError;
@@ -38,10 +45,20 @@ function WatchPiece({ watch, slotX, index = 0 }: { watch: Watch; slotX?: string;
       whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ ...springs.soft, delay: 0.15 + index * 0.13 }}
+      role="button"
+      tabIndex={0}
+      aria-expanded={open}
+      onClick={toggle}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setOpen((v) => !v);
+        }
+      }}
       className={
         slotX
-          ? "group absolute flex w-[32%] -translate-x-1/2 flex-col items-center text-center"
-          : "group flex flex-col items-center text-center"
+          ? "group absolute flex w-[32%] -translate-x-1/2 cursor-pointer flex-col items-center text-center outline-none"
+          : "group flex cursor-pointer flex-col items-center text-center outline-none"
       }
       style={slotX ? { left: slotX, top: "30%" } : undefined}
     >
@@ -125,8 +142,12 @@ function WatchPiece({ watch, slotX, index = 0 }: { watch: Watch; slotX?: string;
           <span aria-hidden className="h-8 w-12 rounded-b-md" style={{ background: strapBg }} />
         </motion.div>
         )}
-        {/* proper tooltip with the watch details, floats above the dial on hover */}
-        <div className="pointer-events-none absolute bottom-full left-1/2 z-30 mb-1.5 w-max max-w-[13rem] -translate-x-1/2 scale-95 rounded-xl border border-line bg-canvas-raised px-3 py-2 text-left opacity-0 shadow-[var(--shadow-lift)] transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 group-focus-within:scale-100 group-focus-within:opacity-100">
+        {/* tooltip with the watch details: hover on desktop, tap on touch */}
+        <div
+          className={`pointer-events-none absolute bottom-full left-1/2 z-30 mb-1.5 w-max max-w-[13rem] -translate-x-1/2 rounded-xl border border-line bg-canvas-raised px-3 py-2 text-left shadow-[var(--shadow-lift)] transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 group-focus-within:scale-100 group-focus-within:opacity-100 ${
+            open ? "scale-100 opacity-100" : "scale-95 opacity-0"
+          }`}
+        >
           <p className="font-display text-sm font-semibold text-ink">
             {watch.brand} <span className="font-normal text-ink-soft">{watch.model}</span>
             {watch.wishlist && (

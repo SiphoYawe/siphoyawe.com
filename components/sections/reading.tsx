@@ -7,6 +7,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { springs } from "@/lib/motion";
 import { BOOKS, BIBLE, type Book } from "@/data/books";
 import { aiAsset } from "@/lib/ai-assets";
+import { useCoarsePointer } from "@/lib/use-coarse-pointer";
 
 const SPINE_STYLES: Record<Book["spine"], { bg: string; ink: string }> = {
   azure: { bg: "#2B5DF2", ink: "#F7F5F0" },
@@ -30,9 +31,21 @@ const HIGHLIGHT_PHRASE = "he will establish your plans";
  */
 function ShelfBook({ book, index }: { book: Book; index: number }) {
   const reduce = useReducedMotion();
+  const coarse = useCoarsePointer();
+  const [revealed, setRevealed] = useState(false);
   const { bg, ink } = SPINE_STYLES[book.spine];
   const tilt = BOOK_TILTS[index % BOOK_TILTS.length];
   const amazonUrl = `https://www.amazon.co.uk/s?k=${encodeURIComponent(`${book.title} ${book.author}`)}`;
+
+  // On touch, the first tap reveals the title/author tooltip instead of jumping
+  // straight to Amazon; a second tap follows the link. On a mouse, hover shows
+  // the tooltip and a click opens Amazon as usual.
+  function onTap(e: React.MouseEvent) {
+    if (coarse && !revealed) {
+      e.preventDefault();
+      setRevealed(true);
+    }
+  }
 
   return (
     <motion.li
@@ -49,6 +62,8 @@ function ShelfBook({ book, index }: { book: Book; index: number }) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`${book.title} by ${book.author}, find it on Amazon`}
+        onClick={onTap}
+        onBlur={() => setRevealed(false)}
         className="relative block rounded-[2px] outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
         <div
@@ -77,8 +92,12 @@ function ShelfBook({ book, index }: { book: Book; index: number }) {
           className="absolute inset-y-1 -right-1 w-1.5 rounded-r-[2px]"
           style={{ background: "repeating-linear-gradient(180deg, #efe8d2 0 2px, #ded4b8 2px 3px)" }}
         />
-        {/* proper tooltip with title + author, floats above the cover on hover */}
-        <div className="pointer-events-none absolute bottom-full left-1/2 z-30 mb-1.5 w-max max-w-[13rem] -translate-x-1/2 scale-95 rounded-xl border border-line bg-canvas-raised px-3 py-2 text-left opacity-0 shadow-[var(--shadow-lift)] transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 group-focus-within:scale-100 group-focus-within:opacity-100">
+        {/* tooltip with title + author: hover on desktop, tap on touch */}
+        <div
+          className={`pointer-events-none absolute bottom-full left-1/2 z-30 mb-1.5 w-max max-w-[13rem] -translate-x-1/2 rounded-xl border border-line bg-canvas-raised px-3 py-2 text-left shadow-[var(--shadow-lift)] transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 group-focus-within:scale-100 group-focus-within:opacity-100 ${
+            revealed ? "scale-100 opacity-100" : "scale-95 opacity-0"
+          }`}
+        >
           <p className="font-display text-sm font-semibold text-ink">{book.title}</p>
           <p className="mt-0.5 text-xs leading-snug text-ink-soft">{book.author}</p>
           <span
