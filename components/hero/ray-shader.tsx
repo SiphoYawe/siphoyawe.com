@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useTheme } from "next-themes";
 import { useReducedMotion } from "framer-motion";
 
 /**
@@ -127,24 +126,27 @@ function createGl(canvas: HTMLCanvasElement) {
 }
 
 /** Static azure gradient: the reduced-motion / no-WebGL stand-in. */
-function StaticRays() {
+function BaseRays({ hidden }: { hidden: boolean }) {
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+    <div
+      aria-hidden
+      className="absolute inset-0 transition-opacity duration-700"
+      style={{ opacity: hidden ? 0 : 1 }}
+    >
       <div className="absolute inset-0 bg-[radial-gradient(130%_95%_at_-6%_-4%,rgb(43_93_242/0.34)_0%,rgb(43_93_242/0.12)_38%,transparent_62%)] dark:bg-[radial-gradient(130%_95%_at_-6%_-4%,rgb(92_130_255/0.3)_0%,rgb(92_130_255/0.1)_38%,transparent_62%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(60%_40%_at_2%_0%,rgb(252_221_9/0.07)_0%,transparent_70%)]" />
-      <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-canvas via-canvas/70 to-transparent" />
     </div>
   );
 }
 
 export function RayShader() {
   const reduce = useReducedMotion();
-  const { resolvedTheme } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [glActive, setGlActive] = useState(false);
   const [glFailed, setGlFailed] = useState(false);
 
   useEffect(() => {
-    if (reduce) return; // static gradient instead
+    if (reduce) return; // static gradient stays, canvas never initialises
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = createGl(canvas);
@@ -194,6 +196,7 @@ export function RayShader() {
       gl.uniform2f(u.mouse, mouse.x, mouse.y);
       gl.uniform1f(u.dark, document.documentElement.classList.contains("dark") ? 1 : 0);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
+      setGlActive((was) => (was ? was : true));
     };
     raf = requestAnimationFrame(frame);
 
@@ -204,15 +207,16 @@ export function RayShader() {
       window.removeEventListener("pointermove", onMove);
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
-    // resolvedTheme is read per-frame from the DOM class; no re-init needed.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // The theme is read per-frame from the DOM class; no re-init needed.
   }, [reduce]);
 
-  if (reduce || glFailed) return <StaticRays />;
-
+  /* One DOM shape for server and client (no hydration mismatch): the static
+     gradient is the base layer; the shader canvas paints over it once the GL
+     context is alive. Reduced motion and no-WebGL leave the gradient alone. */
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+      <BaseRays hidden={glActive} />
+      {!glFailed && <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />}
       {/* blend the fan into the room */}
       <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-canvas via-canvas/70 to-transparent" />
     </div>

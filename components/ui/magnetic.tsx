@@ -36,30 +36,30 @@ export function Magnetic({
   const x = useSpring(mx, { stiffness: 180, damping: 15, mass: 0.4 });
   const y = useSpring(my, { stiffness: 180, damping: 15, mass: 0.4 });
 
-  if (reduce) {
-    return <div className={className}>{children}</div>;
-  }
-
-  const onMove = (e: React.PointerEvent) => {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const dx = e.clientX - (rect.left + rect.width / 2);
-    const dy = e.clientY - (rect.top + rect.height / 2);
-    mx.set(Math.max(-max, Math.min(max, dx * strength)));
-    my.set(Math.max(-max, Math.min(max, dy * strength)));
-  };
+  const onMove = reduce
+    ? undefined
+    : (e: React.PointerEvent) => {
+        const el = ref.current;
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const dx = e.clientX - (rect.left + rect.width / 2);
+        const dy = e.clientY - (rect.top + rect.height / 2);
+        mx.set(Math.max(-max, Math.min(max, dx * strength)));
+        my.set(Math.max(-max, Math.min(max, dy * strength)));
+      };
 
   const reset = () => {
     mx.set(0);
     my.set(0);
   };
 
+  /* Same DOM under reduced motion (no hydration divergence): the values just
+     stay parked at 0 because no pointer listeners are attached. */
   return (
     <motion.div
       ref={ref}
       onPointerMove={onMove}
-      onPointerLeave={reset}
+      onPointerLeave={reduce ? undefined : reset}
       style={{ x, y }}
       className={`inline-block ${className}`}
     >
