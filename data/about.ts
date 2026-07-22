@@ -7,7 +7,7 @@ export const BIO = {
   short:
     "I'm a builder from Kampala, now in the UK. I write code, I write words, and every so often I get on a stage and do both at once.",
   whatIDo:
-    "By title I'm a DevRel Engineer at LI.FI, helping developers build on cross-chain infrastructure. By habit I'm a founder of small, scrappy projects: a lending protocol, a school platform, and my first shipped app.",
+    "By title I'm a DevRel Engineer at LI.FI, helping developers build on cross-chain infrastructure. By habit I'm a founder, shipping real products: a lending protocol, a school platform, and my first shipped app.",
   offKeyboard:
     "Off the keyboard I collect watches, read more than I finish, and follow Jesus. The motto under the family crest is how I try to work: Coram Deo, before the face of God.",
 };

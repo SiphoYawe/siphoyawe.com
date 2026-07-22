@@ -98,7 +98,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
  */
 export function Projects() {
   return (
-    <Section id="projects" title="Small, scrappy projects" aside="each one shipped">
+    <Section id="projects" title="Things I've built" aside="each one shipped">
       <div className="grid gap-10 sm:grid-cols-2">
         {PROJECTS.map((project, i) => (
           <ProjectCard key={project.id} project={project} index={i} />

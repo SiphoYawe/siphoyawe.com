@@ -21,7 +21,7 @@ const HEADSHOT = { src: "/images/sipho-main-1200.webp", alt: "Sipho Yawe speakin
 export function About() {
   const reduce = useReducedMotion();
   return (
-    <Section id="about" title="Come in, take your shoes off" aside="the two-minute version">
+    <Section id="about" title="A bit about me" aside="the two-minute version">
       <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
         {/* Polaroid + scattered chips */}
         <Reveal variant="left" className="relative mx-auto w-fit lg:mx-0">
