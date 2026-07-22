@@ -13,8 +13,9 @@ type ConnectButtonProps = {
 
 /**
  * The marquee neon-glow Connect button (danielsun hover forensics, rebuilt).
- * On hover the dark 3D pill "switches on": an Azure/Or radial glow floods
- * the surround, the label turns gold, doodle burst strokes fade in at the
+ * On hover the dark 3D pill "switches on": an Azure neon glow (a faint gold
+ * rim whispers the crest) floods the surround, the label lights azure, doodle
+ * burst strokes fade in at the
  * corners (staggered, rotated), and a shine sweeps across. One of only two
  * loud moments on the site.
  */
@@ -59,7 +60,7 @@ export function ConnectButton({
           className="pointer-events-none absolute -inset-x-32 -inset-y-24 blur-md"
           style={{
             background:
-              "radial-gradient(closest-side, transparent 22%, rgb(252 221 9 / 0.85) 36%, rgb(252 221 9 / 0.35) 48%, rgb(43 93 242 / 0.35) 62%, transparent 75%)",
+              "radial-gradient(closest-side, transparent 20%, rgb(43 93 242 / 0.9) 36%, rgb(43 93 242 / 0.5) 52%, rgb(92 130 255 / 0.3) 64%, rgb(252 221 9 / 0.22) 72%, transparent 80%)",
           }}
         />
 
@@ -96,7 +97,7 @@ export function ConnectButton({
               className="pointer-events-none absolute inset-y-[-40%] left-0 w-1/3 rotate-[18deg] bg-gradient-to-r from-transparent via-white/50 to-transparent"
             />
           )}
-          <span className="relative font-display text-4xl font-semibold tracking-tight text-paper transition-colors duration-200 group-hover:text-or group-focus-visible:text-or sm:text-6xl">
+          <span className="relative font-display text-4xl font-semibold tracking-tight text-paper transition-colors duration-200 group-hover:text-azure-bright group-focus-visible:text-azure-bright sm:text-6xl">
             {label}
           </span>
         </span>
