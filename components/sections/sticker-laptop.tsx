@@ -80,14 +80,14 @@ function Sticker({ sticker, index }: { sticker: LaptopSticker; index: number }) 
         }}
         className={`relative inline-block outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${round}`}
       >
-        {/* ground shadow on the lid, grows as the sticker peels */}
+        {/* tight contact shadow: flush when resting, grows only as it peels */}
         <motion.span
           aria-hidden
           variants={{
-            visible: { opacity: 1, y: 0, scale: 1 },
-            hover: { opacity: 0.7, y: 4, scale: 1.18, transition: springs.bouncy },
+            visible: { opacity: 0.55, y: 0, scale: 1 },
+            hover: { opacity: 0.6, y: 4, scale: 1.15, transition: springs.bouncy },
           }}
-          className="absolute inset-x-1 -bottom-1 h-3 rounded-[50%] bg-black/25 blur-[5px]"
+          className="absolute inset-x-1.5 bottom-0 h-1 rounded-[50%] bg-black/35 blur-[1px]"
         />
         {/* the sticker face: AI die-cut logo when present, else a text pill */}
         <motion.span
@@ -109,7 +109,7 @@ function Sticker({ sticker, index }: { sticker: LaptopSticker; index: number }) 
               src={logoSrc}
               alt=""
               loading="lazy"
-              className="block h-10 w-auto max-w-[6.5rem] object-contain drop-shadow-[0_3px_5px_rgb(0_0_0/0.28)] sm:h-12 sm:max-w-[7.5rem]"
+              className="block h-10 w-auto max-w-[6.5rem] object-contain drop-shadow-[0_1px_1px_rgb(0_0_0/0.35)] sm:h-12 sm:max-w-[7.5rem]"
             />
           ) : (
             <span
@@ -136,6 +136,7 @@ export function StickerLaptop() {
   // AI lid final (AI-ASSET-PROMPTS.md C7) replaces the CSS slab gradient and
   // sheen when it lands; the crest decal and stickers stay in code.
   const lidSrc = aiAsset("artifacts/laptop-lid");
+  const crestSticker = aiAsset("stickers-brand/sticker-coram-deo");
 
   return (
     <Section
@@ -145,16 +146,20 @@ export function StickerLaptop() {
     >
       <Reveal>
         <div className="mx-auto w-full max-w-2xl">
-          {/* lid: thin darker edge around an aluminium slab */}
-          <div className="rounded-[1.6rem] bg-[linear-gradient(150deg,#8f939a,#c9ccd1_32%,#7d8187)] p-[3px] shadow-[0_18px_44px_rgb(0_0_0/0.25)] dark:shadow-[0_18px_48px_rgb(0_0_0/0.6)]">
-            <div className="relative aspect-[3/2] rounded-[1.35rem] bg-[linear-gradient(160deg,#f1f2f4,#d3d6da_48%,#babec4)]">
+          {/* the closed MacBook lid, seen top-down */}
+          <div className={lidSrc ? "" : "rounded-[1.6rem] bg-[linear-gradient(150deg,#8f939a,#c9ccd1_32%,#7d8187)] p-[3px] shadow-[0_18px_44px_rgb(0_0_0/0.25)] dark:shadow-[0_18px_48px_rgb(0_0_0/0.6)]"}>
+            <div
+              className={`relative rounded-[1.35rem] ${
+                lidSrc ? "aspect-[1254/923]" : "aspect-[3/2] bg-[linear-gradient(160deg,#f1f2f4,#d3d6da_48%,#babec4)]"
+              }`}
+            >
               {lidSrc ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={lidSrc}
-                  alt=""
+                  alt="A closed laptop lid, seen from above"
                   loading="lazy"
-                  className="absolute inset-0 size-full rounded-[inherit] object-cover"
+                  className="absolute inset-0 size-full object-contain drop-shadow-[0_18px_40px_rgb(0_0_0/0.28)]"
                 />
               ) : (
                 /* sheen */
@@ -163,27 +168,32 @@ export function StickerLaptop() {
                   className="absolute inset-0 rounded-[inherit] bg-[radial-gradient(120%_85%_at_50%_0%,rgb(255_255_255/0.55),transparent_60%)]"
                 />
               )}
-              {/* crest decal, the "logo", peeking through the open grid cell */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/brand/crest-badge.svg"
-                alt=""
+              {/* the Apple mark, pressed into the lid's centre recess */}
+              <svg
+                viewBox="0 0 24 24"
                 aria-hidden
-                className="absolute top-1/2 left-[64%] size-14 -translate-x-1/2 -translate-y-1/2 opacity-85 sm:size-16"
-              />
-              <ul className="absolute inset-0 grid grid-cols-4 grid-rows-3 p-5 sm:p-7">
+                className="absolute top-[43.5%] left-[47%] size-9 -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_1px_1px_rgb(255_255_255/0.35)] sm:size-11"
+                fill="#61656d"
+              >
+                <path d="M17.05 12.04c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.28-1.27 3.14-2.53.99-1.45 1.4-2.85 1.42-2.92-.03-.01-2.72-1.04-2.75-4.13zM14.6 4.59c.72-.87 1.2-2.08 1.07-3.29-1.03.04-2.28.69-3.02 1.56-.66.77-1.24 2-1.09 3.18 1.15.09 2.32-.58 3.04-1.45z" />
+              </svg>
+              {/* CORAM DEO crest, as a die-cut decal on the lid */}
+              {crestSticker && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={crestSticker}
+                  alt=""
+                  aria-hidden
+                  loading="lazy"
+                  className="absolute top-[62%] left-[70%] h-16 w-auto -translate-x-1/2 -translate-y-1/2 -rotate-6 drop-shadow-[0_1px_1px_rgb(0_0_0/0.3)] sm:h-20"
+                />
+              )}
+              <ul className="absolute inset-0 grid grid-cols-4 grid-rows-3 p-6 sm:p-9">
                 {LAPTOP_STICKERS.map((sticker, i) => (
                   <Sticker key={sticker.id} sticker={sticker} index={i} />
                 ))}
               </ul>
             </div>
-          </div>
-          {/* base lip + thumb scoop, just enough to read "laptop" */}
-          <div
-            aria-hidden
-            className="relative mx-auto h-2.5 w-[104%] -translate-x-[2%] rounded-t-sm rounded-b-2xl bg-[linear-gradient(180deg,#a2a6ac,#7a7e84)] shadow-md"
-          >
-            <div className="absolute top-0 left-1/2 h-1 w-16 -translate-x-1/2 rounded-b-md bg-black/20" />
           </div>
         </div>
       </Reveal>
