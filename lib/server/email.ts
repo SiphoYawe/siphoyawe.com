@@ -95,6 +95,53 @@ export async function sendGuestbookEmail(entry: {
   }
 }
 
+/** Notifies Sipho whenever someone subscribes to the newsletter (e.g. through
+ * a gated blog post). `source` is where they signed up, usually the gated PDF
+ * path, so it doubles as which post drove the signup. */
+export async function sendNewsletterEmail(entry: {
+  email: string;
+  source?: string | null;
+}): Promise<SendResult> {
+  const subject = `New newsletter subscriber: ${entry.email}`;
+  const sourceLine = entry.source ? `\nSource: ${entry.source}` : "";
+  const text = `${entry.email} just subscribed to your newsletter.${sourceLine}`;
+  const html = `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.5">
+  <h2 style="margin:0 0 12px">New newsletter subscriber</h2>
+  <p style="margin:0 0 8px"><strong>${escapeHtml(entry.email)}</strong> just subscribed.</p>
+  ${entry.source ? `<p style="margin:0;color:#555">Source: ${escapeHtml(entry.source)}</p>` : ""}
+</div>`;
+
+  if (!isConfigured.resend || !env.resend.apiKey || !env.resend.toEmail) {
+    console.info(
+      "[email] RESEND_API_KEY/SPEAKING_TO_EMAIL not set — logging newsletter email instead of sending (dev mode).",
+    );
+    console.info(`[email] To: ${env.resend.toEmail ?? "(unset)"}`);
+    console.info(`[email] Subject: ${subject}`);
+    console.info(`[email] Body:\n${text}`);
+    return { ok: true };
+  }
+
+  try {
+    const resend = new Resend(env.resend.apiKey);
+    const { error } = await resend.emails.send({
+      from: env.resend.fromEmail,
+      to: env.resend.toEmail,
+      replyTo: entry.email,
+      subject,
+      text,
+      html,
+    });
+    if (error) {
+      console.error("[email] Resend error", error);
+      return { ok: false, error: "Email delivery failed" };
+    }
+    return { ok: true };
+  } catch (err) {
+    console.error("[email] newsletter send failed", err);
+    return { ok: false, error: "Email delivery failed" };
+  }
+}
+
 export async function sendSpeakingEmail(
   input: SpeakingInput,
 ): Promise<SendResult> {

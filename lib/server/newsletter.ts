@@ -1,11 +1,18 @@
 import { getNewsletterStore, type NewsletterStore } from "./db";
+import { sendNewsletterEmail, type SendResult } from "./email";
 import { newsletterRateLimiter, type RateLimiter } from "./rate-limit";
 import { firstError, honeypotTripped, newsletterSchema } from "./validation";
 import type { ServiceResponse } from "./http";
 
+export type NewsletterNotifier = (entry: {
+  email: string;
+  source?: string | null;
+}) => Promise<SendResult>;
+
 export type NewsletterDeps = {
   store?: NewsletterStore;
   rateLimiter?: RateLimiter;
+  notify?: NewsletterNotifier;
 };
 
 /**
@@ -20,6 +27,7 @@ export async function createSubscriber(
 ): Promise<ServiceResponse> {
   const store = deps.store ?? getNewsletterStore();
   const rateLimiter = deps.rateLimiter ?? newsletterRateLimiter;
+  const notify = deps.notify ?? sendNewsletterEmail;
 
   if (raw === null || typeof raw !== "object") {
     return { status: 400, body: { ok: false, error: "Invalid JSON body" } };
@@ -45,7 +53,19 @@ export async function createSubscriber(
   }
 
   const email = input.email.toLowerCase();
-  const { isNew } = await store.subscribe(email, input.source ?? null);
+  const source = input.source ?? null;
+  const { isNew } = await store.subscribe(email, source);
+
+  // Notify Sipho only on genuinely new subscribers, so re-subscribes don't
+  // spam the inbox. The address is already stored, so a failed email must not
+  // fail the request — swallow and log.
+  if (isNew) {
+    try {
+      await notify({ email, source });
+    } catch (err) {
+      console.error("[newsletter] notify failed", err);
+    }
+  }
 
   return { status: 200, body: { ok: true, subscribed: true, isNew } };
 }
