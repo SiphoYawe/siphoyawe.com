@@ -51,7 +51,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={project.image ?? SHOT_PLACEHOLDER(project.name, CARD_HUES[project.id] ?? "#2B5DF2")}
-            alt={`${project.name} screenshot (placeholder)`}
+            alt={project.image ? `${project.name} project screenshot` : ""}
             className="w-full rounded-xl"
             loading="lazy"
           />
