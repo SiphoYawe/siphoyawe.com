@@ -103,8 +103,18 @@ function WaxSeal() {
       aria-label="The Yawe wax seal, gold, with an SY monogram"
     >
       {aiSrc ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={aiSrc} alt="" loading="lazy" className="size-full object-contain" />
+        <span className="relative grid size-full place-items-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={aiSrc} alt="" loading="lazy" className="absolute inset-0 size-full object-contain" />
+          {/* the family crest pressed into the oval as a gold-ink mark */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/crest-badge.svg"
+            alt=""
+            className="relative w-[42%] opacity-80 mix-blend-multiply"
+            style={{ filter: GOLD_FOIL }}
+          />
+        </span>
       ) : (
       <div
         className="grid size-full place-items-center"
