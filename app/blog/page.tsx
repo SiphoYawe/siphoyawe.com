@@ -29,7 +29,7 @@ const blogLd = {
   "@context": "https://schema.org",
   "@type": "Blog",
   "@id": `${SITE_URL}/blog#blog`,
-  name: "Notes, by hand",
+  name: "Thinking out loud",
   description: BLOG_DESCRIPTION,
   url: `${SITE_URL}/blog`,
   inLanguage: "en-GB",
@@ -58,12 +58,12 @@ export default function BlogIndex() {
       <JsonLd data={blogLd} />
       <header className="mb-14">
         <p className="mb-3 font-sans font-semibold text-xs tracking-[0.3em] text-accent uppercase">
-          The desk
+          The blog
         </p>
-        <h1 className="font-display text-5xl font-semibold tracking-tight">Notes, by hand</h1>
+        <h1 className="font-display text-5xl font-semibold tracking-tight">Thinking out loud</h1>
         <p className="mt-4 leading-relaxed text-ink-soft">
-          Build notes, cross-chain musings, and the occasional slower note.
-          Written by a person, for a person.
+          Essays and notes on what I build and what I believe. Cross-chain and
+          DeFi, writing, faith and work, and the occasional slower read.
         </p>
       </header>
 

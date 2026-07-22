@@ -115,7 +115,7 @@ export function CorkboardNow() {
 
   // The ink stamp — knocked out on a cream chip so it reads clearly on cork.
   const stamp = (
-    <p className="pointer-events-none absolute right-4 bottom-2 -rotate-6 rounded-md border-[2.5px] border-[#c40000] bg-[#f7efe0]/90 px-2.5 py-1 font-sans text-[10px] font-extrabold tracking-[0.2em] text-[#c40000] uppercase shadow-sm sm:right-6 sm:text-[11px]">
+    <p className="pointer-events-none absolute right-4 bottom-7 -rotate-6 rounded-md border-[2.5px] border-[#c40000] bg-[#f7efe0]/90 px-2.5 py-1 font-sans text-[10px] font-extrabold tracking-[0.2em] text-[#c40000] uppercase shadow-sm sm:right-6 sm:bottom-9 sm:text-[11px]">
       updated {NOW.updated}
     </p>
   );

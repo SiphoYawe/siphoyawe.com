@@ -68,7 +68,7 @@ export function About() {
           <Reveal>
             <BentoCard className="relative">
               <p className="text-lg leading-relaxed">{BIO.short}</p>
-              <DoodleArrow className="absolute -bottom-2 right-6 w-12 rotate-[160deg] text-or" />
+              <DoodleArrow className="absolute bottom-2 right-11 w-12 rotate-[160deg] text-or" />
             </BentoCard>
           </Reveal>
           <Reveal delay={0.08}>
@@ -80,7 +80,7 @@ export function About() {
             <BentoCard>
               <p className="leading-relaxed text-ink-soft">{BIO.offKeyboard}</p>
               <Handwritten className="mt-4" rotate={-1.5}>
-                this is the bit the CV leaves out
+                the part a CV never captures
               </Handwritten>
             </BentoCard>
           </Reveal>

@@ -79,12 +79,12 @@ export const PROJECTS: Project[] = [
     image: "/images/projects/cardpass.webp",
     name: "CardPass",
     oneLiner:
-      "My first shipped app, now live. Full write-up coming soon.",
+      "My first mobile app, now live. Full write-up coming soon.",
     tags: [
       { label: "Mobile", color: "blue" },
       { label: "App", color: "purple" },
     ],
-    links: { live: "https://cardpass.app" },
+    links: {},
     year: "2025",
   },
 ];

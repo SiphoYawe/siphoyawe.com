@@ -233,13 +233,13 @@ export function Talks() {
             <Lanyard key={talk.id} talk={talk} index={i} />
           ))}
           {/* a humorous nod to the 160k views on the Arc spotlight talk */}
-          <div className="pointer-events-none absolute top-3 right-[3%] hidden w-48 -rotate-2 text-right lg:block xl:right-[9%]">
+          <div className="pointer-events-none absolute top-10 left-1/2 ml-24 hidden w-44 -rotate-2 lg:block xl:ml-32">
             <p className="font-hand text-lg leading-snug text-ink-soft">
               160k+ views on this one. yes, I bring it up at parties.
             </p>
-            <svg viewBox="0 0 60 44" className="mt-1 ml-auto h-10 w-16 text-ink-soft/70" fill="none" aria-hidden>
-              <path d="M56 6 C 40 4, 12 8, 7 30" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-              <path d="M3 22 L7 32 L16 27" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+            <svg viewBox="0 0 60 44" className="mt-1 h-10 w-16 text-ink-soft/70" fill="none" aria-hidden>
+              <path d="M52 6 C 36 9, 10 13, 6 32" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+              <path d="M2 24 L6 34 L15 29" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
         </div>
