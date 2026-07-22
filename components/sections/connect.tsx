@@ -489,7 +489,7 @@ export function Connect() {
       </Section>
 
       {/* (d) + (e) the close of the page */}
-      <footer className="mt-24">
+      <footer className="mt-10">
         <FooterBar />
         <WaxSeal />
       </footer>
