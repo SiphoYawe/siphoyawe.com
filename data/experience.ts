@@ -7,8 +7,10 @@ export type Experience = {
   end: string;
   /** Enamel pin face colour. */
   pinColor: "azure" | "or" | "gules" | "mint" | "sable";
-  /** Short pin inscription (1-2 chars). */
+  /** Short pin inscription (1-2 chars). CSS-ball fallback when no pin image. */
   monogram: string;
+  /** AI enamel-pin asset slot (pins/pin-<slug>); image renders over the ball. */
+  pinSlug?: string;
   note?: string;
 };
 
@@ -27,6 +29,7 @@ export const EXPERIENCE: Experience[] = [
     end: "May 2023",
     pinColor: "sable",
     monogram: "PT",
+    pinSlug: "pins/pin-pegasus",
     note: "Kampala, Uganda. Where it all started: a full website redesign and rebuild.",
   },
   {
@@ -37,6 +40,7 @@ export const EXPERIENCE: Experience[] = [
     end: "Jun 2026",
     pinColor: "gules",
     monogram: "SU",
+    pinSlug: "pins/pin-sheffield-su",
     note: "The big website redesign in React and Next.js, for tens of thousands of students.",
   },
   {
@@ -47,6 +51,7 @@ export const EXPERIENCE: Experience[] = [
     end: "now",
     pinColor: "azure",
     monogram: "LI",
+    pinSlug: "pins/pin-lifi",
     note: "Docs, integration guides, and developer content for cross-chain bridging. The dream gig.",
   },
 ];

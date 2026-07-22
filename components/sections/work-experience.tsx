@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { springs } from "@/lib/motion";
 import { EXPERIENCE, type Experience } from "@/data/experience";
+import { aiAsset } from "@/lib/ai-assets";
 
 const PIN_COLORS: Record<Experience["pinColor"], { face: string; ink: string }> = {
   azure: { face: "#2B5DF2", ink: "#F7F5F0" },
@@ -19,6 +20,9 @@ const PIN_COLORS: Record<Experience["pinColor"], { face: string; ink: string }> 
 function EnamelPin({ job, index }: { job: Experience; index: number }) {
   const reduce = useReducedMotion();
   const { face, ink } = PIN_COLORS[job.pinColor];
+  // Real enamel-pin art (content-drop/ai-assets/pins) replaces the CSS ball
+  // when the slot is filled; the monogram ball stays as the fallback.
+  const pinSrc = job.pinSlug ? aiAsset(job.pinSlug) : null;
 
   return (
     <motion.li
@@ -31,19 +35,33 @@ function EnamelPin({ job, index }: { job: Experience; index: number }) {
       <motion.div
         whileHover={reduce ? undefined : { rotate: [0, -9, 7, -3, 0] }}
         transition={{ duration: 0.55, ease: "easeInOut" }}
-        className="relative grid size-16 cursor-default place-items-center rounded-full sm:size-20"
-        style={{
-          background: `radial-gradient(circle at 32% 28%, #ffffffb8, transparent 42%), ${face}`,
-          boxShadow:
-            "0 0 0 4px #c9c9cf, 0 0 0 5.5px #8e8e96, 0 6px 14px rgb(0 0 0 / 0.35), inset 0 -6px 12px rgb(0 0 0 / 0.25)",
-        }}
+        className="relative grid size-20 cursor-default place-items-center sm:size-24"
         aria-hidden
       >
-        <span className="font-display text-lg font-bold tracking-wide sm:text-xl" style={{ color: ink }}>
-          {job.monogram}
-        </span>
-        {/* pin post */}
-        <span className="absolute -bottom-2 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-steel shadow" />
+        {pinSrc ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={pinSrc}
+            alt=""
+            loading="lazy"
+            className="size-full object-contain drop-shadow-[0_6px_10px_rgb(0_0_0/0.35)]"
+          />
+        ) : (
+          <span
+            className="relative grid size-16 place-items-center rounded-full sm:size-20"
+            style={{
+              background: `radial-gradient(circle at 32% 28%, #ffffffb8, transparent 42%), ${face}`,
+              boxShadow:
+                "0 0 0 4px #c9c9cf, 0 0 0 5.5px #8e8e96, 0 6px 14px rgb(0 0 0 / 0.35), inset 0 -6px 12px rgb(0 0 0 / 0.25)",
+            }}
+          >
+            <span className="font-display text-lg font-bold tracking-wide sm:text-xl" style={{ color: ink }}>
+              {job.monogram}
+            </span>
+            {/* pin post */}
+            <span className="absolute -bottom-2 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-steel shadow" />
+          </span>
+        )}
       </motion.div>
 
       <div className="mt-4">
