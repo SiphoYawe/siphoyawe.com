@@ -1,6 +1,7 @@
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
 import { Handwritten } from "@/components/ui/handwritten";
+import { AiDoodle } from "@/components/ui/doodles";
 import { PillButton } from "@/components/ui/pill-button";
 import { FAITH } from "@/data/faith";
 import { READY_SCRIBE_URL } from "@/data/socials";
@@ -25,6 +26,16 @@ export function Faith() {
     <Section id="faith" title="Coram Deo">
       <Reveal>
         <div className="relative mx-auto max-w-2xl">
+          {/* crown over the column — Coram Deo, before God the King */}
+          <AiDoodle
+            name="crown"
+            className="absolute -top-12 right-2 hidden w-16 rotate-6 opacity-75 sm:block"
+          />
+          {/* the ichthys, quiet in the lower margin */}
+          <AiDoodle
+            name="fish"
+            className="absolute -bottom-10 left-0 hidden w-16 -rotate-6 opacity-70 sm:block"
+          />
           {/* Verse marginalia, tucked in the side margin on desktop */}
           <aside className="absolute top-1/2 -right-56 hidden w-48 -translate-y-1/2 lg:block xl:-right-64">
             <Handwritten rotate={3}>{marginalia}</Handwritten>

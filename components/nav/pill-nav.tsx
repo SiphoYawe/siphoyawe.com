@@ -65,7 +65,7 @@ export function PillNav() {
           className="mr-1 flex items-center gap-2 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand/crest-badge.svg" alt="" className="size-7" />
+          <img src="/brand/crest-badge.svg" alt="" className="size-[2.1rem]" />
         </Link>
 
         {NAV_LINKS.map((link) => {

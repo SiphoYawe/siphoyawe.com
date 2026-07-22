@@ -9,6 +9,8 @@ import { Section } from "@/components/ui/section";
 import { ConnectButton } from "@/components/ui/connect-button";
 import { Reveal } from "@/components/ui/reveal";
 import { Handwritten } from "@/components/ui/handwritten";
+import { AiDoodle } from "@/components/ui/doodles";
+import { Crane } from "@/components/crane/crane-mascot";
 import { SocialDock } from "@/components/nav/social-dock";
 import { springs } from "@/lib/motion";
 import { submitSpeaking } from "@/lib/api";
@@ -406,9 +408,13 @@ function WaxSeal() {
       <motion.div
         whileHover={reduce ? undefined : { rotate: 2 }}
         transition={springs.soft}
-        className="relative grid size-28 cursor-default place-items-center shadow-[0_14px_30px_rgb(20_20_22/0.35)] transition-shadow duration-300 hover:shadow-[0_22px_46px_rgb(20_20_22/0.55)] sm:size-32"
+        className={`relative grid size-28 cursor-default place-items-center sm:size-32 ${
+          aiSrc
+            ? ""
+            : "shadow-[0_14px_30px_rgb(20_20_22/0.35)] transition-shadow duration-300 hover:shadow-[0_22px_46px_rgb(20_20_22/0.55)]"
+        }`}
         style={{
-          borderRadius: "46% 54% 51% 49% / 52% 47% 53% 48%",
+          borderRadius: aiSrc ? undefined : "46% 54% 51% 49% / 52% 47% 53% 48%",
           background: aiSrc
             ? undefined
             : "radial-gradient(circle at 34% 28%, #f05545 0%, #D50000 42%, #8f0000 82%), radial-gradient(circle at 70% 82%, rgb(252 221 9 / 0.28), transparent 55%)",
@@ -464,7 +470,20 @@ export function Connect() {
     <>
       <Section id="connect">
         {/* (a) the marquee button */}
-        <Reveal className="py-8 sm:py-12">
+        <Reveal className="relative py-8 sm:py-12">
+          {/* ambient hand-drawn bursts framing the finale CTA */}
+          <AiDoodle name="burst-left" className="absolute top-1 left-3 hidden w-16 opacity-45 sm:block lg:left-[12%]" />
+          <AiDoodle name="burst-right" className="absolute right-3 bottom-1 hidden w-16 -scale-x-100 opacity-45 sm:block lg:right-[12%]" />
+          {/* a crane pointing straight at the button, with a curly arrow */}
+          <Crane
+            pose="pointing"
+            phase={0.7}
+            className="absolute bottom-1 left-[6%] z-10 hidden w-20 lg:block"
+          />
+          <AiDoodle
+            name="arrow-curly"
+            className="absolute bottom-16 left-[18%] hidden w-14 rotate-[8deg] opacity-70 lg:block"
+          />
           <ConnectButton onClick={scrollToBooking} />
         </Reveal>
 

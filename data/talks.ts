@@ -45,7 +45,7 @@ export const TALKS: Talk[] = [
   },
   {
     id: "blueshift",
-    title: "Assembly Timeout",
+    title: "Hyperliquid",
     venue: "Blueshift Challenge, Superteam UK",
     date: "Jun 2026",
     href: "https://dev.to/siphoyawe/how-i-shrank-a-solana-deadline-guard-from-148-compute-units-to-4-18d5",

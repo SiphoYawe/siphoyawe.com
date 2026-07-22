@@ -5,6 +5,8 @@ import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
 import { springs } from "@/lib/motion";
 import { aiAsset } from "@/lib/ai-assets";
+import { Crane } from "@/components/crane/crane-mascot";
+import { AiDoodle } from "@/components/ui/doodles";
 import { STAMPS, type Stamp } from "@/data/stamps";
 
 const INK: Record<Stamp["ink"], string> = {
@@ -13,11 +15,15 @@ const INK: Record<Stamp["ink"], string> = {
   sable: "#141416",
 };
 
-/** AI stamp slots (AI-ASSET-PROMPTS.md section G), keyed on the stamp id.
- * kampala and london get the generated imprints, the rest keep the CSS stamp. */
+/** AI stamp slots (AI-ASSET-PROMPTS.md section G), keyed on the stamp id. All
+ * six countries carry a generated ink imprint; the CSS stamp is the fallback. */
 const STAMP_AI: Record<string, string> = {
-  kampala: "stamps/stamp-kampala",
-  london: "stamps/stamp-london",
+  uganda: "stamps/stamp-kampala",
+  uk: "stamps/stamp-london",
+  usa: "stamps/stamp-usa",
+  dubai: "stamps/stamp-dubai",
+  "south-africa": "stamps/stamp-south-africa",
+  kenya: "stamps/stamp-kenya",
 };
 
 /** Turns the full-colour crest into a gold foil imprint (brief 6.12). */
@@ -152,6 +158,9 @@ export function Passport() {
   // AI open-passport spread (AI-ASSET-PROMPTS.md C9) replaces the CSS page
   // gradients when the final lands; crest, text and stamps stay in code.
   const spreadSrc = aiAsset("artifacts/passport-spread");
+  // The closed Ugandan passport, tucked behind the open spread as the lead
+  // object — the book these stamps came out of (AI-ASSET-PROMPTS.md C).
+  const coverSrc = aiAsset("artifacts/passport-cover");
 
   return (
     <Section
@@ -160,7 +169,28 @@ export function Passport() {
       aside="stamps so far"
     >
       <Reveal className="mx-auto max-w-3xl">
-        <div className="relative -rotate-[0.6deg] rounded-[1.6rem] bg-night p-2.5 pb-4 shadow-(--shadow-lift) sm:p-3 sm:pb-5">
+       <div className="relative">
+        {/* closed passport cover, peeking out behind the open spread */}
+        {coverSrc && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={coverSrc}
+            alt="A closed Ugandan passport"
+            loading="lazy"
+            className="pointer-events-none absolute -top-10 -left-14 z-0 hidden w-40 -rotate-[9deg] select-none drop-shadow-[0_16px_30px_rgb(0_0_0/0.35)] lg:block xl:-left-24 xl:w-44"
+          />
+        )}
+        {/* a crowned crane flying the Kampala-to-UK route, over the spread */}
+        <Crane
+          pose="flying"
+          phase={1.1}
+          className="absolute -top-12 right-6 z-20 hidden w-24 sm:block xl:right-0"
+        />
+        {/* travel doodles: a bird trailing the crane and a wave line below */}
+        <AiDoodle name="bird" className="absolute -top-6 right-32 z-20 hidden w-10 -rotate-6 opacity-70 xl:block" />
+        <AiDoodle name="waves" className="absolute -bottom-8 left-6 z-0 hidden w-28 opacity-60 lg:block" />
+
+        <div className="relative z-10 -rotate-[0.6deg] rounded-[1.6rem] bg-night p-2.5 pb-4 shadow-(--shadow-lift) sm:p-3 sm:pb-5">
           <div className={`grid overflow-hidden rounded-[1.1rem] sm:grid-cols-2 ${spreadSrc ? "relative" : ""}`}>
             {spreadSrc && (
               // eslint-disable-next-line @next/next/no-img-element
@@ -217,6 +247,7 @@ export function Passport() {
             }}
           />
         </div>
+       </div>
       </Reveal>
     </Section>
   );

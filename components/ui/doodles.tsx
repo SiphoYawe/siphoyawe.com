@@ -3,6 +3,36 @@
  * drawn once, reused everywhere. All presentational.
  */
 
+import { aiAsset } from "@/lib/ai-assets";
+
+/**
+ * A generated hand-drawn doodle (AI-ASSET-PROMPTS.md, `doodles/doodle-<name>`),
+ * used as a tasteful margin/section accent near headings, CTAs and marginalia.
+ * Purely presentational: aria-hidden, non-interactive, lazy. Renders nothing
+ * when the asset is absent so it never leaves a broken image.
+ */
+export function AiDoodle({
+  name,
+  className = "",
+}: {
+  /** Doodle slug, e.g. "fish", "crown", "burst-left", "sun". */
+  name: string;
+  className?: string;
+}) {
+  const src = aiAsset(`doodles/doodle-${name}`);
+  if (!src) return null;
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt=""
+      aria-hidden
+      loading="lazy"
+      className={`pointer-events-none block select-none ${className}`}
+    />
+  );
+}
+
 export function BurstStrokes({ className = "" }: { className?: string }) {
   return (
     <svg

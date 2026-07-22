@@ -13,11 +13,11 @@ type ConnectButtonProps = {
 
 /**
  * The marquee neon-glow Connect button (danielsun hover forensics, rebuilt).
- * On hover the dark 3D pill "switches on": an Azure neon glow (a faint gold
- * rim whispers the crest) floods the surround, the label lights azure, doodle
- * burst strokes fade in at the
- * corners (staggered, rotated), and a shine sweeps across. One of only two
- * loud moments on the site.
+ * On hover the dark 3D pill "switches on": a pure Azure neon glow floods the
+ * surround (bright azure core fading to transparent, no gold rim), the label
+ * lights azure, doodle burst strokes fade in at the corners (staggered,
+ * rotated), and a shine sweeps across. One of only two loud moments on the
+ * site.
  */
 export function ConnectButton({
   label = "Connect",
@@ -60,7 +60,7 @@ export function ConnectButton({
           className="pointer-events-none absolute -inset-x-8 -inset-y-12 blur-md sm:-inset-x-32 sm:-inset-y-24"
           style={{
             background:
-              "radial-gradient(closest-side, transparent 20%, rgb(43 93 242 / 0.9) 36%, rgb(43 93 242 / 0.5) 52%, rgb(92 130 255 / 0.3) 64%, rgb(252 221 9 / 0.22) 72%, transparent 80%)",
+              "radial-gradient(closest-side, rgb(43 93 242 / 0.95) 18%, rgb(43 93 242 / 0.7) 38%, rgb(43 93 242 / 0.4) 54%, rgb(92 130 255 / 0.22) 68%, transparent 82%)",
           }}
         />
 

@@ -32,7 +32,7 @@ const SECOND_DEG = 170;
  * with simple hands and a crown nub. Micro-interaction (brief section 6.7):
  * lifts and rotates slightly out of the slot on hover, bouncy spring.
  */
-function WatchPiece({ watch }: { watch: Watch }) {
+function WatchPiece({ watch, slotX }: { watch: Watch; slotX?: string }) {
   const reduce = useReducedMotion();
   const [imgError, setImgError] = useState(false);
   const tone = TONES[watch.tone];
@@ -41,7 +41,14 @@ function WatchPiece({ watch }: { watch: Watch }) {
   const showImg = Boolean(watch.image) && !imgError;
 
   return (
-    <li className="flex flex-col items-center text-center">
+    <li
+      className={
+        slotX
+          ? "absolute flex w-[32%] -translate-x-1/2 flex-col items-center text-center"
+          : "flex flex-col items-center text-center"
+      }
+      style={slotX ? { left: slotX, top: "30%" } : undefined}
+    >
       {/* the watch seated in its slot on the leather */}
       <div className="relative flex h-44 w-full items-center justify-center sm:h-48">
         {/* soft contact shadow on the leather */}
@@ -145,9 +152,13 @@ function WatchPiece({ watch }: { watch: Watch }) {
  * a stitched frame, a flap edge, and one slot per watch. Everything here is
  * an honest placeholder until the real roll is shot.
  */
+/** Horizontal centre of each velvet slot, as a fraction of the roll asset. */
+const SLOT_X = ["19%", "45%", "75.5%"];
+
 export function Watches() {
-  // AI leather roll photo (AI-ASSET-PROMPTS.md C4) becomes the base surface
-  // when it lands; the dials and captions stay in code on top either way.
+  // AI leather roll photo (AI-ASSET-PROMPTS.md C4). Transparent PNG: it sits
+  // directly on the section, no card or crop, with the watches resting in the
+  // three velvet slots and captions hanging on the leather below.
   const rollSrc = aiAsset("artifacts/watch-roll");
   return (
     <Section
@@ -156,55 +167,54 @@ export function Watches() {
       aside="the rotation, such as it is"
     >
       <Reveal>
-        <div
-          className="relative rounded-2xl shadow-(--shadow-lift)"
-          style={
-            rollSrc
-              ? undefined
-              : {
-                  background:
-                    "linear-gradient(140deg, #7d4e2c 0%, #5f3a1f 45%, #4a2c16 100%)",
-                }
-          }
-        >
-          {rollSrc && (
-            /* eslint-disable-next-line @next/next/no-img-element */
+        {rollSrc ? (
+          <div className="relative mx-auto w-full max-w-3xl">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={rollSrc}
               alt=""
               loading="lazy"
-              className="absolute inset-0 size-full rounded-2xl object-cover"
+              className="pointer-events-none block w-full select-none"
             />
-          )}
-          {/* CSS roll dressing, only while the AI roll photo is absent */}
-          {!rollSrc && (
-            <>
-          {/* flap edge with its own stitch line */}
+            <ol className="absolute inset-0">
+              {WATCHES.map((watch, i) => (
+                <WatchPiece key={watch.id} watch={watch} slotX={SLOT_X[i]} />
+              ))}
+            </ol>
+          </div>
+        ) : (
+          // CSS-fallback roll (stitched leather) while the photo is absent.
           <div
-            aria-hidden
-            className="absolute inset-x-0 top-0 h-9 rounded-t-2xl border-b border-dashed border-[#e8c493]/40"
-            style={{ background: "linear-gradient(180deg, #8a5732, #6f4525)" }}
-          />
-          {/* tie strap crossing the flap */}
-          <span
-            aria-hidden
-            className="absolute -top-1 right-10 h-14 w-4 rotate-1 rounded-full shadow-md"
-            style={{ background: "linear-gradient(90deg, #3c2413, #59371f)" }}
-          />
-          {/* stitched dashed frame */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-2.5 rounded-xl border-2 border-dashed border-[#e8c493]/35"
-          />
-            </>
-          )}
-
-          <ol className="relative grid gap-8 px-6 pt-16 pb-8 sm:grid-cols-3 sm:gap-6 sm:px-8 sm:pt-7 sm:pb-6">
-            {WATCHES.map((watch) => (
-              <WatchPiece key={watch.id} watch={watch} />
-            ))}
-          </ol>
-        </div>
+            className="relative rounded-2xl shadow-(--shadow-lift)"
+            style={{
+              background:
+                "linear-gradient(140deg, #7d4e2c 0%, #5f3a1f 45%, #4a2c16 100%)",
+            }}
+          >
+            {/* flap edge with its own stitch line */}
+            <div
+              aria-hidden
+              className="absolute inset-x-0 top-0 h-9 rounded-t-2xl border-b border-dashed border-[#e8c493]/40"
+              style={{ background: "linear-gradient(180deg, #8a5732, #6f4525)" }}
+            />
+            {/* tie strap crossing the flap */}
+            <span
+              aria-hidden
+              className="absolute -top-1 right-10 h-14 w-4 rotate-1 rounded-full shadow-md"
+              style={{ background: "linear-gradient(90deg, #3c2413, #59371f)" }}
+            />
+            {/* stitched dashed frame */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-2.5 rounded-xl border-2 border-dashed border-[#e8c493]/35"
+            />
+            <ol className="relative grid gap-8 px-6 pt-16 pb-8 sm:grid-cols-3 sm:gap-6 sm:px-8 sm:pt-7 sm:pb-6">
+              {WATCHES.map((watch) => (
+                <WatchPiece key={watch.id} watch={watch} />
+              ))}
+            </ol>
+          </div>
+        )}
       </Reveal>
     </Section>
   );

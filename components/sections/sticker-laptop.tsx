@@ -80,16 +80,9 @@ function Sticker({ sticker, index }: { sticker: LaptopSticker; index: number }) 
         }}
         className={`relative inline-block outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${round}`}
       >
-        {/* tight contact shadow: flush when resting, grows only as it peels */}
-        <motion.span
-          aria-hidden
-          variants={{
-            visible: { opacity: 0.55, y: 0, scale: 1 },
-            hover: { opacity: 0.6, y: 4, scale: 1.15, transition: springs.bouncy },
-          }}
-          className="absolute inset-x-1.5 bottom-0 h-1 rounded-[50%] bg-black/35 blur-[1px]"
-        />
-        {/* the sticker face: AI die-cut logo when present, else a text pill */}
+        {/* the sticker face: AI die-cut logo when present, else a text pill.
+            Stickers lie flat on the lid — no resting drop shadow — and only
+            peel (lift + rotate) on hover. */}
         <motion.span
           variants={{
             visible: { y: 0, rotate: 0, scale: 1 },
@@ -98,18 +91,23 @@ function Sticker({ sticker, index }: { sticker: LaptopSticker; index: number }) 
           className={
             logoSrc
               ? "relative block"
-              : `relative block bg-white p-[3px] shadow-sm ${round}`
+              : `relative block bg-white p-[3px] ${round}`
           }
         >
           {logoSrc ? (
-            // Logo is already die-cut (white rim baked in): no pill background,
-            // just a soft lift shadow so it sits on the lid.
+            // Logo is already die-cut (white rim baked in): sits flat and
+            // flush on the lid, no offset shadow. Phaneroo runs larger as the
+            // hero decal.
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={logoSrc}
               alt=""
               loading="lazy"
-              className="block h-10 w-auto max-w-[6.5rem] object-contain drop-shadow-[0_1px_1px_rgb(0_0_0/0.35)] sm:h-12 sm:max-w-[7.5rem]"
+              className={
+                sticker.big
+                  ? "block h-16 w-auto max-w-[10rem] object-contain sm:h-20 sm:max-w-[12.5rem]"
+                  : "block h-10 w-auto max-w-[6.5rem] object-contain sm:h-12 sm:max-w-[7.5rem]"
+              }
             />
           ) : (
             <span
@@ -168,15 +166,19 @@ export function StickerLaptop() {
                   className="absolute inset-0 rounded-[inherit] bg-[radial-gradient(120%_85%_at_50%_0%,rgb(255_255_255/0.55),transparent_60%)]"
                 />
               )}
-              {/* the Apple mark, pressed into the lid's centre recess */}
-              <svg
-                viewBox="0 0 24 24"
-                aria-hidden
-                className="absolute top-[43.5%] left-[47%] size-9 -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_1px_1px_rgb(255_255_255/0.35)] sm:size-11"
-                fill="#61656d"
-              >
-                <path d="M17.05 12.04c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.28-1.27 3.14-2.53.99-1.45 1.4-2.85 1.42-2.92-.03-.01-2.72-1.04-2.75-4.13zM14.6 4.59c.72-.87 1.2-2.08 1.07-3.29-1.03.04-2.28.69-3.02 1.56-.66.77-1.24 2-1.09 3.18 1.15.09 2.32-.58 3.04-1.45z" />
-              </svg>
+              {/* the Apple mark, pressed into the lid's centre recess — only in
+                  the CSS-fallback lid. The AI lid asset already has the Apple
+                  logo baked in, so rendering this too would duplicate it. */}
+              {!lidSrc && (
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden
+                  className="absolute top-[43.5%] left-[47%] size-9 -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_1px_1px_rgb(255_255_255/0.35)] sm:size-11"
+                  fill="#61656d"
+                >
+                  <path d="M17.05 12.04c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.28-1.27 3.14-2.53.99-1.45 1.4-2.85 1.42-2.92-.03-.01-2.72-1.04-2.75-4.13zM14.6 4.59c.72-.87 1.2-2.08 1.07-3.29-1.03.04-2.28.69-3.02 1.56-.66.77-1.24 2-1.09 3.18 1.15.09 2.32-.58 3.04-1.45z" />
+                </svg>
+              )}
               {/* CORAM DEO crest, as a die-cut decal on the lid */}
               {crestSticker && (
                 // eslint-disable-next-line @next/next/no-img-element

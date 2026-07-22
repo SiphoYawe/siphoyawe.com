@@ -100,9 +100,46 @@ function PinnedCard({
  * stamp with the last-updated date.
  */
 export function CorkboardNow() {
-  // AI corkboard final (AI-ASSET-PROMPTS.md C6) replaces the CSS cork texture
-  // when it lands; cards, pins, string and the updated stamp stay in code.
+  // AI corkboard final (AI-ASSET-PROMPTS.md C6): a wooden-framed cork board,
+  // transparent PNG. It IS the object — no extra card or frame behind it. The
+  // cards, pins, string and updated stamp overlay the cork in code.
   const corkSrc = aiAsset("artifacts/corkboard");
+
+  // The pinned cards, shared by both the AI-asset and CSS-fallback layouts.
+  const cards = (
+    <ul className="relative grid gap-x-6 gap-y-8 pt-4 sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-4">
+      {NOW.cards.map((card, i) => (
+        <PinnedCard key={card.id} card={card} index={i} />
+      ))}
+    </ul>
+  );
+
+  // The red string between the pins (decorative, wide screens only).
+  const string = (
+    <svg
+      aria-hidden
+      viewBox="0 0 100 12"
+      preserveAspectRatio="none"
+      className="pointer-events-none absolute inset-x-[3%] top-4 hidden h-10 w-[94%] lg:block"
+    >
+      <path
+        d="M-2 6 Q 6 9.5 12.5 3.5 Q 25 11 37.5 3.5 Q 50 11 62.5 3.5 Q 75 11 87.5 3.5 Q 94 9 102 6"
+        fill="none"
+        stroke="#D50000"
+        strokeWidth="2"
+        vectorEffect="non-scaling-stroke"
+        strokeLinecap="round"
+        opacity="0.7"
+      />
+    </svg>
+  );
+
+  // The ink stamp — knocked out on a cream chip so it reads clearly on cork.
+  const stamp = (
+    <p className="pointer-events-none absolute right-4 bottom-2 -rotate-6 rounded-md border-[2.5px] border-[#c40000] bg-[#f7efe0]/90 px-2.5 py-1 font-sans text-[10px] font-extrabold tracking-[0.2em] text-[#c40000] uppercase shadow-sm sm:right-6 sm:text-[11px]">
+      updated {NOW.updated}
+    </p>
+  );
 
   return (
     <Section
@@ -111,64 +148,41 @@ export function CorkboardNow() {
       aside="updated periodically"
     >
       <Reveal>
-        {/* wooden frame */}
-        <div className="relative rounded-2xl bg-[linear-gradient(160deg,#7a5636,#583b20)] p-2.5 shadow-[0_18px_44px_rgb(0_0_0/0.28)] sm:p-3 dark:shadow-[0_18px_44px_rgb(0_0_0/0.6)]">
-          {/* cork */}
-          <div
-            className="relative rounded-xl p-8 pt-12 pb-16 shadow-[inset_0_2px_14px_rgb(0_0_0/0.35)] sm:p-12 sm:pt-14 sm:pb-20"
-            style={{
-              backgroundColor: "#b5855c",
-              backgroundImage:
-                "radial-gradient(circle at 25% 30%, rgb(90 60 35 / 0.28) 0 1.5px, transparent 1.5px), radial-gradient(circle at 70% 65%, rgb(255 225 180 / 0.22) 0 1.5px, transparent 1.5px), radial-gradient(circle at 45% 80%, rgb(90 60 35 / 0.2) 0 1px, transparent 1px), linear-gradient(160deg, #c1916a, #a67a4e)",
-              backgroundSize: "90px 90px, 70px 70px, 50px 50px, 100% 100%",
-            }}
-          >
-            {corkSrc && (
-              <>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={corkSrc}
-                  alt=""
-                  loading="lazy"
-                  className="absolute inset-0 size-full rounded-[inherit] object-cover"
-                />
-                {/* inset vignette re-applied over the image */}
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-[inset_0_2px_14px_rgb(0_0_0/0.35)]"
-                />
-              </>
-            )}
-            <ul className="relative grid gap-x-8 gap-y-10 pt-6 sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-4">
-              {NOW.cards.map((card, i) => (
-                <PinnedCard key={card.id} card={card} index={i} />
-              ))}
-            </ul>
-
-            {/* red string between the pins (decorative, wide screens only) */}
-            <svg
-              aria-hidden
-              viewBox="0 0 100 12"
-              preserveAspectRatio="none"
-              className="pointer-events-none absolute inset-x-[3%] top-9 hidden h-10 w-[94%] lg:block"
-            >
-              <path
-                d="M-2 6 Q 6 9.5 12.5 3.5 Q 25 11 37.5 3.5 Q 50 11 62.5 3.5 Q 75 11 87.5 3.5 Q 94 9 102 6"
-                fill="none"
-                stroke="#D50000"
-                strokeWidth="2"
-                vectorEffect="non-scaling-stroke"
-                strokeLinecap="round"
-                opacity="0.7"
-              />
-            </svg>
-
-            {/* ink stamp, seated inside the cork margin */}
-            <p className="pointer-events-none absolute right-6 bottom-4 -rotate-6 rounded-md border-[2.5px] border-gules/70 px-2.5 py-0.5 font-sans text-[10px] font-extrabold tracking-[0.2em] text-gules/80 uppercase sm:right-8 sm:text-[11px]">
-              updated {NOW.updated}
-            </p>
+        {corkSrc ? (
+          // The framed cork asset sits directly on the section, no card behind.
+          <div className="relative mx-auto w-full max-w-4xl">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={corkSrc}
+              alt=""
+              loading="lazy"
+              className="pointer-events-none block w-full select-none"
+            />
+            {/* content area, inset to sit inside the wooden frame on the cork */}
+            <div className="absolute inset-x-[6%] inset-y-[8%] flex flex-col justify-center">
+              {cards}
+              {string}
+              {stamp}
+            </div>
           </div>
-        </div>
+        ) : (
+          // CSS fallback: hand-built wooden frame + cork texture.
+          <div className="relative mx-auto w-full max-w-4xl rounded-2xl bg-[linear-gradient(160deg,#7a5636,#583b20)] p-2.5 shadow-[0_18px_44px_rgb(0_0_0/0.28)] sm:p-3 dark:shadow-[0_18px_44px_rgb(0_0_0/0.6)]">
+            <div
+              className="relative rounded-xl p-8 pt-12 pb-16 shadow-[inset_0_2px_14px_rgb(0_0_0/0.35)] sm:p-12 sm:pt-14 sm:pb-20"
+              style={{
+                backgroundColor: "#b5855c",
+                backgroundImage:
+                  "radial-gradient(circle at 25% 30%, rgb(90 60 35 / 0.28) 0 1.5px, transparent 1.5px), radial-gradient(circle at 70% 65%, rgb(255 225 180 / 0.22) 0 1.5px, transparent 1.5px), radial-gradient(circle at 45% 80%, rgb(90 60 35 / 0.2) 0 1px, transparent 1px), linear-gradient(160deg, #c1916a, #a67a4e)",
+                backgroundSize: "90px 90px, 70px 70px, 50px 50px, 100% 100%",
+              }}
+            >
+              {cards}
+              {string}
+              {stamp}
+            </div>
+          </div>
+        )}
       </Reveal>
       <Reveal delay={0.12}>
         <Handwritten className="mt-8 text-center" rotate={1.5}>
