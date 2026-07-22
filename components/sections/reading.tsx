@@ -95,7 +95,7 @@ function BibleArtifact() {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-label={open ? "Close the Bible" : "Open the Bible to read the life verse"}
-        className="flex h-56 w-full max-w-80 cursor-pointer items-end justify-center rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:h-60"
+        className="flex min-h-[17rem] cursor-pointer items-center justify-center rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:min-h-[19rem]"
       >
         <AnimatePresence mode="wait" initial={false}>
           {open ? (
@@ -105,17 +105,22 @@ function BibleArtifact() {
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.94, rotate: -1 }}
               transition={swap}
-              className="relative w-full max-w-72"
+              className="relative w-[20rem] sm:w-[29rem]"
             >
               {/* page block peeking out under the open spread */}
-              <span aria-hidden className="absolute inset-x-1 -bottom-1.5 h-2.5 rounded-b-md bg-[#e6ddc4]" />
-              <div className="relative grid h-44 grid-cols-2 overflow-hidden rounded-md shadow-(--shadow-lift)">
+              <span aria-hidden className="absolute inset-x-2 -bottom-2 h-3 rounded-b-lg bg-[#e6ddc4]" />
+              <div className="relative grid grid-cols-2 overflow-hidden rounded-lg shadow-(--shadow-lift)">
+                {/* centre fold */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-y-0 left-1/2 z-10 w-3 -translate-x-1/2 bg-gradient-to-r from-black/0 via-black/25 to-black/0"
+                />
                 {/* left page: the verse, key phrase highlighted */}
-                <div className="flex flex-col justify-center bg-[#f6f0dd] p-4 shadow-[inset_-16px_0_18px_-16px_rgb(0_0_0/0.35)]">
-                  <p className="font-heraldic text-[9px] tracking-[0.3em] text-[#8a7f63] uppercase">
+                <div className="flex min-h-[13.5rem] flex-col justify-center bg-[#f6f0dd] px-5 py-6 shadow-[inset_-18px_0_20px_-16px_rgb(0_0_0/0.35)] sm:min-h-[15.5rem] sm:px-7">
+                  <p className="font-sans text-[9px] font-semibold tracking-[0.28em] text-[#8a7f63] uppercase">
                     The life verse
                   </p>
-                  <p className="mt-2 text-[13px] leading-relaxed text-[#3a352a]">
+                  <p className="mt-3 text-[13px] leading-relaxed text-[#3a352a] sm:text-[14px] sm:leading-[1.7]">
                     {hi >= 0 ? (
                       <>
                         {verse.slice(0, hi)}
@@ -129,18 +134,15 @@ function BibleArtifact() {
                     )}
                   </p>
                 </div>
-                {/* right page: reference, heraldic */}
-                <div className="flex flex-col items-center justify-center gap-2.5 bg-[#f2ebd5] p-4 text-center shadow-[inset_16px_0_18px_-16px_rgb(0_0_0/0.35)]">
-                  <svg viewBox="0 0 24 24" aria-hidden className="size-4 text-or">
-                    <path
-                      d="M11 2h2v6h6v2h-6v12h-2V10H5V8h6z"
-                      fill="currentColor"
-                    />
+                {/* right page: gold cross + reference */}
+                <div className="flex min-h-[13.5rem] flex-col items-center justify-center gap-3 bg-[#f2ebd5] px-5 py-6 text-center shadow-[inset_18px_0_20px_-16px_rgb(0_0_0/0.35)] sm:min-h-[15.5rem] sm:px-7">
+                  <svg viewBox="0 0 24 24" aria-hidden className="size-6 text-or drop-shadow-sm sm:size-7">
+                    <path d="M11 2h2v6h6v2h-6v12h-2V10H5V8h6z" fill="currentColor" />
                   </svg>
-                  <p className="font-heraldic text-sm tracking-[0.22em] text-[#3a352a] uppercase">
+                  <p className="font-hand text-2xl leading-tight text-[#3a352a] sm:text-3xl">
                     {BIBLE.reference}
                   </p>
-                  <p className="text-[10px] tracking-[0.2em] text-[#8a7f63] uppercase">
+                  <p className="font-sans text-[10px] font-semibold tracking-[0.22em] text-[#8a7f63] uppercase">
                     {BIBLE.translation}
                   </p>
                 </div>
