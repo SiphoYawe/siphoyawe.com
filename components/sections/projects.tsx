@@ -50,8 +50,13 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   const tilt = isMobile ? 0 : index % 2 === 0 ? -1.6 : 1.8;
   return (
     <Reveal
+      // Remount when the breakpoint flips so the mobile "up" variant starts
+      // clean: without this, a card first mounted with the desktop left/right
+      // variant keeps its ±28px x offset (that variant never resets x), which
+      // reads as a left/right stagger on phones.
+      key={isMobile ? "mobile" : "desktop"}
       variant={isMobile ? "up" : index % 2 === 0 ? "left" : "right"}
-      delay={(index % 2) * 0.1}
+      delay={isMobile ? 0 : (index % 2) * 0.1}
       className={index % 2 === 1 ? "sm:mt-14" : ""}
     >
       <TiltedCard rotate={tilt} className="group">
