@@ -29,6 +29,7 @@ const APPS: readonly App[] = [
   { name: "Bible", file: "bible.png", href: "https://bible.com" },
   { name: "Linear", file: "linear.png", href: "https://linear.app" },
   { name: "Notion", file: "notion.png", href: "https://notion.so" },
+  { name: "Obsidian", file: "obsidian.png", href: "https://obsidian.md" },
   { name: "Slack", file: "slack.png", href: "https://slack.com" },
   { name: "Superset", file: "superset.png", href: "https://superset.sh" },
   { name: "Signal", file: "signal.png", href: "https://signal.org" },

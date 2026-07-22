@@ -21,7 +21,7 @@ export const TALKS: Talk[] = [
     title: "Chariot: crosschain collateral lending on Arc",
     venue: "Arc Enterprise & DeFi Hackathon Spotlight",
     date: "May 2026",
-    href: "https://x.com/i/broadcasts/1mxPaLQOEOyKN",
+    href: "https://community.arc.network/home/events/arc-enterprise-and-defi-hackathon-spotlight-chariot-crosschain-collateral-lending-protocol-on-arc-umne213eet",
     note: "With Sam Sealey. 160k+ views.",
     kind: "lanyard",
   },

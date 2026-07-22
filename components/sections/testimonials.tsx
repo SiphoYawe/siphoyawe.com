@@ -5,7 +5,6 @@ import { springs } from "@/lib/motion";
 import { Section } from "@/components/ui/section";
 import { TiltedCard } from "@/components/ui/tilted-card";
 import { Reveal } from "@/components/ui/reveal";
-import { Handwritten } from "@/components/ui/handwritten";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 import { TESTIMONIALS, type Testimonial } from "@/data/testimonials";
 
@@ -105,7 +104,7 @@ export function Testimonials() {
     <Section
       id="testimonials"
       title="Kind words"
-      aside="real ones land here soon"
+      aside="from people I've worked with"
     >
       <div className="grid gap-8 md:grid-cols-3">
         {TESTIMONIALS.map((item, i) => (
@@ -114,9 +113,6 @@ export function Testimonials() {
           </Reveal>
         ))}
       </div>
-      <Handwritten className="mt-10 text-center" rotate={-1.4}>
-        these are placeholders until the real quotes arrive
-      </Handwritten>
     </Section>
   );
 }
