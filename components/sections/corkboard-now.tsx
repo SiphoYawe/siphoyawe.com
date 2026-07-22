@@ -114,9 +114,18 @@ export function CorkboardNow() {
   );
 
   // The ink stamp — knocked out on a cream chip so it reads clearly on cork.
+  const stampClass =
+    "pointer-events-none inline-block -rotate-6 rounded-md border-[2.5px] border-[#c40000] bg-[#f7efe0]/90 px-2.5 py-1 font-sans text-[10px] font-extrabold tracking-[0.2em] text-[#c40000] uppercase shadow-sm sm:text-[11px]";
+  // Absolute, tucked in the corner for the framed desktop board.
   const stamp = (
-    <p className="pointer-events-none absolute right-4 bottom-7 -rotate-6 rounded-md border-[2.5px] border-[#c40000] bg-[#f7efe0]/90 px-2.5 py-1 font-sans text-[10px] font-extrabold tracking-[0.2em] text-[#c40000] uppercase shadow-sm sm:right-6 sm:bottom-9 sm:text-[11px]">
+    <p className={`absolute right-4 bottom-7 sm:right-6 sm:bottom-9 ${stampClass}`}>
       updated {NOW.updated}
+    </p>
+  );
+  // Inline, sits after the cards on the flowing mobile board.
+  const stampInline = (
+    <p className="mt-6 flex justify-end">
+      <span className={stampClass}>updated {NOW.updated}</span>
     </p>
   );
 
@@ -128,20 +137,40 @@ export function CorkboardNow() {
     >
       <Reveal>
         {corkSrc ? (
-          // The framed cork asset sits directly on the section, no card behind.
-          <div className="relative mx-auto w-full max-w-4xl">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={corkSrc}
-              alt=""
-              loading="lazy"
-              className="pointer-events-none block w-full select-none"
-            />
-            {/* content area, inset to sit inside the wooden frame on the cork */}
-            <div className="absolute inset-x-[6%] inset-y-[8%] flex flex-col justify-center">
-              {cards}              {stamp}
+          <>
+            {/* Desktop: the framed cork asset sizes the board and the four
+                cards sit in a row inside its wooden frame. */}
+            <div className="relative mx-auto hidden w-full max-w-4xl lg:block">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={corkSrc}
+                alt=""
+                loading="lazy"
+                className="pointer-events-none block w-full select-none"
+              />
+              <div className="absolute inset-x-[6%] inset-y-[8%] flex flex-col justify-center">
+                {cards}
+                {stamp}
+              </div>
             </div>
-          </div>
+            {/* Mobile/tablet: the framed landscape asset is too short to hold
+                readable stacked cards, so the cork fills a board that grows
+                with the cards (object-cover crops the frame, texture stays). */}
+            <div className="relative mx-auto w-full max-w-xl overflow-hidden rounded-2xl shadow-(--shadow-lift) lg:hidden">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={corkSrc}
+                alt=""
+                aria-hidden
+                loading="lazy"
+                className="pointer-events-none absolute inset-0 size-full select-none object-cover"
+              />
+              <div className="relative px-5 py-8 sm:px-8 sm:py-10">
+                {cards}
+                {stampInline}
+              </div>
+            </div>
+          </>
         ) : (
           // CSS fallback: hand-built wooden frame + cork texture.
           <div className="relative mx-auto w-full max-w-4xl rounded-2xl bg-[linear-gradient(160deg,#7a5636,#583b20)] p-2.5 shadow-[0_18px_44px_rgb(0_0_0/0.28)] sm:p-3 dark:shadow-[0_18px_44px_rgb(0_0_0/0.6)]">

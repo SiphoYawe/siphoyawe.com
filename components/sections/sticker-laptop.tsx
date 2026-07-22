@@ -104,13 +104,13 @@ function Sticker({ sticker, index }: { sticker: LaptopSticker; index: number }) 
               loading="lazy"
               className={
                 sticker.big
-                  ? "block h-16 w-auto max-w-[10rem] object-contain sm:h-20 sm:max-w-[12.5rem]"
-                  : "block h-10 w-auto max-w-[6.5rem] object-contain sm:h-12 sm:max-w-[7.5rem]"
+                  ? "block h-11 w-auto max-w-[7rem] object-contain sm:h-20 sm:max-w-[12.5rem]"
+                  : "block h-7 w-auto max-w-[4.5rem] object-contain sm:h-12 sm:max-w-[7.5rem]"
               }
             />
           ) : (
             <span
-              className={`block px-3.5 py-1.5 font-display text-xs font-semibold tracking-wide whitespace-nowrap sm:text-sm ${round}`}
+              className={`block px-2.5 py-1 font-display text-[10px] font-semibold tracking-wide whitespace-nowrap sm:px-3.5 sm:py-1.5 sm:text-sm ${round}`}
               style={{
                 background: `radial-gradient(circle at 30% 20%, rgb(255 255 255 / 0.5), transparent 52%), ${face}`,
                 color: ink,
@@ -186,7 +186,7 @@ export function StickerLaptop() {
                   alt=""
                   aria-hidden
                   loading="lazy"
-                  className="absolute top-[62%] left-[70%] h-16 w-auto -translate-x-1/2 -translate-y-1/2 -rotate-6 drop-shadow-[0_1px_1px_rgb(0_0_0/0.3)] sm:h-20"
+                  className="absolute top-[62%] left-[70%] h-11 w-auto -translate-x-1/2 -translate-y-1/2 -rotate-6 drop-shadow-[0_1px_1px_rgb(0_0_0/0.3)] sm:h-20"
                 />
               )}
               <ul className="absolute inset-0 grid grid-cols-4 grid-rows-3 p-6 sm:p-9">

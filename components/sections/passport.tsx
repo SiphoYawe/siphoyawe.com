@@ -58,10 +58,10 @@ function InkStamp({ stamp, index }: { stamp: Stamp; index: number }) {
     >
       {aiSrc ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={aiSrc} alt="" loading="lazy" className="size-24 object-contain sm:size-28" />
+        <img src={aiSrc} alt="" loading="lazy" className="size-14 object-contain sm:size-28" />
       ) : (
       <div
-        className={`grid size-24 place-items-center border-[3px] p-1 sm:size-28 ${
+        className={`grid size-14 place-items-center border-[3px] p-1 sm:size-28 ${
           circle ? "rounded-full" : "rounded-lg"
         }`}
         style={{ borderColor: ink, color: ink }}
@@ -101,7 +101,7 @@ function WaxSeal() {
       whileHover={reduce ? undefined : { scale: 0.95 }}
       transition={springs.bouncy}
       style={{ rotate: -12 }}
-      className="relative grid size-24 place-items-center sm:size-28"
+      className="relative grid size-16 place-items-center sm:size-28"
       role="img"
       aria-label="The Yawe wax seal, gold, with an SY monogram"
     >
@@ -210,7 +210,7 @@ export function Passport() {
             spreadSrc ? "" : "bg-night p-2.5 pb-4 sm:p-3 sm:pb-5"
           }`}
         >
-          <div className={`grid overflow-hidden rounded-[1.1rem] sm:grid-cols-2 ${spreadSrc ? "relative" : ""}`}>
+          <div className={`grid grid-cols-2 overflow-hidden rounded-[1.1rem] ${spreadSrc ? "relative" : ""}`}>
             {spreadSrc && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -222,35 +222,35 @@ export function Passport() {
             )}
             {/* left page: the crest in gold foil */}
             <div
-              className="relative flex flex-col items-center justify-center gap-5 px-6 py-12"
+              className="relative flex flex-col items-center justify-center gap-2 px-2 py-6 sm:gap-5 sm:px-6 sm:py-12"
               style={{ background: spreadSrc ? "transparent" : LEFT_PAGE }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/brand/crest-badge.svg"
                 alt="Yawe family crest, embossed as a gold foil stamp"
-                className="w-24 opacity-50 mix-blend-multiply sm:w-28"
+                className="w-14 opacity-50 mix-blend-multiply sm:w-28"
                 style={{ filter: GOLD_FOIL }}
               />
               <div className="text-center">
-                <p className="font-heraldic text-base tracking-[0.45em] text-[#8a6d03] sm:text-lg">
+                <p className="font-heraldic text-[10px] tracking-[0.3em] text-[#8a6d03] sm:text-lg sm:tracking-[0.45em]">
                   PASSPORT
                 </p>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/brand/signature-black.png"
                   alt="Sipho Yawe signature"
-                  className="mx-auto mt-3 h-9 w-auto opacity-90 mix-blend-multiply"
+                  className="mx-auto mt-1.5 h-5 w-auto opacity-90 mix-blend-multiply sm:mt-3 sm:h-9"
                 />
               </div>
             </div>
 
             {/* right page: travel stamps plus the wax seal */}
             <div
-              className={`px-5 py-8 sm:py-10 ${spreadSrc ? "relative" : ""}`}
+              className={`px-2 py-5 sm:px-5 sm:py-10 ${spreadSrc ? "relative" : ""}`}
               style={{ background: spreadSrc ? "transparent" : RIGHT_PAGE }}
             >
-              <div className="grid grid-cols-2 justify-items-center gap-3 sm:gap-4">
+              <div className="grid grid-cols-2 justify-items-center gap-1.5 sm:gap-4">
                 {STAMPS.map((stamp, i) => (
                   <InkStamp key={stamp.id} stamp={stamp} index={i} />
                 ))}

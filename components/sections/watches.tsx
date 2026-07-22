@@ -45,12 +45,14 @@ function WatchPiece({ watch, slotX, index = 0 }: { watch: Watch; slotX?: string;
       }
       style={slotX ? { left: slotX, top: "30%" } : undefined}
     >
-      {/* the watch seated in its slot on the leather */}
-      <div className="relative flex h-44 w-full items-center justify-center sm:h-48">
+      {/* the watch seated in its slot on the leather. On mobile the roll is
+          narrower, so the watch scales with the viewport (vw) to stay inside
+          its velvet slot; from sm up it settles to a fixed height. */}
+      <div className="relative flex h-[30vw] w-full items-center justify-center sm:h-44 md:h-48">
         {/* soft contact shadow on the leather */}
         <span
           aria-hidden
-          className="absolute bottom-4 h-3.5 w-24 rounded-[50%] bg-black/45 blur-md"
+          className="absolute bottom-2 h-3 w-16 rounded-[50%] bg-black/45 blur-md sm:bottom-4 sm:h-3.5 sm:w-24"
         />
         {showImg ? (
           <motion.div
@@ -64,7 +66,7 @@ function WatchPiece({ watch, slotX, index = 0 }: { watch: Watch; slotX?: string;
               alt={`${watch.brand} ${watch.model}`}
               loading="lazy"
               onError={() => setImgError(true)}
-              className="h-40 w-auto object-contain drop-shadow-[0_10px_14px_rgb(0_0_0/0.5)] sm:h-44"
+              className="h-[25vw] w-auto object-contain drop-shadow-[0_10px_14px_rgb(0_0_0/0.5)] sm:h-40 md:h-44"
             />
           </motion.div>
         ) : (
