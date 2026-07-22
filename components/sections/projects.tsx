@@ -7,6 +7,7 @@ import { TagChip } from "@/components/ui/tag-chip";
 import { PillButton } from "@/components/ui/pill-button";
 import { Reveal } from "@/components/ui/reveal";
 import { springs, staggerContainer, staggerPop } from "@/lib/motion";
+import { useIsMobile } from "@/lib/use-is-mobile";
 import { PROJECTS, type Project } from "@/data/projects";
 
 const SHOT_PLACEHOLDER = (name: string, hue: string) =>
@@ -43,10 +44,13 @@ function HiddenSticker() {
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const reduce = useReducedMotion();
-  const tilt = index % 2 === 0 ? -1.6 : 1.8;
+  const isMobile = useIsMobile();
+  // On phones the cards sit straight and centred; the paper tilt and side
+  // stagger are desktop-only flourishes.
+  const tilt = isMobile ? 0 : index % 2 === 0 ? -1.6 : 1.8;
   return (
     <Reveal
-      variant={index % 2 === 0 ? "left" : "right"}
+      variant={isMobile ? "up" : index % 2 === 0 ? "left" : "right"}
       delay={(index % 2) * 0.1}
       className={index % 2 === 1 ? "sm:mt-14" : ""}
     >

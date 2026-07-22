@@ -8,7 +8,7 @@ export const NOW = {
     {
       id: "building",
       label: "building",
-      text: "Zion, and everything LI.FI is doing across the ecosystem.",
+      text: "Zion, and everything LI.FI is doing across crypto, blockchain, and DeFi.",
       rotate: -2,
     },
     {
