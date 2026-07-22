@@ -8,8 +8,8 @@ type PillButtonProps = {
   label: string;
   href?: string;
   onClick?: () => void;
-  /** Arrow badge colour — Gules spark or Or jewel. */
-  badge?: "gules" | "or";
+  /** Arrow badge colour — Azure lead, Or jewel, or Gules spark. */
+  badge?: "azure" | "gules" | "or";
   external?: boolean;
   className?: string;
 };
@@ -27,7 +27,7 @@ export function PillButton({
   className = "",
 }: PillButtonProps) {
   const reduce = useReducedMotion();
-  const badgeBg = badge === "gules" ? "bg-gules" : "bg-or";
+  const badgeBg = badge === "azure" ? "bg-azure" : badge === "gules" ? "bg-gules" : "bg-or";
 
   const inner = (
     <>

@@ -70,7 +70,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             ))}
           </div>
           <div className="mt-5 flex flex-wrap gap-3">
-            {project.links.live && <PillButton label="Visit" href={project.links.live} external badge="gules" />}
+            {project.links.live && <PillButton label="Visit" href={project.links.live} external badge="azure" />}
             {project.links.github && <PillButton label="Code" href={project.links.github} external badge="or" />}
           </div>
         </div>
