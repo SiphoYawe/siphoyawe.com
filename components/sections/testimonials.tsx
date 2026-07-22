@@ -1,7 +1,6 @@
 "use client";
 
 import { Section } from "@/components/ui/section";
-import { Kicker } from "@/components/ui/kicker";
 import { TiltedCard } from "@/components/ui/tilted-card";
 import { Reveal } from "@/components/ui/reveal";
 import { Handwritten } from "@/components/ui/handwritten";
@@ -95,7 +94,6 @@ export function Testimonials() {
   return (
     <Section
       id="testimonials"
-      kicker={<Kicker k="testimonials" />}
       title="Kind words"
       aside="real ones land here soon"
     >

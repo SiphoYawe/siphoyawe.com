@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { useTranslations } from "next-intl";
 import { springs } from "@/lib/motion";
 import { EXPERIENCE, type Experience } from "@/data/experience";
 
@@ -66,7 +65,6 @@ function EnamelPin({ job, index }: { job: Experience; index: number }) {
  * hand-drawn timeline arrow, 2023 to now, with handwritten annotation.
  */
 export function WorkExperience() {
-  const t = useTranslations("kickers");
   const reduce = useReducedMotion();
 
   return (
@@ -79,7 +77,6 @@ export function WorkExperience() {
           transition={springs.soft}
           className="mb-10 sm:mb-14"
         >
-          <p className="mb-3 font-heraldic text-xs tracking-[0.3em] text-accent uppercase">{t("work")}</p>
           <div className="flex flex-wrap items-end gap-x-6 gap-y-2">
             <h2 className="font-display text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
               The pin board of jobs

@@ -1,5 +1,4 @@
 import { Section } from "@/components/ui/section";
-import { Kicker } from "@/components/ui/kicker";
 import { Reveal } from "@/components/ui/reveal";
 import { Handwritten } from "@/components/ui/handwritten";
 import { PillButton } from "@/components/ui/pill-button";
@@ -23,7 +22,7 @@ export function Faith() {
   );
 
   return (
-    <Section id="faith" kicker={<Kicker k="faith" />} title="Coram Deo">
+    <Section id="faith" title="Coram Deo">
       <Reveal>
         <div className="relative mx-auto max-w-2xl">
           {/* Verse marginalia, tucked in the side margin on desktop */}

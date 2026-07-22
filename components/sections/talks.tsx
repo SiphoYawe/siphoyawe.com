@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/section";
-import { Kicker } from "@/components/ui/kicker";
 import { Reveal } from "@/components/ui/reveal";
 import { Handwritten } from "@/components/ui/handwritten";
 import { springs } from "@/lib/motion";
@@ -200,7 +199,7 @@ export function Talks() {
   const stubs = TALKS.filter((talk) => talk.kind === "stub");
 
   return (
-    <Section id="talks" kicker={<Kicker k="talks" />} title="Talks & media" aside="stages & hackathons so far">
+    <Section id="talks" title="Talks & media" aside="stages & hackathons so far">
       <Reveal className="mb-12">
         <figure className="mx-auto max-w-xl">
           <div className="relative aspect-[3/2] w-full overflow-hidden rounded-2xl border border-line bg-canvas-raised shadow-(--shadow-polaroid)">

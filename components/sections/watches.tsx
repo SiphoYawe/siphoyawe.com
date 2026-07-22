@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/section";
-import { Kicker } from "@/components/ui/kicker";
 import { Reveal } from "@/components/ui/reveal";
 import { springs } from "@/lib/motion";
 import { WATCHES, type Watch } from "@/data/watches";
@@ -119,7 +118,6 @@ export function Watches() {
   return (
     <Section
       id="watches"
-      kicker={<Kicker k="watches" />}
       title="The watch roll"
       aside="placeholders until the real roll is shot"
     >

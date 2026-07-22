@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { Section } from "@/components/ui/section";
-import { Kicker } from "@/components/ui/kicker";
 import { Reveal } from "@/components/ui/reveal";
 import { Handwritten } from "@/components/ui/handwritten";
 import { springs } from "@/lib/motion";
@@ -110,7 +109,6 @@ export function Awards() {
   return (
     <Section
       id="awards"
-      kicker={<Kicker k="awards" />}
       title="The fridge"
       aside="every magnet earned"
     >

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/section";
-import { Kicker } from "@/components/ui/kicker";
 import { Reveal } from "@/components/ui/reveal";
 import { springs } from "@/lib/motion";
 import { BOOKS, BIBLE, type Book } from "@/data/books";
@@ -223,7 +222,6 @@ export function Reading() {
   return (
     <Section
       id="reading"
-      kicker={<Kicker k="reading" />}
       title="The shelf"
       aside="the bible stays"
     >

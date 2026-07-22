@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/section";
-import { Kicker } from "@/components/ui/kicker";
 import { Reveal } from "@/components/ui/reveal";
 import { PROVERBS, type Proverb as ProverbType } from "@/data/proverbs";
 
@@ -52,7 +51,6 @@ export function Proverb() {
   return (
     <Section
       id="proverb"
-      kicker={<Kicker k="proverb" />}
       title="A word from home"
       aside="luganda & runyankole"
     >

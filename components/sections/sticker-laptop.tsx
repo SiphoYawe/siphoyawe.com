@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/section";
-import { Kicker } from "@/components/ui/kicker";
 import { Reveal } from "@/components/ui/reveal";
 import { Handwritten } from "@/components/ui/handwritten";
 import { springs } from "@/lib/motion";
@@ -141,7 +140,6 @@ export function StickerLaptop() {
   return (
     <Section
       id="stack"
-      kicker={<Kicker k="stack" />}
       title="The stickered lid"
       aside="every sticker links out"
     >

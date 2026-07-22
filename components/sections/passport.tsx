@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/section";
-import { Kicker } from "@/components/ui/kicker";
 import { Reveal } from "@/components/ui/reveal";
 import { Handwritten } from "@/components/ui/handwritten";
 import { springs } from "@/lib/motion";
@@ -239,7 +238,6 @@ export function Passport() {
   return (
     <Section
       id="passport"
-      kicker={<Kicker k="passport" />}
       title="Kampala to the UK"
       aside="stamps so far"
     >

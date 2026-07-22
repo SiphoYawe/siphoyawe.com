@@ -1,5 +1,4 @@
 import { Section } from "@/components/ui/section";
-import { Kicker } from "@/components/ui/kicker";
 import { GuestbookWall } from "./guestbook-wall";
 
 /**
@@ -12,7 +11,6 @@ export function Guestbook() {
   return (
     <Section
       id="guestbook"
-      kicker={<Kicker k="guestbook" />}
       title="Leave a note"
       aside="no signup, just say hi"
     >

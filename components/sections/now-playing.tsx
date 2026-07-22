@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/section";
-import { Kicker } from "@/components/ui/kicker";
 import { Reveal } from "@/components/ui/reveal";
 import { PillButton } from "@/components/ui/pill-button";
 import { getNowPlaying } from "@/lib/api";
@@ -69,7 +68,6 @@ export function NowPlaying() {
   return (
     <Section
       id="now-playing"
-      kicker={<Kicker k="nowPlaying" />}
       title="Now playing"
       aside="live(ish) from spotify"
     >

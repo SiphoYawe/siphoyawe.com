@@ -3,9 +3,6 @@ import { SectionTracker } from "./section-tracker";
 
 type SectionProps = {
   id?: string;
-  /** Heraldic kicker word above the title (pass <Kicker k="..."/> for the
-   * translated surface). */
-  kicker?: React.ReactNode;
   title?: string;
   /** Optional handwritten aside next to the title (danielsun annotation). */
   aside?: string;
@@ -17,11 +14,10 @@ type SectionProps = {
 
 /**
  * The room's walls: every scroll section shares rhythm, anchor id, and a
- * quiet reveal. Titles are Clash Display; kickers are Cinzel caps (heraldic).
+ * quiet reveal. Titles are Clash Display; a handwritten aside sits alongside.
  */
 export function Section({
   id,
-  kicker,
   title,
   aside,
   children,
@@ -36,13 +32,8 @@ export function Section({
       } ${className}`}
     >
       {id && <SectionTracker id={id} />}
-      {(kicker || title) && (
+      {(title || aside) && (
         <Reveal className="mb-10 sm:mb-14">
-          {kicker && (
-            <p className="mb-3 font-heraldic text-xs tracking-[0.3em] text-accent uppercase">
-              {kicker}
-            </p>
-          )}
           <div className="flex flex-wrap items-end gap-x-6 gap-y-2">
             {title && (
               <h2 className="font-display text-4xl font-semibold tracking-tight text-balance sm:text-5xl">

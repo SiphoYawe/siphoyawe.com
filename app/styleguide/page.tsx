@@ -32,7 +32,7 @@ function Swatch({ name, className }: { name: string; className: string }) {
 export default function StyleguidePage() {
   return (
     <main className="pt-28 pb-16">
-      <Section kicker="Design system" title="The Yawe room's toolkit" aside="every piece, one micro-interaction">
+      <Section title="The Yawe room's toolkit" aside="every piece, one micro-interaction">
         <div className="grid gap-6 sm:grid-cols-2">
           <BentoCard>
             <h3 className="mb-4 font-display text-xl font-semibold">Palette</h3>
@@ -57,7 +57,7 @@ export default function StyleguidePage() {
         </div>
       </Section>
 
-      <Section kicker="Buttons" title="Pills and one loud light">
+      <Section title="Pills and one loud light">
         <div className="grid items-center gap-10 sm:grid-cols-2">
           <BentoCard className="flex flex-wrap items-center gap-4">
             <PillButton label="Let's talk" href="#connect" />
@@ -70,7 +70,7 @@ export default function StyleguidePage() {
         </div>
       </Section>
 
-      <Section kicker="Chips" title="Pastel tag chips" aside="scattered, never aligned">
+      <Section title="Pastel tag chips" aside="scattered, never aligned">
         <BentoCard className="flex flex-wrap items-center gap-4 py-10">
           <TagChip label="DeFi" color="blue" rotate={-4} />
           <TagChip label="Web3" color="purple" rotate={3} />
@@ -80,7 +80,7 @@ export default function StyleguidePage() {
         </BentoCard>
       </Section>
 
-      <Section kicker="Frames" title="Polaroid, tilted paper, bento">
+      <Section title="Polaroid, tilted paper, bento">
         <div className="grid items-start gap-10 sm:grid-cols-3">
           <Polaroid
             src={PLACEHOLDER_IMG}
@@ -107,7 +107,7 @@ export default function StyleguidePage() {
         </div>
       </Section>
 
-      <Section kicker="Doodles" title="Hand-drawn helpers">
+      <Section title="Hand-drawn helpers">
         <BentoCard className="flex flex-wrap items-end gap-10">
           <div className="text-center">
             <BurstStrokes className="w-20 text-ink" />

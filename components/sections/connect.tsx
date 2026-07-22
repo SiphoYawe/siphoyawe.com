@@ -6,7 +6,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import type { z } from "zod";
 import { speakingSchema } from "@/lib/speaking-schema";
 import { Section } from "@/components/ui/section";
-import { Kicker } from "@/components/ui/kicker";
 import { ConnectButton } from "@/components/ui/connect-button";
 import { Reveal } from "@/components/ui/reveal";
 import { Handwritten } from "@/components/ui/handwritten";
@@ -460,7 +459,7 @@ export function Connect() {
 
   return (
     <>
-      <Section id="connect" kicker={<Kicker k="connect" />}>
+      <Section id="connect">
         {/* (a) the marquee button */}
         <Reveal className="py-8 sm:py-12">
           <ConnectButton onClick={scrollToBooking} />
