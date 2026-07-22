@@ -19,6 +19,21 @@ const FLICK_MS = 700;
 const POLL_MS = 45_000;
 
 /**
+ * Client-side last resort mirroring the server FALLBACK_TRACK, used only for
+ * the brief moment before the first fetch resolves. The section must NEVER
+ * render an empty idle state, so there is always a title to show. No album art
+ * here on purpose, so the vinyl-only label state renders.
+ */
+const CLIENT_FALLBACK = {
+  title: "Gethsemane (Live)",
+  artist: "Worship Culture Collective",
+  album: undefined as string | undefined,
+  albumArtUrl: undefined as string | undefined,
+  songUrl:
+    "https://open.spotify.com/search/Gethsemane%20Worship%20Culture%20Collective",
+};
+
+/**
  * Now Playing (brief section 6.8): a spinning vinyl driven by the Spotify
  * stub. The record spins only while isPlaying is true (CSS keyframes,
  * play-state gated; never under reduced motion). Micro-interaction: flicking
@@ -65,15 +80,24 @@ export function NowPlaying() {
   const deckSrc = aiAsset("artifacts/vinyl-player");
   const isStub = track?._mock === true || (track?.title?.includes("Stub") ?? false);
 
-  // When paused, the API returns the last played track additively; surface it
-  // so the section reads "Last played …" with real art instead of empty copy.
+  // The API always hands back a track: the live one when playing, else a
+  // durable last-played (recently-played -> memory -> KV -> fallback). So the
+  // section always has real title/artist/art to render, never empty copy.
   const playing = Boolean(track?.isPlaying);
-  const last = !playing ? track?.lastPlayed : undefined;
-  const art = playing ? track?.albumArtUrl : last?.albumArtUrl;
-  const title = playing ? track?.title : last?.title;
-  const artist = playing ? track?.artist : last?.artist;
-  const album = playing ? track?.album : last?.album;
-  const songUrl = playing ? track?.songUrl : last?.songUrl;
+  const source = playing
+    ? {
+        title: track?.title,
+        artist: track?.artist,
+        album: track?.album,
+        albumArtUrl: track?.albumArtUrl,
+        songUrl: track?.songUrl,
+      }
+    : (track?.lastPlayed ?? CLIENT_FALLBACK);
+  const art = source.albumArtUrl;
+  const title = source.title ?? CLIENT_FALLBACK.title;
+  const artist = source.artist;
+  const album = source.album;
+  const songUrl = source.songUrl ?? CLIENT_FALLBACK.songUrl;
 
   return (
     <Section
@@ -169,14 +193,12 @@ export function NowPlaying() {
               ) : (
                 <>
                   <span className="inline-flex size-2 rounded-full bg-steel" />
-                  <span className="text-ink-soft">
-                    {last ? "Last played" : track ? "Paused" : "Tuning in"}
-                  </span>
+                  <span className="text-ink-soft">Last played</span>
                 </>
               )}
             </p>
             <h3 className="mt-3 font-display text-3xl font-semibold tracking-tight text-balance">
-              {title ?? "Warming up the needle"}
+              {title}
             </h3>
             {artist && <p className="mt-1 text-lg text-ink-soft">{artist}</p>}
             {album && <p className="mt-0.5 text-sm text-ink-soft/80">{album}</p>}

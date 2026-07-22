@@ -1,4 +1,5 @@
 import { isConfigured } from "./env";
+import { durableLastPlayed, rememberTrack } from "./last-played";
 import { fetchNowPlaying, type FetchDeps, type Track } from "./spotify";
 
 export type NowPlayingResponse =
@@ -8,7 +9,8 @@ export type NowPlayingResponse =
     } & Track)
   | {
       isPlaying: false;
-      lastPlayed?: Track;
+      /** Always present: the section never renders an empty idle state. */
+      lastPlayed: Track;
       _mock?: true;
     };
 
@@ -44,24 +46,36 @@ export async function getNowPlaying(
     return cache.value;
   }
 
-  let value: NowPlayingResponse;
-
-  if (!isConfigured.spotify) {
-    value = mockResponse();
-  } else {
-    try {
-      const result = await fetchNowPlaying(deps);
-      value = result.isPlaying
-        ? { isPlaying: true, ...result.track }
-        : result.lastPlayed
-          ? { isPlaying: false, lastPlayed: result.lastPlayed }
-          : { isPlaying: false };
-    } catch (err) {
-      console.error("[now-playing] Spotify fetch failed", err);
-      value = { isPlaying: false };
-    }
-  }
+  const value = isConfigured.spotify
+    ? await resolveConfigured(deps)
+    : mockResponse();
 
   cache = { value, expiresAt: now() + CACHE_TTL_MS };
   return value;
+}
+
+/**
+ * Read order: live -> recently-played -> in-memory cache -> KV ->
+ * FALLBACK_TRACK. A live or recently-played hit is remembered durably; any
+ * miss (or a Spotify error) resolves to the durable last-played track so the
+ * section always has something to render.
+ */
+async function resolveConfigured(
+  deps: NowPlayingDeps,
+): Promise<NowPlayingResponse> {
+  try {
+    const result = await fetchNowPlaying(deps);
+    if (result.isPlaying) {
+      await rememberTrack(result.track);
+      return { isPlaying: true, ...result.track };
+    }
+    if (result.lastPlayed) {
+      await rememberTrack(result.lastPlayed);
+      return { isPlaying: false, lastPlayed: result.lastPlayed };
+    }
+  } catch (err) {
+    console.error("[now-playing] Spotify fetch failed", err);
+  }
+
+  return { isPlaying: false, lastPlayed: await durableLastPlayed() };
 }
