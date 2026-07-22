@@ -6,7 +6,7 @@ import { TiltedCard } from "@/components/ui/tilted-card";
 import { TagChip } from "@/components/ui/tag-chip";
 import { PillButton } from "@/components/ui/pill-button";
 import { Reveal } from "@/components/ui/reveal";
-import { springs } from "@/lib/motion";
+import { springs, staggerContainer, staggerPop } from "@/lib/motion";
 import { PROJECTS, type Project } from "@/data/projects";
 
 const SHOT_PLACEHOLDER = (name: string, hue: string) =>
@@ -42,9 +42,14 @@ function HiddenSticker() {
 }
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const reduce = useReducedMotion();
   const tilt = index % 2 === 0 ? -1.6 : 1.8;
   return (
-    <Reveal className={index % 2 === 1 ? "sm:mt-14" : ""}>
+    <Reveal
+      variant={index % 2 === 0 ? "left" : "right"}
+      delay={(index % 2) * 0.1}
+      className={index % 2 === 1 ? "sm:mt-14" : ""}
+    >
       <TiltedCard rotate={tilt} className="group">
         {project.hiddenSticker && <HiddenSticker />}
         <div className="p-3">
@@ -64,11 +69,19 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             </h3>
           </div>
           <p className="mt-2 leading-relaxed text-ink-soft">{project.oneLiner}</p>
-          <div className="mt-4 flex flex-wrap items-center gap-2">
+          <motion.div
+            variants={staggerContainer}
+            initial={reduce ? false : "hidden"}
+            whileInView={reduce ? undefined : "visible"}
+            viewport={{ once: true, margin: "-40px" }}
+            className="mt-4 flex flex-wrap items-center gap-2"
+          >
             {project.tags.map((tag) => (
-              <TagChip key={tag.label} label={tag.label} color={tag.color} rotate={0} className="!px-2.5 !py-1 text-xs" />
+              <motion.span key={tag.label} variants={staggerPop} className="inline-flex">
+                <TagChip label={tag.label} color={tag.color} rotate={0} className="!px-2.5 !py-1 text-xs" />
+              </motion.span>
             ))}
-          </div>
+          </motion.div>
           <div className="mt-5 flex flex-wrap gap-3">
             {project.links.live && <PillButton label="Visit" href={project.links.live} external badge="azure" />}
             {project.links.github && <PillButton label="Code" href={project.links.github} external badge="or" />}

@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { springs } from "@/lib/motion";
+import { Magnetic } from "./magnetic";
 import { BurstStrokes } from "./doodles";
 
 type ConnectButtonProps = {
@@ -35,14 +36,15 @@ export function ConnectButton({
         </p>
       )}
 
-      <motion.button
-        type="button"
-        onClick={onClick}
-        initial="rest"
-        animate="rest"
-        whileHover="hover"
-        whileFocus="hover"
-        whileTap={reduce ? undefined : { scale: 0.97 }}
+      <Magnetic strength={0.22} max={9}>
+        <motion.button
+          type="button"
+          onClick={onClick}
+          initial="rest"
+          animate="rest"
+          whileHover="hover"
+          whileFocus="hover"
+          whileTap={reduce ? undefined : { scale: 0.97 }}
         transition={springs.snappy}
         aria-label={`${label} — jump to contact options`}
         className="group relative cursor-pointer rounded-full focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-accent"
@@ -102,6 +104,7 @@ export function ConnectButton({
           </span>
         </span>
       </motion.button>
+      </Magnetic>
     </div>
   );
 }

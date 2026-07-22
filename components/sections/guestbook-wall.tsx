@@ -39,9 +39,17 @@ function StickyNote({
 
   return (
     <motion.figure
-      initial={fresh && !reduce ? { scale: 1.15, opacity: 0, rotate: rotate * 2 } : false}
-      animate={{ scale: 1, opacity: 1, rotate }}
-      transition={springs.bouncy}
+      initial={
+        reduce
+          ? false
+          : fresh
+            ? { scale: 1.15, opacity: 0, rotate: rotate * 2 }
+            : { opacity: 0, y: 18, rotate: rotate * 1.6 }
+      }
+      animate={fresh ? { scale: 1, opacity: 1, rotate } : undefined}
+      whileInView={fresh ? undefined : { opacity: 1, y: 0, rotate }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ ...springs.bouncy, delay: fresh ? 0 : index * 0.08 }}
       className="relative min-h-40 p-5 pb-8 shadow-[0_10px_20px_rgb(0_0_0/0.16)]"
       style={{ background: NOTE_COLORS[index % NOTE_COLORS.length], color: "#141416" }}
     >

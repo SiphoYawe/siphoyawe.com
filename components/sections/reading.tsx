@@ -90,7 +90,13 @@ function BibleArtifact() {
   const bibleSrc = aiAsset("artifacts/bible");
 
   return (
-    <div className="flex flex-col items-center gap-3">
+    <motion.div
+      initial={reduce ? false : { opacity: 0, scale: 0.9, rotate: -4 }}
+      whileInView={reduce ? undefined : { opacity: 1, scale: 1, rotate: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ ...springs.soft, delay: 0.25 }}
+      className="flex flex-col items-center gap-3"
+    >
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -209,7 +215,7 @@ function BibleArtifact() {
       <p aria-hidden className="-rotate-2 font-hand text-lg text-ink-soft">
         {open ? "tap again to close" : "tap to open"}
       </p>
-    </div>
+    </motion.div>
   );
 }
 
@@ -218,6 +224,7 @@ function BibleArtifact() {
  * with the Bible beside it as the scripture-as-object moment.
  */
 export function Reading() {
+  const reduce = useReducedMotion();
   // AI walnut shelf photo (AI-ASSET-PROMPTS.md C2) replaces the CSS plank
   // when it lands; the books keep standing on it in code either way.
   const bookshelfSrc = aiAsset("artifacts/bookshelf");
@@ -238,11 +245,15 @@ export function Reading() {
             </ol>
             {/* shelf plank: AI photo when present, CSS plank otherwise */}
             {bookshelfSrc ? (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img
+               
+              <motion.img
                 src={bookshelfSrc}
                 alt=""
                 loading="lazy"
+                initial={reduce ? false : { opacity: 0, y: 16 }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={springs.soft}
                 className="-mx-3 h-auto w-[calc(100%+1.5rem)] max-w-none object-contain drop-shadow-lg"
               />
             ) : (

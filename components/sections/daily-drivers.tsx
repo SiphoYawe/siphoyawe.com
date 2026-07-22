@@ -12,7 +12,7 @@ import {
 } from "framer-motion";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
-import { springs } from "@/lib/motion";
+import { springs, staggerContainer, staggerItem } from "@/lib/motion";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 
 type App = { name: string; file: string; href: string };
@@ -149,12 +149,16 @@ export function DailyDrivers() {
           <motion.ul
             onMouseMove={reduce ? undefined : (e) => mouseX.set(e.clientX)}
             onMouseLeave={() => mouseX.set(Number.POSITIVE_INFINITY)}
+            variants={staggerContainer}
+            initial={reduce ? false : "hidden"}
+            whileInView={reduce ? undefined : "visible"}
+            viewport={{ once: true, margin: "-60px" }}
             className="mx-auto flex w-max items-end gap-3 rounded-[1.7rem] border border-white/50 bg-white/55 px-3.5 py-3 shadow-[var(--shadow-lift)] ring-1 ring-black/5 backdrop-blur-xl sm:gap-4 dark:border-white/10 dark:bg-white/5 dark:ring-white/5"
           >
             {APPS.map((app) => (
-              <li key={app.name} className="flex items-end">
+              <motion.li key={app.name} variants={staggerItem} className="flex items-end">
                 <DockIcon app={app} mouseX={mouseX} reduce={Boolean(reduce)} />
-              </li>
+              </motion.li>
             ))}
           </motion.ul>
         </div>

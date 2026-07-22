@@ -65,6 +65,9 @@ function Lanyard({ talk, index }: { talk: Talk; index: number }) {
   return (
     <TalkShell talk={talk} className="w-60">
       <motion.div
+        initial={reduce ? false : { opacity: 0, y: -26, rotate: -5 }}
+        whileInView={reduce ? undefined : { opacity: 1, y: 0, rotate: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
         whileHover={reduce ? undefined : { rotate: 2 }}
         transition={springs.soft}
         style={{ transformOrigin: "top center" }}
@@ -137,9 +140,12 @@ function Stub({ talk, index }: { talk: Talk; index: number }) {
 
   return (
     <TalkShell talk={talk} className="w-full">
-      <div
+      <motion.div
+        initial={reduce ? false : { opacity: 0, x: -22, rotate: STUB_TILTS[index % STUB_TILTS.length] * 2.2 }}
+        whileInView={reduce ? undefined : { opacity: 1, x: 0, rotate: STUB_TILTS[index % STUB_TILTS.length] }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ ...springs.soft, delay: index * 0.1 }}
         className="drop-shadow-sm dark:drop-shadow-md"
-        style={{ transform: `rotate(${STUB_TILTS[index % STUB_TILTS.length]}deg)` }}
       >
         {aiSrc ? (
           <motion.div
@@ -189,7 +195,7 @@ function Stub({ talk, index }: { talk: Talk; index: number }) {
           </div>
         </motion.div>
         )}
-      </div>
+      </motion.div>
     </TalkShell>
   );
 }
@@ -204,7 +210,7 @@ export function Talks() {
 
   return (
     <Section id="talks" title="Talks & media" aside="stages & hackathons so far">
-      <Reveal className="mb-12">
+      <Reveal variant="wipe" className="mb-12">
         <figure className="mx-auto max-w-xl">
           <div className="relative aspect-[3/2] w-full overflow-hidden rounded-2xl border border-line bg-canvas-raised shadow-(--shadow-polaroid)">
             <Image

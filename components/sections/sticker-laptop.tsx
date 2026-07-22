@@ -142,7 +142,7 @@ export function StickerLaptop() {
       title="The stickered lid"
       aside="every sticker links out"
     >
-      <Reveal>
+      <Reveal variant="scale">
         <div className="mx-auto w-full max-w-2xl">
           {/* the closed MacBook lid, seen top-down */}
           <div className={lidSrc ? "" : "rounded-[1.6rem] bg-[linear-gradient(150deg,#8f939a,#c9ccd1_32%,#7d8187)] p-[3px] shadow-[0_18px_44px_rgb(0_0_0/0.25)] dark:shadow-[0_18px_48px_rgb(0_0_0/0.6)]"}>

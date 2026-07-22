@@ -49,10 +49,13 @@ function InkStamp({ stamp, index }: { stamp: Stamp; index: number }) {
 
   return (
     <motion.div
+      initial={reduce ? false : { opacity: 0, scale: 1.45 }}
+      whileInView={reduce ? undefined : { opacity: 0.75, scale: 1 }}
+      viewport={{ once: true, margin: "-60px" }}
       whileHover={reduce ? undefined : { scale: 0.95, opacity: 1 }}
-      transition={springs.bouncy}
+      transition={{ ...springs.bouncy, delay: 0.25 + index * 0.13 }}
       style={{ rotate: stamp.rotate }}
-      className="opacity-75 mix-blend-multiply"
+      className="mix-blend-multiply"
     >
       {aiSrc ? (
         // eslint-disable-next-line @next/next/no-img-element
@@ -99,10 +102,21 @@ function WaxSeal() {
       whileHover={reduce ? undefined : { scale: 0.95 }}
       transition={springs.bouncy}
       style={{ rotate: -12 }}
-      className="grid size-24 place-items-center sm:size-28"
+      className="relative grid size-24 place-items-center sm:size-28"
       role="img"
       aria-label="The Yawe wax seal, gold, with an SY monogram"
     >
+      {/* breathing sheen: the wax catches the room light, slowly */}
+      <motion.span
+        aria-hidden
+        animate={reduce ? undefined : { opacity: [0.12, 0.38, 0.12] }}
+        transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut" }}
+        className="pointer-events-none absolute inset-0 rounded-full mix-blend-screen"
+        style={{
+          background:
+            "radial-gradient(ellipse at 34% 24%, rgb(255 255 255 / 0.55), transparent 58%)",
+        }}
+      />
       {aiSrc ? (
         <span className="relative grid size-full place-items-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}

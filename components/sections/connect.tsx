@@ -404,8 +404,11 @@ function WaxSeal() {
   return (
     <div className="flex flex-col items-center gap-5 px-5 py-16 sm:py-20">
       <motion.div
+        initial={reduce ? false : { opacity: 0, scale: 0.6, rotate: -14 }}
+        whileInView={reduce ? undefined : { opacity: 1, scale: 1, rotate: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
         whileHover={reduce ? undefined : { rotate: 2 }}
-        transition={springs.soft}
+        transition={springs.bouncy}
         className={`relative grid size-28 cursor-default place-items-center sm:size-32 ${
           aiSrc
             ? ""

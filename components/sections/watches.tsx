@@ -25,7 +25,7 @@ const SECOND_DEG = 170;
  * with simple hands and a crown nub. Micro-interaction (brief section 6.7):
  * lifts and rotates slightly out of the slot on hover, bouncy spring.
  */
-function WatchPiece({ watch, slotX }: { watch: Watch; slotX?: string }) {
+function WatchPiece({ watch, slotX, index = 0 }: { watch: Watch; slotX?: string; index?: number }) {
   const reduce = useReducedMotion();
   const [imgError, setImgError] = useState(false);
   const tone = TONES[watch.tone];
@@ -33,7 +33,11 @@ function WatchPiece({ watch, slotX }: { watch: Watch; slotX?: string }) {
   const showImg = Boolean(watch.image) && !imgError;
 
   return (
-    <li
+    <motion.li
+      initial={reduce ? false : { opacity: 0, y: 22 }}
+      whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ ...springs.soft, delay: 0.15 + index * 0.13 }}
       className={
         slotX
           ? "absolute flex w-[32%] -translate-x-1/2 flex-col items-center text-center"
@@ -134,7 +138,7 @@ function WatchPiece({ watch, slotX }: { watch: Watch; slotX?: string }) {
       <p className="mt-1.5 max-w-52 -rotate-1 font-hand text-lg leading-tight text-[#efe3c8] [text-shadow:0_1px_2px_rgb(20_20_22/0.45)] sm:line-clamp-2">
         {watch.why}
       </p>
-    </li>
+    </motion.li>
   );
 }
 
@@ -169,7 +173,7 @@ export function Watches() {
             />
             <ol className="absolute inset-0">
               {WATCHES.map((watch, i) => (
-                <WatchPiece key={watch.id} watch={watch} slotX={SLOT_X[i]} />
+                <WatchPiece key={watch.id} watch={watch} slotX={SLOT_X[i]} index={i} />
               ))}
             </ol>
           </div>

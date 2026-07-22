@@ -1,5 +1,7 @@
 "use client";
 
+import { motion, useReducedMotion } from "framer-motion";
+import { springs } from "@/lib/motion";
 import { Section } from "@/components/ui/section";
 import { TiltedCard } from "@/components/ui/tilted-card";
 import { Reveal } from "@/components/ui/reveal";
@@ -54,6 +56,7 @@ function SourceLink({ href, name }: { href: string; name: string }) {
  * does (squares up slightly, shadow deepens); nothing extra is added here.
  */
 function QuoteCard({ item, index }: { item: Testimonial; index: number }) {
+  const reduce = useReducedMotion();
   return (
     <TiltedCard
       rotate={TILTS[index % TILTS.length]}
@@ -61,9 +64,16 @@ function QuoteCard({ item, index }: { item: Testimonial; index: number }) {
       className="flex h-full flex-col"
     >
       <figure className="flex h-full flex-col p-6">
-        <span aria-hidden className="font-display text-6xl leading-[0.5] text-accent/30">
+        <motion.span
+          aria-hidden
+          initial={reduce ? false : { opacity: 0, scale: 0.4 }}
+          whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ ...springs.bouncy, delay: 0.35 + index * 0.07 }}
+          className="font-display text-6xl leading-[0.5] text-accent/30"
+        >
           &ldquo;
-        </span>
+        </motion.span>
         <blockquote className="mt-5 flex-1">
           <p className="leading-relaxed">{item.quote}</p>
         </blockquote>

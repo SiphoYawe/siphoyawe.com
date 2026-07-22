@@ -2,10 +2,12 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
 import { PillButton } from "@/components/ui/pill-button";
+import { Magnetic } from "@/components/ui/magnetic";
+import { springs } from "@/lib/motion";
 import { getNowPlaying } from "@/lib/api";
 import type { NowPlaying as NowPlayingTrack } from "@/lib/types";
 import { aiAsset } from "@/lib/ai-assets";
@@ -105,15 +107,19 @@ export function NowPlaying() {
       title="Now playing"
       aside="live(ish) from spotify"
     >
-      <style>{`@keyframes vinyl-spin { to { transform: rotate(360deg); } }`}</style>
-      <Reveal>
-        <div className="flex flex-col items-center gap-10 sm:flex-row sm:gap-14">
+      <style>{`@keyframes vinyl-spin { to { transform: rotate(360deg); } }
+@keyframes vinyl-sheen { to { transform: rotate(-360deg); } }`}</style>
+      <div className="flex flex-col items-center gap-10 sm:flex-row sm:gap-14">
+        <Reveal variant="left" className="shrink-0">
           {/* the record player: the deck asset with the vinyl seated on its
               platter (platter centre measured on artifacts/vinyl-player). */}
-          <button
+          <motion.button
             type="button"
             onClick={handleFlick}
             aria-label="Flick the record to spin it faster"
+            whileHover={reduce ? undefined : { scale: 1.02 }}
+            whileTap={reduce ? undefined : { scale: 0.99 }}
+            transition={springs.soft}
             className={`relative w-72 shrink-0 cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:w-96 ${
               deckSrc ? "aspect-[952/871]" : "aspect-square"
             }`}
@@ -168,19 +174,22 @@ export function NowPlaying() {
                 {/* spindle hole */}
                 <span className="absolute top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-paper shadow" />
               </span>
-              {/* room light sheen, stays put while the grooves turn */}
+              {/* room light sheen, drifts slowly against the grooves */}
               <span
                 className="pointer-events-none absolute inset-0 rounded-full"
                 style={{
                   background:
                     "conic-gradient(from 210deg, transparent 0deg, rgb(255 255 255 / 0.09) 20deg, transparent 60deg, transparent 180deg, rgb(255 255 255 / 0.06) 200deg, transparent 240deg)",
+                  animation: reduce ? "none" : "vinyl-sheen 11s linear infinite",
                 }}
               />
             </span>
-          </button>
+          </motion.button>
+        </Reveal>
 
-          {/* track info */}
-          <div className="max-w-md text-center sm:text-left" aria-live="polite">
+        {/* track info */}
+        <Reveal variant="right" delay={0.12} className="max-w-md">
+          <div className="text-center sm:text-left" aria-live="polite">
             <p className="flex items-center justify-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase sm:justify-start">
               {playing ? (
                 <>
@@ -209,15 +218,17 @@ export function NowPlaying() {
             )}
             {songUrl && (
               <div className="mt-5 flex justify-center sm:justify-start">
-                <PillButton label="Open in Spotify" href={songUrl} external badge="or" />
+                <Magnetic strength={0.3}>
+                  <PillButton label="Open in Spotify" href={songUrl} external badge="or" />
+                </Magnetic>
               </div>
             )}
             <p aria-hidden className="mt-6 -rotate-2 font-hand text-lg text-ink-soft">
               flick the record, it likes it
             </p>
           </div>
-        </div>
-      </Reveal>
+        </Reveal>
+      </div>
     </Section>
   );
 }
