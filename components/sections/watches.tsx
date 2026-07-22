@@ -199,7 +199,7 @@ export function Watches() {
             </>
           )}
 
-          <ol className="relative grid gap-8 px-6 pt-16 pb-8 sm:grid-cols-3 sm:gap-6 sm:px-8 sm:pt-9 sm:pb-6">
+          <ol className="relative grid gap-8 px-6 pt-16 pb-8 sm:grid-cols-3 sm:gap-6 sm:px-8 sm:pt-7 sm:pb-6">
             {WATCHES.map((watch) => (
               <WatchPiece key={watch.id} watch={watch} />
             ))}

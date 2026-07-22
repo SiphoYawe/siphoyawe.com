@@ -150,7 +150,7 @@ function Stub({ talk, index }: { talk: Talk; index: number }) {
             <img src={aiSrc} alt="" loading="lazy" className="w-full" />
             {/* text kept inside the ticket's cream safe area: the ornamental
                 border and torn stub start near 78% width, so cap the right. */}
-            <div className="absolute inset-y-[12%] left-[9%] right-[24%] flex flex-col justify-center">
+            <div className="absolute inset-y-[12%] left-[9%] right-[27%] flex flex-col justify-center">
               <p className="line-clamp-2 font-display text-sm leading-snug font-semibold text-[#141416] sm:text-base">
                 {talk.title}
               </p>
@@ -159,7 +159,7 @@ function Stub({ talk, index }: { talk: Talk; index: number }) {
                 {talk.date}
               </p>
               {talk.note && (
-                <p className="mt-1 -rotate-1 font-hand text-sm leading-tight text-[#55534e] sm:text-base">
+                <p className="mt-1 -rotate-1 font-hand text-sm leading-tight text-[#55534e]">
                   {talk.note}
                 </p>
               )}

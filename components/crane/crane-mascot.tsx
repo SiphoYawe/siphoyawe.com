@@ -52,7 +52,7 @@ export function CraneMascot() {
       initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4, duration: 0.6 }}
-      className="pointer-events-none fixed -right-2 bottom-0 z-40 w-16 translate-x-[15%] sm:w-32"
+      className="pointer-events-none fixed -right-2 bottom-0 z-40 w-16 translate-x-[15%] translate-y-[22%] sm:w-32 sm:translate-y-0"
     >
       {aiSrc ? (
         <motion.img

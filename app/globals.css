@@ -73,6 +73,19 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Nothing may ever push the page sideways (peeking crane, glow bleeds,
+   oversized artifacts). `clip` avoids creating a scroll container. */
+html,
+body {
+  overflow-x: clip;
+}
+@supports not (overflow: clip) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
+
 body {
   background: var(--canvas);
   color: var(--ink);

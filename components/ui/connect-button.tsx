@@ -57,7 +57,7 @@ export function ConnectButton({
             hover: { opacity: 1, scale: 1 },
           }}
           transition={springs.soft}
-          className="pointer-events-none absolute -inset-x-32 -inset-y-24 blur-md"
+          className="pointer-events-none absolute -inset-x-8 -inset-y-12 blur-md sm:-inset-x-32 sm:-inset-y-24"
           style={{
             background:
               "radial-gradient(closest-side, transparent 20%, rgb(43 93 242 / 0.9) 36%, rgb(43 93 242 / 0.5) 52%, rgb(92 130 255 / 0.3) 64%, rgb(252 221 9 / 0.22) 72%, transparent 80%)",
