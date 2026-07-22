@@ -106,6 +106,10 @@ export function Awards() {
   // (grain, seam, handle, feet) when it lands; the magnets stay in code.
   const fridgeSrc = aiAsset("artifacts/fridge");
 
+  const magnets = AWARDS.map((award, i) => (
+    <FridgeMagnet key={award.id} award={award} index={i} />
+  ));
+
   return (
     <Section
       id="awards"
@@ -113,62 +117,58 @@ export function Awards() {
       aside="every magnet earned"
     >
       <Reveal>
-        <div className="relative mx-auto w-full max-w-2xl">
-          {/* fridge door */}
-          <div className="relative overflow-hidden rounded-[2rem] border border-black/10 bg-[linear-gradient(180deg,#f6f7f8,#e3e5e7_55%,#d0d3d6)] shadow-[0_20px_50px_rgb(0_0_0/0.18)] dark:border-white/10 dark:shadow-[0_20px_50px_rgb(0_0_0/0.55)]">
-            {fridgeSrc ? (
-              <>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={fridgeSrc}
-                  alt=""
-                  loading="lazy"
-                  className="absolute inset-0 size-full object-cover"
-                />
-              </>
-            ) : (
-              <>
-                {/* brushed-metal grain */}
-                <div
-                  aria-hidden
-                  className="absolute inset-0 opacity-70"
-                  style={{
-                    backgroundImage:
-                      "repeating-linear-gradient(90deg, rgb(255 255 255 / 0.14) 0 1px, transparent 1px 5px), repeating-linear-gradient(90deg, rgb(0 0 0 / 0.03) 0 1px, transparent 1px 7px)",
-                  }}
-                />
-                {/* freezer door seam */}
-                <div
-                  aria-hidden
-                  className="absolute inset-x-0 top-[23%] h-[3px] bg-[linear-gradient(180deg,rgb(0_0_0/0.16),rgb(255_255_255/0.55))]"
-                />
-                {/* slim handle */}
-                <div
-                  aria-hidden
-                  className="absolute top-[30%] right-3 h-40 w-2.5 rounded-full bg-[linear-gradient(90deg,#b7bbc0,#e9ebed_50%,#a4a8ae)] shadow-[inset_0_1px_2px_rgb(255_255_255/0.7),0_3px_6px_rgb(0_0_0/0.3)]"
-                />
-              </>
-            )}
-            <ul className="relative flex min-h-[520px] flex-wrap content-start items-start justify-center gap-x-5 gap-y-7 p-7 pt-14 sm:min-h-[560px] sm:p-10 sm:pt-16">
-              {AWARDS.map((award, i) => (
-                <FridgeMagnet key={award.id} award={award} index={i} />
-              ))}
+        {fridgeSrc ? (
+          /* The whole fridge shows (its own rounded shoulders and top), and
+             the bottom softly fades into the section instead of a hard crop. */
+          <div className="relative mx-auto w-full max-w-md">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={fridgeSrc}
+              alt=""
+              loading="lazy"
+              className="pointer-events-none w-full select-none"
+              style={{
+                maskImage: "linear-gradient(to bottom, #000 82%, transparent 100%)",
+                WebkitMaskImage: "linear-gradient(to bottom, #000 82%, transparent 100%)",
+              }}
+            />
+            {/* magnets scattered across the door */}
+            <ul className="absolute inset-0 flex flex-wrap content-start justify-center gap-x-4 gap-y-6 px-[11%] pt-[16%] pb-[24%]">
+              {magnets}
             </ul>
           </div>
-          {/* little fridge feet (CSS fridge only; baked into the AI final) */}
-          {!fridgeSrc && (
-            <>
+        ) : (
+          <div className="relative mx-auto w-full max-w-2xl">
+            {/* CSS fridge door */}
+            <div className="relative overflow-hidden rounded-[2rem] border border-black/10 bg-[linear-gradient(180deg,#f6f7f8,#e3e5e7_55%,#d0d3d6)] shadow-[0_20px_50px_rgb(0_0_0/0.18)] dark:border-white/10 dark:shadow-[0_20px_50px_rgb(0_0_0/0.55)]">
+              {/* brushed-metal grain */}
               <div
                 aria-hidden
-                className="absolute -bottom-1.5 left-10 h-2 w-7 rounded-b-lg bg-steel/80"
+                className="absolute inset-0 opacity-70"
+                style={{
+                  backgroundImage:
+                    "repeating-linear-gradient(90deg, rgb(255 255 255 / 0.14) 0 1px, transparent 1px 5px), repeating-linear-gradient(90deg, rgb(0 0 0 / 0.03) 0 1px, transparent 1px 7px)",
+                }}
               />
+              {/* freezer door seam */}
               <div
                 aria-hidden
-                className="absolute -bottom-1.5 right-10 h-2 w-7 rounded-b-lg bg-steel/80"
+                className="absolute inset-x-0 top-[23%] h-[3px] bg-[linear-gradient(180deg,rgb(0_0_0/0.16),rgb(255_255_255/0.55))]"
               />
-            </>
-          )}
-        </div>
+              {/* slim handle */}
+              <div
+                aria-hidden
+                className="absolute top-[30%] right-3 h-40 w-2.5 rounded-full bg-[linear-gradient(90deg,#b7bbc0,#e9ebed_50%,#a4a8ae)] shadow-[inset_0_1px_2px_rgb(255_255_255/0.7),0_3px_6px_rgb(0_0_0/0.3)]"
+              />
+              <ul className="relative flex min-h-[520px] flex-wrap content-start items-start justify-center gap-x-5 gap-y-7 p-7 pt-14 sm:min-h-[560px] sm:p-10 sm:pt-16">
+                {magnets}
+              </ul>
+            </div>
+            {/* little fridge feet */}
+            <div aria-hidden className="absolute -bottom-1.5 left-10 h-2 w-7 rounded-b-lg bg-steel/80" />
+            <div aria-hidden className="absolute -bottom-1.5 right-10 h-2 w-7 rounded-b-lg bg-steel/80" />
+          </div>
+        )}
       </Reveal>
       <Reveal delay={0.12}>
         <Handwritten className="mt-8 text-center" rotate={-1.5}>
