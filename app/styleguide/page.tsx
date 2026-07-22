@@ -48,8 +48,8 @@ export default function StyleguidePage() {
 
           <BentoCard>
             <h3 className="mb-4 font-display text-xl font-semibold">Type scale</h3>
-            <p className="font-display text-5xl font-semibold tracking-tight">Clash Display 700</p>
-            <p className="mt-2 font-display text-2xl font-medium">Clash Display heading</p>
+            <p className="font-display text-5xl font-semibold tracking-tight">Satoshi Bold</p>
+            <p className="mt-2 font-display text-2xl font-medium">Satoshi heading</p>
             <p className="mt-2 font-heraldic text-sm tracking-[0.3em] uppercase">Cinzel · Coram Deo</p>
             <p className="mt-2 text-base text-ink-soft">DM Sans body, the quiet workhorse for everything long-form.</p>
             <p className="mt-2 font-hand text-2xl">Caveat — handwritten margin notes</p>

@@ -7,10 +7,10 @@ import { LocaleProvider } from "@/components/providers/locale-provider";
 import { PillNav } from "@/components/nav/pill-nav";
 import { HiddenTerminal } from "@/components/terminal/hidden-terminal";
 
-const clash = localFont({
-  src: "./fonts/ClashDisplay-Variable.woff2",
-  variable: "--font-clash",
-  weight: "200 700",
+const satoshi = localFont({
+  src: "./fonts/Satoshi-Variable.woff2",
+  variable: "--font-satoshi",
+  weight: "300 900",
   display: "swap",
 });
 
@@ -55,7 +55,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${clash.variable} ${dmSans.variable} ${cinzel.variable} ${caveat.variable} h-full antialiased`}
+      className={`${satoshi.variable} ${dmSans.variable} ${cinzel.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-canvas text-ink">
         <ThemeProvider>

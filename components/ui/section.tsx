@@ -14,7 +14,7 @@ type SectionProps = {
 
 /**
  * The room's walls: every scroll section shares rhythm, anchor id, and a
- * quiet reveal. Titles are Clash Display; a handwritten aside sits alongside.
+ * quiet reveal. Titles are Satoshi; a handwritten aside sits alongside.
  */
 export function Section({
   id,

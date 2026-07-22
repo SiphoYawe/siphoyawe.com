@@ -27,7 +27,7 @@
 
   /* Type system (wired to next/font variables in app/layout.tsx) */
   --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-clash), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
   --font-heraldic: var(--font-cinzel), ui-serif, Georgia, serif;
   --font-hand: var(--font-caveat), cursive;
 
