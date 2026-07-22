@@ -10,6 +10,7 @@ import { Watches } from "@/components/sections/watches";
 import { NowPlaying } from "@/components/sections/now-playing";
 import { CorkboardNow } from "@/components/sections/corkboard-now";
 import { StickerLaptop } from "@/components/sections/sticker-laptop";
+import { DailyDrivers } from "@/components/sections/daily-drivers";
 import { Talks } from "@/components/sections/talks";
 import { Passport } from "@/components/sections/passport";
 import { Proverb } from "@/components/sections/proverb";
@@ -37,6 +38,7 @@ export default function Home() {
       <NowPlaying />
       <CorkboardNow />
       <StickerLaptop />
+      <DailyDrivers />
       <Talks />
       <Passport />
       <Proverb />
