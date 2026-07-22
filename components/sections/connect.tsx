@@ -271,7 +271,10 @@ function SpeakingForm() {
               type="date"
               value={values.eventDate}
               onChange={(e) => set("eventDate")(e.target.value)}
-              className={INPUT_CLASS}
+              // iOS Safari ignores the padding-based height on native date
+              // inputs and renders a tall empty box, so pin an explicit height
+              // that matches the other fields and strip the native chrome.
+              className={`${INPUT_CLASS} block h-[46px] appearance-none [&::-webkit-date-and-time-value]:text-left`}
             />
           )}
         </Field>

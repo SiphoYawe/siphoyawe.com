@@ -181,6 +181,7 @@ export function Passport() {
       id="passport"
       title="Kampala to the UK"
       aside="stamps so far"
+      className="hidden md:block"
     >
       <Reveal className="mx-auto max-w-3xl">
        <div className="relative">
