@@ -20,7 +20,7 @@ export const WATCHES: Watch[] = [
     model: "5 (SNXS79)",
     why: "the everyday classic. Goes anywhere, forgives everything.",
     tone: "sable",
-    image: "/images/watches/seiko-5-snxs79.webp",
+    image: "/images/watches/seiko-snxs79-v2.webp",
   },
   {
     id: "opulens-spirit",

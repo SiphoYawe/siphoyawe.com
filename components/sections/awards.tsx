@@ -8,36 +8,26 @@ import { springs } from "@/lib/motion";
 import { aiAsset } from "@/lib/ai-assets";
 import { AWARDS, type Award } from "@/data/awards";
 
-const FACE_COLORS: Record<Award["color"], { face: string; ink: string }> = {
-  azure: { face: "#2B5DF2", ink: "#F7F5F0" },
-  or: { face: "#FCDD09", ink: "#141416" },
-  gules: { face: "#D50000", ink: "#F7F5F0" },
-  mint: { face: "#34c77b", ink: "#141416" },
-  sable: { face: "#141416", ink: "#F7F5F0" },
-};
-
-/** Deterministic hand-scattered placement, stable across renders. */
-const SCATTER_ROTATIONS = [-3, 2.5, -1.5, 3, -2.5, 2];
-const SCATTER_MARGINS = ["", "mt-5", "mt-2", "mt-8", "mt-1", "mt-4"];
+/** Hand-set tilt per certificate, papers pinned a touch off-square. */
+const CERT_TILTS = [-2.6, 2.1];
 
 /**
- * One glossy fridge magnet: domed colour face, inner top highlight, drop
- * shadow. Micro-interaction (brief 6.5): lifts off the door on hover and
- * springs back down, while its shadow stays on the fridge and shifts a
- * touch (y -6, springs.bouncy).
+ * One framed certificate hung on the fridge door: the ornate generated frame,
+ * the award text set into its blank centre, a strip of tape at the top.
+ * Micro-interaction: lifts and squares up on hover, shadow stays on the door.
  */
-function FridgeMagnet({ award, index }: { award: Award; index: number }) {
+function Certificate({ award, index }: { award: Award; index: number }) {
   const reduce = useReducedMotion();
-  const { face, ink } = FACE_COLORS[award.color];
-  const rotate = SCATTER_ROTATIONS[index % SCATTER_ROTATIONS.length];
+  const certSrc = aiAsset("awards/certificate");
+  const tilt = CERT_TILTS[index % CERT_TILTS.length];
 
   const settle: Variants = {
-    hidden: { opacity: 0, scale: 0.8, rotate: rotate * 2 },
+    hidden: { opacity: 0, y: 26, rotate: tilt * 2.4 },
     visible: {
       opacity: 1,
-      scale: 1,
-      rotate,
-      transition: { ...springs.bouncy, delay: index * 0.06 },
+      y: 0,
+      rotate: tilt,
+      transition: { ...springs.bouncy, delay: 0.15 + index * 0.12 },
     },
   };
 
@@ -46,129 +36,100 @@ function FridgeMagnet({ award, index }: { award: Award; index: number }) {
       variants={settle}
       initial={reduce ? false : "hidden"}
       whileInView={reduce ? undefined : "visible"}
-      whileHover={reduce ? undefined : "hover"}
       viewport={{ once: true, margin: "-40px" }}
-      className={`relative w-40 sm:w-44 ${SCATTER_MARGINS[index % SCATTER_MARGINS.length]}`}
+      className="relative w-[42%] max-w-52 shrink-0"
     >
-      {/* drop shadow: stays on the door while the magnet lifts */}
+      {/* drop shadow stays on the door while the certificate lifts */}
       <motion.span
         aria-hidden
-        variants={{
-          visible: { opacity: 1, y: 0, scale: 1 },
-          hover: { opacity: 0.5, y: 5, scale: 0.94, transition: springs.bouncy },
-        }}
-        className="absolute inset-x-3 -bottom-1.5 h-4 rounded-[50%] bg-sable/25 blur-md"
+        whileHover={reduce ? undefined : { opacity: 0.55, y: 7, scale: 0.94 }}
+        transition={springs.bouncy}
+        className="absolute inset-x-4 -bottom-2 h-5 rounded-[50%] bg-sable/30 blur-md"
       />
-      {/* magnet face */}
       <motion.div
-        variants={{
-          visible: { y: 0 },
-          hover: { y: -6, transition: springs.bouncy },
-        }}
-        className="relative rounded-2xl p-3.5"
-        style={{
-          background: `radial-gradient(circle at 30% 16%, rgb(255 255 255 / 0.55), transparent 45%), ${face}`,
-          boxShadow:
-            "inset 0 2px 3px rgb(255 255 255 / 0.5), inset 0 -8px 14px rgb(0 0 0 / 0.22)",
-        }}
+        whileHover={reduce ? undefined : { y: -8, rotate: 0 }}
+        transition={springs.bouncy}
+        className="relative"
       >
-        <p
-          className="font-display text-[13px] leading-tight font-semibold"
-          style={{ color: ink }}
-        >
-          {award.name}
-        </p>
-        <p
-          className="mt-1.5 text-[11px] font-medium"
-          style={{ color: ink, opacity: 0.85 }}
-        >
-          {award.issuer} · {award.year}
-        </p>
-        {award.detail && (
-          <p
-            className="mt-1 text-[11px] leading-snug"
-            style={{ color: ink, opacity: 0.7 }}
-          >
-            {award.detail}
-          </p>
+        {certSrc ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img src={certSrc} alt="" loading="lazy" className="w-full select-none" />
+        ) : (
+          /* cream card with a gold frame line, while the asset is absent */
+          <div className="aspect-[916/1350] w-full rounded-sm border-[3px] border-or/70 bg-[#f6efdd] shadow-sm" />
         )}
+        {/* the award, set into the certificate's blank centre */}
+        <div className="absolute inset-x-[13%] top-[12%] text-center">
+          <p className="font-display text-[clamp(0.62rem,2.4vw,0.95rem)] leading-tight font-bold text-[#3a2f14]">
+            {award.name}
+          </p>
+          <p className="mt-[0.6em] text-[clamp(0.5rem,1.8vw,0.68rem)] font-medium tracking-[0.14em] text-[#6b5a2a] uppercase">
+            {award.issuer} · {award.year}
+          </p>
+          {award.detail && (
+            <p className="mt-[0.9em] -rotate-1 font-hand text-[clamp(0.6rem,2.2vw,0.85rem)] leading-tight text-[#7a6430]">
+              {award.detail}
+            </p>
+          )}
+        </div>
+        {/* the tape it hangs by */}
+        <motion.span
+          aria-hidden
+          initial={reduce ? false : { scale: 0, rotate: -8 }}
+          whileInView={reduce ? undefined : { scale: 1, rotate: -4 }}
+          viewport={{ once: true }}
+          transition={{ ...springs.bouncy, delay: 0.5 + index * 0.12 }}
+          className="absolute -top-2.5 left-1/2 h-5 w-14 -translate-x-1/2 rounded-[2px] bg-or/45 shadow-sm backdrop-blur-[1px]"
+        />
       </motion.div>
     </motion.li>
   );
 }
 
 /**
- * Awards (brief section 6.5): honours as glossy magnets scattered on a
- * brushed-steel fridge, freezer seam, slim handle, little feet and all.
+ * Awards (brief section 6.5): the fridge as the kitchen wall, its body fading
+ * out before the legs, with the two academic honours hung on the door as
+ * framed certificates.
  */
 export function Awards() {
-  // AI fridge final (AI-ASSET-PROMPTS.md C1) replaces the CSS fridge body
-  // (grain, seam, handle, feet) when it lands; the magnets stay in code.
   const fridgeSrc = aiAsset("artifacts/fridge");
 
-  const magnets = AWARDS.map((award, i) => (
-    <FridgeMagnet key={award.id} award={award} index={i} />
+  const certificates = AWARDS.map((award, i) => (
+    <Certificate key={award.id} award={award} index={i} />
   ));
 
   return (
-    <Section
-      id="awards"
-      title="The fridge"
-      aside="every magnet earned"
-    >
+    <Section id="awards" title="The fridge" aside="hung where I see them">
       <Reveal>
-        {fridgeSrc ? (
-          /* The whole fridge shows (its own rounded shoulders and top), and
-             the bottom softly fades into the section instead of a hard crop. */
-          <div className="relative mx-auto w-full max-w-md">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+        {/* the whole top of the fridge shows (shoulders + door); the body
+            softly fades before the legs, never a hard crop */}
+        <div className="relative mx-auto w-full max-w-md">
+          {fridgeSrc ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={fridgeSrc}
               alt=""
               loading="lazy"
               className="pointer-events-none w-full select-none"
               style={{
-                maskImage: "linear-gradient(to bottom, #000 82%, transparent 100%)",
-                WebkitMaskImage: "linear-gradient(to bottom, #000 82%, transparent 100%)",
+                maskImage: "linear-gradient(to bottom, #000 70%, transparent 86%)",
+                WebkitMaskImage: "linear-gradient(to bottom, #000 70%, transparent 86%)",
               }}
             />
-            {/* magnets scattered across the door, kept clear of the handle */}
-            <ul className="absolute inset-0 flex flex-wrap content-start justify-center gap-x-4 gap-y-6 pt-[16%] pr-[22%] pb-[24%] pl-[10%]">
-              {magnets}
-            </ul>
-          </div>
-        ) : (
-          <div className="relative mx-auto w-full max-w-2xl">
-            {/* CSS fridge door */}
-            <div className="relative overflow-hidden rounded-[2rem] border border-black/10 bg-[linear-gradient(180deg,#f6f7f8,#e3e5e7_55%,#d0d3d6)] shadow-[0_20px_50px_rgb(0_0_0/0.18)] dark:border-white/10 dark:shadow-[0_20px_50px_rgb(0_0_0/0.55)]">
-              {/* brushed-metal grain */}
-              <div
-                aria-hidden
-                className="absolute inset-0 opacity-70"
-                style={{
-                  backgroundImage:
-                    "repeating-linear-gradient(90deg, rgb(255 255 255 / 0.14) 0 1px, transparent 1px 5px), repeating-linear-gradient(90deg, rgb(0 0 0 / 0.03) 0 1px, transparent 1px 7px)",
-                }}
-              />
-              {/* freezer door seam */}
-              <div
-                aria-hidden
-                className="absolute inset-x-0 top-[23%] h-[3px] bg-[linear-gradient(180deg,rgb(0_0_0/0.16),rgb(255_255_255/0.55))]"
-              />
-              {/* slim handle */}
+          ) : (
+            /* CSS fridge door while the AI fridge is absent */
+            <div className="relative aspect-[3/4] w-full rounded-[2rem] border border-black/10 bg-[linear-gradient(180deg,#f6f7f8,#e3e5e7_55%,#d0d3d6)] shadow-[0_20px_50px_rgb(0_0_0/0.18)] dark:border-white/10 dark:shadow-[0_20px_50px_rgb(0_0_0/0.55)]">
               <div
                 aria-hidden
                 className="absolute top-[30%] right-3 h-40 w-2.5 rounded-full bg-[linear-gradient(90deg,#b7bbc0,#e9ebed_50%,#a4a8ae)] shadow-[inset_0_1px_2px_rgb(255_255_255/0.7),0_3px_6px_rgb(0_0_0/0.3)]"
               />
-              <ul className="relative flex min-h-[520px] flex-wrap content-start items-start justify-center gap-x-5 gap-y-7 p-7 pt-14 sm:min-h-[560px] sm:p-10 sm:pt-16">
-                {magnets}
-              </ul>
             </div>
-            {/* little fridge feet */}
-            <div aria-hidden className="absolute -bottom-1.5 left-10 h-2 w-7 rounded-b-lg bg-steel/80" />
-            <div aria-hidden className="absolute -bottom-1.5 right-10 h-2 w-7 rounded-b-lg bg-steel/80" />
-          </div>
-        )}
+          )}
+          {/* the framed certificates, hung on the door clear of the handle */}
+          <ul className="absolute inset-0 flex content-start items-start justify-center gap-[4%] pt-[16%] pr-[16%] pl-[6%]">
+            {certificates}
+          </ul>
+        </div>
       </Reveal>
       <Reveal delay={0.12}>
         <Handwritten className="mt-8 text-center" rotate={-1.5}>

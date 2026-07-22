@@ -12,7 +12,6 @@ import {
 } from "framer-motion";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
-import { Handwritten } from "@/components/ui/handwritten";
 import { springs } from "@/lib/motion";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 
@@ -144,8 +143,9 @@ export function DailyDrivers() {
     <Section id="daily-drivers" title="Daily drivers" aside="the apps I actually open">
       <Reveal>
         {/* headroom (pt) keeps floating labels + magnified icons from clipping;
+            pb clears the dock's drop shadow (overflow-x makes y clip too);
             the wrapper scrolls horizontally on narrow screens, never the page. */}
-        <div className="-mx-5 overflow-x-auto px-5 pt-24 pb-2 sm:mx-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="-mx-5 overflow-x-auto px-5 pt-24 pb-12 sm:mx-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <motion.ul
             onMouseMove={reduce ? undefined : (e) => mouseX.set(e.clientX)}
             onMouseLeave={() => mouseX.set(Number.POSITIVE_INFINITY)}
@@ -158,11 +158,6 @@ export function DailyDrivers() {
             ))}
           </motion.ul>
         </div>
-      </Reveal>
-      <Reveal delay={0.12}>
-        <Handwritten className="mt-10 text-center" rotate={-1.5}>
-          yes, the Bible app lives in the dock
-        </Handwritten>
       </Reveal>
     </Section>
   );
