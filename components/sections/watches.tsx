@@ -20,10 +20,6 @@ const HOUR_DEG = 305;
 const MINUTE_DEG = 60;
 const SECOND_DEG = 170;
 
-/** Per-slot vertical seat, so each dial lines up in its velvet cushion. The
- * Opulens image carries more strap below the dial, so it seats a touch lower. */
-const SLOT_TOP = ["30%", "34%", "30%"];
-
 /**
  * One watch resting in its slot: strap arcs above and below a toned dial
  * with simple hands and a crown nub. Micro-interaction (brief section 6.7):
@@ -44,10 +40,10 @@ function WatchPiece({ watch, slotX, index = 0 }: { watch: Watch; slotX?: string;
       transition={{ ...springs.soft, delay: 0.15 + index * 0.13 }}
       className={
         slotX
-          ? "absolute flex w-[32%] -translate-x-1/2 flex-col items-center text-center"
-          : "flex flex-col items-center text-center"
+          ? "group absolute flex w-[32%] -translate-x-1/2 flex-col items-center text-center"
+          : "group flex flex-col items-center text-center"
       }
-      style={slotX ? { left: slotX, top: SLOT_TOP[index] ?? "30%" } : undefined}
+      style={slotX ? { left: slotX, top: "30%" } : undefined}
     >
       {/* the watch seated in its slot on the leather */}
       <div className="relative flex h-44 w-full items-center justify-center sm:h-48">
@@ -129,19 +125,21 @@ function WatchPiece({ watch, slotX, index = 0 }: { watch: Watch; slotX?: string;
         )}
       </div>
 
-      {/* caption on the leather, cream ink so both themes read */}
-      <p className="mt-3 font-display text-sm font-semibold text-[#f6efe1] [text-shadow:0_1px_2px_rgb(20_20_22/0.4)]">
-        {watch.brand}
-        {watch.wishlist && (
-          <span className="ml-1.5 align-middle text-[10px] font-normal tracking-wide text-[#d8c9ae] uppercase">
-            wishlist
-          </span>
-        )}
-      </p>
-      <p className="mt-0.5 text-xs text-[#d8c9ae] [text-shadow:0_1px_2px_rgb(20_20_22/0.4)]">{watch.model}</p>
-      <p className="mt-1.5 max-w-52 -rotate-1 font-hand text-lg leading-tight text-[#efe3c8] [text-shadow:0_1px_2px_rgb(20_20_22/0.45)] sm:line-clamp-2">
-        {watch.why}
-      </p>
+      {/* caption on the leather; only appears on hover for a cleaner roll */}
+      <div className="mt-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100">
+        <p className="font-display text-sm font-semibold text-[#f6efe1] [text-shadow:0_1px_2px_rgb(20_20_22/0.4)]">
+          {watch.brand}
+          {watch.wishlist && (
+            <span className="ml-1.5 align-middle text-[10px] font-normal tracking-wide text-[#d8c9ae] uppercase">
+              wishlist
+            </span>
+          )}
+        </p>
+        <p className="mt-0.5 text-xs text-[#d8c9ae] [text-shadow:0_1px_2px_rgb(20_20_22/0.4)]">{watch.model}</p>
+        <p className="mt-1.5 max-w-52 -rotate-1 font-hand text-lg leading-tight text-[#efe3c8] [text-shadow:0_1px_2px_rgb(20_20_22/0.45)] sm:line-clamp-2">
+          {watch.why}
+        </p>
+      </div>
     </motion.li>
   );
 }
@@ -180,6 +178,16 @@ export function Watches() {
                 <WatchPiece key={watch.id} watch={watch} slotX={SLOT_X[i]} index={i} />
               ))}
             </ol>
+            {/* Sipho designed the Opulens Spirit Blue in the centre slot */}
+            <div className="pointer-events-none absolute top-[1%] left-[45%] hidden -translate-x-1/2 flex-col items-center sm:flex">
+              <p className="-rotate-2 font-hand text-lg text-[#f3e8cf] [text-shadow:0_1px_3px_rgb(20_20_22/0.6)] sm:text-xl">
+                I designed this watch
+              </p>
+              <svg viewBox="0 0 44 48" className="mt-0.5 h-9 w-8 text-[#f3e8cf]" fill="none" aria-hidden>
+                <path d="M24 4 C 33 17, 11 25, 20 40" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+                <path d="M12 33 L20 41 L29 35" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
           </div>
         ) : (
           // CSS-fallback roll (stitched leather) while the photo is absent.

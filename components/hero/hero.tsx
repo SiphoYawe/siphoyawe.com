@@ -55,13 +55,6 @@ export function Hero() {
         <motion.p variants={line} className="mt-3 -rotate-2 font-hand text-xl text-ink-soft sm:text-2xl">
           {t("blessing")}
         </motion.p>
-        {/* Coram Deo spine: hand-lettered near the hero blessing */}
-        <motion.p
-          variants={line}
-          className="mt-1 ml-8 -rotate-3 font-hand text-xl text-[#a8870c] sm:text-2xl dark:text-or"
-        >
-          coram deo
-        </motion.p>
       </motion.div>
 
       <Wordmark />

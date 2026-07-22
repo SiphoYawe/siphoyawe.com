@@ -4,8 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { LOCALE_LABELS, LOCALES, type Locale } from "@/lib/i18n";
-import { useLocale } from "@/components/providers/locale-provider";
 import { useTheme } from "next-themes";
 import { useMounted } from "@/lib/use-mounted";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
@@ -95,34 +93,13 @@ export function MobileMenu() {
 
             <div className="my-1 h-px bg-line" />
 
-            <div className="flex items-center justify-between px-1 py-1">
-              <MenuLanguage />
+            <div className="flex items-center justify-end px-1 py-1">
               <MenuTheme />
             </div>
           </motion.div>
         )}
       </AnimatePresence>
     </div>
-  );
-}
-
-/** Language cycler styled for the menu row. */
-function MenuLanguage() {
-  const { locale, setLocale } = useLocale();
-  const cycle = () => {
-    const next = LOCALES[(LOCALES.indexOf(locale) + 1) % LOCALES.length] as Locale;
-    setLocale(next);
-  };
-  return (
-    <button
-      type="button"
-      onClick={cycle}
-      aria-label={`Language: ${LOCALE_LABELS[locale]}. Switch language`}
-      className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 font-display text-xs font-semibold tracking-wider text-ink-soft outline-none transition-colors hover:text-ink focus-visible:ring-2 focus-visible:ring-accent"
-    >
-      <span aria-hidden className="text-ink-soft/70">lang</span>
-      {LOCALE_LABELS[locale]}
-    </button>
   );
 }
 

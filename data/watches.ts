@@ -25,7 +25,7 @@ export const WATCHES: Watch[] = [
   {
     id: "opulens-spirit",
     brand: "Opulens",
-    model: "Spirit (blue)",
+    model: "Spirit Blue",
     why: "blue dial, quiet flex. My everyday lift.",
     tone: "azure",
     image: "/images/watches/opulens-spirit-v2.webp",

@@ -123,7 +123,7 @@ export function CorkboardNow() {
   return (
     <Section
       id="now"
-      title="Right now"
+      title="My current focus"
       aside="updated periodically"
     >
       <Reveal>

@@ -139,7 +139,7 @@ export function DailyDrivers() {
   const mouseX = useMotionValue(Number.POSITIVE_INFINITY);
 
   return (
-    <Section id="daily-drivers" title="Daily drivers" aside="the apps I actually open">
+    <Section id="daily-drivers" title="Daily drivers" aside="the apps I open every single day">
       <Reveal>
         {/* headroom (pt) keeps floating labels + magnified icons from clipping;
             pb clears the dock's drop shadow (overflow-x makes y clip too);

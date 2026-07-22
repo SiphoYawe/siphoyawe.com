@@ -124,9 +124,6 @@ function BibleArtifact() {
                 />
                 {/* left page: the verse, key phrase highlighted */}
                 <div className="flex min-h-[13.5rem] flex-col justify-center bg-[#f6f0dd] px-5 py-6 shadow-[inset_-18px_0_20px_-16px_rgb(0_0_0/0.35)] sm:min-h-[15.5rem] sm:px-7">
-                  <p className="font-sans text-[9px] font-semibold tracking-[0.28em] text-[#8a7f63] uppercase">
-                    The life verse
-                  </p>
                   <p className="mt-3 text-[13px] leading-relaxed text-[#3a352a] sm:text-[14px] sm:leading-[1.7]">
                     {hi >= 0 ? (
                       <>
@@ -231,7 +228,7 @@ export function Reading() {
   return (
     <Section
       id="reading"
-      title="The shelf"
+      title="What I'm reading"
       aside="the bible stays"
     >
       <Reveal>

@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ThemeToggle } from "./theme-toggle";
-import { LanguageToggle } from "./language-toggle";
 import { MobileMenu } from "./mobile-menu";
 import { SquiggleUnderline } from "@/components/ui/doodles";
 import { springs } from "@/lib/motion";
@@ -110,9 +109,8 @@ export function PillNav() {
           )}
         </Link>
 
-        {/* Toggles live in the pill on desktop; on mobile they move into the menu */}
+        {/* Theme toggle lives in the pill on desktop; on mobile it moves into the menu */}
         <span className="hidden items-center sm:flex">
-          <LanguageToggle />
           <ThemeToggle />
         </span>
 

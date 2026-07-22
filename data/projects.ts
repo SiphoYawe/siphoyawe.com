@@ -16,6 +16,20 @@ export type Project = {
 /** Real projects, grounded in Sipho's GitHub + posts (CONTENT-DATA). */
 export const PROJECTS: Project[] = [
   {
+    id: "zion",
+    image: "/images/projects/zion.webp",
+    name: "Zion",
+    oneLiner:
+      "A comprehensive school-management platform for ACE curriculum schools: administration, records, and reporting in one place.",
+    tags: [
+      { label: "Next.js", color: "blue" },
+      { label: "Supabase", color: "mint" },
+      { label: "SaaS", color: "purple" },
+    ],
+    links: { live: "https://zionapp.co" },
+    year: "2025",
+  },
+  {
     id: "chariot",
     image: "/images/projects/chariot.webp",
     name: "Chariot",
@@ -30,20 +44,6 @@ export const PROJECTS: Project[] = [
     links: { live: "https://onchariot.co", github: "https://github.com/SiphoYawe/Chariot" },
     hiddenSticker: true,
     year: "2026",
-  },
-  {
-    id: "zion",
-    image: "/images/projects/zion.webp",
-    name: "Zion",
-    oneLiner:
-      "A comprehensive school-management platform for ACE curriculum schools: administration, records, and reporting in one place.",
-    tags: [
-      { label: "Next.js", color: "blue" },
-      { label: "Supabase", color: "mint" },
-      { label: "SaaS", color: "purple" },
-    ],
-    links: { live: "https://zionapp.co" },
-    year: "2025",
   },
   {
     id: "spica",

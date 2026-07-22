@@ -26,7 +26,7 @@ export const NOW = {
     {
       id: "where",
       label: "where I am",
-      text: "Between Sheffield and London, one train ahead of my luggage.",
+      text: "In London: meeting web3 people, attending hackathons, building projects, and networking.",
       rotate: 2.5,
     },
   ] as const,

@@ -104,7 +104,7 @@ export function NowPlaying() {
   return (
     <Section
       id="now-playing"
-      title="Now playing"
+      title="Currently listening to"
       aside="live(ish) from spotify"
     >
       <style>{`@keyframes vinyl-spin { to { transform: rotate(360deg); } }
@@ -223,9 +223,6 @@ export function NowPlaying() {
                 </Magnetic>
               </div>
             )}
-            <p aria-hidden className="mt-6 -rotate-2 font-hand text-lg text-ink-soft">
-              flick the record, it likes it
-            </p>
           </div>
         </Reveal>
       </div>

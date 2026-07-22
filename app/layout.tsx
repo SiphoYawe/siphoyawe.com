@@ -22,7 +22,7 @@ const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans" });
 const cinzel = Cinzel({ subsets: ["latin"], variable: "--font-cinzel" });
 const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
 
-const TITLE = "Sipho Yawe | Builder in Web3, writer, speaker";
+const TITLE = "Sipho Yawe | Builder in Web3, Writer, Speaker";
 const DESCRIPTION =
   "The personal corner of Sipho Yawe: building in DeFi at LI.FI, writing, and speaking. Come in, look around, say hello.";
 

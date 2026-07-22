@@ -3,7 +3,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
-import { Handwritten } from "@/components/ui/handwritten";
 import { springs } from "@/lib/motion";
 import { aiAsset } from "@/lib/ai-assets";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
@@ -139,7 +138,7 @@ export function StickerLaptop() {
   return (
     <Section
       id="stack"
-      title="The stickered lid"
+      title="I never go anywhere without my laptop"
       aside="every sticker links out"
     >
       <Reveal variant="scale">
@@ -198,11 +197,6 @@ export function StickerLaptop() {
             </div>
           </div>
         </div>
-      </Reveal>
-      <Reveal delay={0.12}>
-        <Handwritten className="mt-8 text-center" rotate={1.5}>
-          yes, the lid still closes
-        </Handwritten>
       </Reveal>
     </Section>
   );

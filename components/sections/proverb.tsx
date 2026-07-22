@@ -67,7 +67,7 @@ export function Proverb() {
   const current = PROVERBS[index];
 
   return (
-    <Section id="proverb" title="A word from home" aside="luganda & runyankole">
+    <Section id="proverb" title="Wise sayings from home" aside="luganda & runyankole">
       <Reveal>
         <div
           className="mx-auto max-w-xl"
