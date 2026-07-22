@@ -82,7 +82,8 @@ export function Turnstile({ onToken, className = "" }: TurnstileProps) {
       });
     } catch (err) {
       console.debug("[turnstile] render failed", err);
-      setErrored(true);
+      // Defer out of the effect body (avoids a synchronous cascading render).
+      queueMicrotask(() => setErrored(true));
     }
     return () => {
       // Reset the live widget before React tears the container down; nulling the
