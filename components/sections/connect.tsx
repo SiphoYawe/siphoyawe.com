@@ -90,7 +90,7 @@ function BookingBlock() {
       <div id="booking" className="scroll-mt-24">
         <div className="mb-5 flex flex-wrap items-end gap-x-5 gap-y-1">
           <h3 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-            Grab 20 minutes
+            Grab 30 minutes
           </h3>
           <p className="-rotate-1 pb-0.5 font-hand text-xl text-ink-soft">
             the calendar is real, pick a slot
@@ -116,7 +116,7 @@ function BookingBlock() {
               confirmed. Until then the old-fashioned way works too:
             </p>
             <a
-              href={`mailto:${CONTACT_EMAIL}?subject=20 minutes?`}
+              href={`mailto:${CONTACT_EMAIL}?subject=30 minutes?`}
               onClick={() => trackEvent(AnalyticsEvents.CalBooking)}
               className="inline-flex items-center gap-2 rounded-full bg-sable px-5 py-2 text-sm font-semibold text-paper shadow-md transition-shadow hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:bg-paper dark:text-sable"
             >
