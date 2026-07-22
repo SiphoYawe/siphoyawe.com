@@ -164,7 +164,7 @@ export function CorkboardNow() {
             </svg>
 
             {/* ink stamp, seated inside the cork margin */}
-            <p className="pointer-events-none absolute right-5 bottom-4 -rotate-[8deg] rounded-md border-[2.5px] border-gules/70 px-2.5 py-0.5 font-sans text-[10px] font-extrabold tracking-[0.2em] text-gules/80 uppercase sm:text-[11px]">
+            <p className="pointer-events-none absolute right-6 bottom-4 -rotate-6 rounded-md border-[2.5px] border-gules/70 px-2.5 py-0.5 font-sans text-[10px] font-extrabold tracking-[0.2em] text-gules/80 uppercase sm:right-8 sm:text-[11px]">
               updated {NOW.updated}
             </p>
           </div>
