@@ -3,10 +3,9 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
-import { Handwritten } from "@/components/ui/handwritten";
 import { springs } from "@/lib/motion";
 import { aiAsset } from "@/lib/ai-assets";
-import { STAMPS, JOURNEY_NOTE, type Stamp } from "@/data/stamps";
+import { STAMPS, type Stamp } from "@/data/stamps";
 
 const INK: Record<Stamp["ink"], string> = {
   azure: "#2B5DF2",
@@ -30,9 +29,6 @@ const LEFT_PAGE =
   "linear-gradient(100deg, #e9e1cc 0%, #F7F5F0 16%, #F7F5F0 82%, #e4dbc2 100%)";
 const RIGHT_PAGE =
   "linear-gradient(260deg, #e9e1cc 0%, #F7F5F0 16%, #F7F5F0 82%, #e4dbc2 100%)";
-
-/** Dotted arc, Kampala to the UK. */
-const FLIGHT_PATH = "M96 182 C 250 46, 470 18, 636 66";
 
 /**
  * One ink imprint: ~3px border in the stamp's ink, dashed inner ring, heraldic
@@ -148,122 +144,9 @@ function WaxSeal() {
 }
 
 /**
- * Illustrated map strip: two labelled dots, a dotted arc that draws in on
- * scroll (a white path in an SVG mask reveals the dashes, so the line stays
- * dotted while pathLength animates), and a small plane at the head.
- */
-function FlightMap() {
-  const reduce = useReducedMotion();
-  // Embroidered-hoop map (textures/map-kampala-uk): the illustrated centrepiece
-  // when present; the CSS dotted arc is the fallback.
-  const mapSrc = aiAsset("textures/map-kampala-uk");
-
-  if (mapSrc) {
-    return (
-      <Reveal className="mx-auto mt-12 max-w-xl">
-        <figure className="flex flex-col items-center">
-          <motion.img
-            src={mapSrc}
-            alt="Embroidered hoop map of the journey from Kampala to the UK"
-            loading="lazy"
-            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 26 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full max-w-md drop-shadow-[0_18px_30px_rgb(0_0_0/0.28)]"
-          />
-          <figcaption className="mt-6 max-w-sm -rotate-1 text-center font-hand text-xl text-ink-soft sm:text-2xl">
-            {JOURNEY_NOTE}
-          </figcaption>
-        </figure>
-      </Reveal>
-    );
-  }
-
-  return (
-    <Reveal className="mx-auto mt-12 max-w-3xl">
-      <div className="rounded-3xl border border-line bg-canvas-raised p-5 shadow-sm sm:p-7">
-        <svg
-          viewBox="0 0 760 240"
-          role="img"
-          aria-label="Illustrated dotted flight path from Kampala to the UK"
-          className="h-auto w-full"
-        >
-          <defs>
-            <mask id="flight-path-reveal">
-              <motion.path
-                d={FLIGHT_PATH}
-                fill="none"
-                stroke="#ffffff"
-                strokeWidth="10"
-                strokeLinecap="round"
-                initial={reduce ? { pathLength: 1 } : { pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 1.9, ease: [0.65, 0, 0.35, 1] }}
-              />
-            </mask>
-          </defs>
-
-          <path
-            d={FLIGHT_PATH}
-            fill="none"
-            stroke="var(--accent)"
-            strokeWidth="3.5"
-            strokeLinecap="round"
-            strokeDasharray="0.5 12"
-            mask="url(#flight-path-reveal)"
-          />
-
-          {/* Kampala, the home end */}
-          <circle cx="96" cy="182" r="13" fill="none" stroke="#D50000" strokeOpacity="0.3" strokeWidth="2" />
-          <circle cx="96" cy="182" r="7" fill="#D50000" />
-          <text
-            x="96"
-            y="216"
-            textAnchor="middle"
-            className="font-heraldic"
-            style={{ fill: "var(--ink-soft)", fontSize: "13px", letterSpacing: "0.3em" }}
-          >
-            KAMPALA
-          </text>
-
-          {/* UK, the far end */}
-          <circle cx="636" cy="66" r="13" fill="none" stroke="#2B5DF2" strokeOpacity="0.3" strokeWidth="2" />
-          <circle cx="636" cy="66" r="7" fill="#2B5DF2" />
-          <text
-            x="636"
-            y="38"
-            textAnchor="middle"
-            className="font-heraldic"
-            style={{ fill: "var(--ink-soft)", fontSize: "13px", letterSpacing: "0.3em" }}
-          >
-            UK
-          </text>
-
-          {/* plane at the head of the path, lands once the line does */}
-          <motion.g
-            initial={reduce ? false : { opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: reduce ? 0 : 1.75 }}
-          >
-            <path d="M0 -8 L18 0 L0 8 L4.5 0 Z" fill="var(--accent)" transform="translate(622 59) rotate(16)" />
-          </motion.g>
-        </svg>
-
-        <Handwritten className="mt-3 sm:mt-4" rotate={-1.2}>
-          {JOURNEY_NOTE}
-        </Handwritten>
-      </div>
-    </Reveal>
-  );
-}
-
-/**
  * Passport and travel stamps (brief section 6.12): an open passport spread,
- * gold-foil crest on the left page, ink stamps plus the wax seal on the
- * right, and the Kampala-to-UK flight path below.
+ * gold-foil crest on the left page, and ink stamps plus the wax seal on the
+ * right.
  */
 export function Passport() {
   // AI open-passport spread (AI-ASSET-PROMPTS.md C9) replaces the CSS page
@@ -335,8 +218,6 @@ export function Passport() {
           />
         </div>
       </Reveal>
-
-      <FlightMap />
     </Section>
   );
 }

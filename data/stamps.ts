@@ -22,7 +22,3 @@ export const STAMPS: Stamp[] = [
   { id: "south-africa", place: "SOUTH AFRICA", caption: "down south", date: "", ink: "gules", rotate: -6 },
   { id: "kenya", place: "KENYA", caption: "neighbours up north", date: "", ink: "sable", rotate: 7 },
 ];
-
-/** Journey note next to the map. */
-export const JOURNEY_NOTE =
-  "Kampala raised me, Sheffield schooled me, London is building me.";
