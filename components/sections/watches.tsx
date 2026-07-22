@@ -181,7 +181,7 @@ export function Watches() {
             {/* Sipho designed the Opulens Spirit Blue in the centre slot */}
             <div className="pointer-events-none absolute top-[19%] left-[48%] hidden -translate-x-1/2 flex-col items-center sm:flex">
               <p className="-rotate-2 font-hand text-lg text-[#f3e8cf] [text-shadow:0_1px_3px_rgb(20_20_22/0.6)] sm:text-xl">
-                I designed this watch
+                I designed this one
               </p>
               <svg viewBox="0 0 44 48" className="mt-0.5 h-9 w-8 text-[#f3e8cf]" fill="none" aria-hidden>
                 <path d="M24 4 C 33 17, 11 25, 20 40" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
