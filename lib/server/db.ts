@@ -187,3 +187,54 @@ export function getGuestbookStore(): GuestbookStore {
 export function __setGuestbookStore(next: GuestbookStore | null): void {
   store = next;
 }
+
+/** Newsletter subscribers (gated blog downloads). */
+export interface NewsletterStore {
+  subscribe(email: string, source: string | null): Promise<{ isNew: boolean }>;
+}
+
+class NeonNewsletterStore implements NewsletterStore {
+  constructor(private readonly sql: NeonQueryFunction<false, false>) {}
+
+  async subscribe(
+    email: string,
+    source: string | null,
+  ): Promise<{ isNew: boolean }> {
+    const rows = (await this.sql`
+      INSERT INTO newsletter_subscribers (email, source)
+      VALUES (${email}, ${source})
+      ON CONFLICT (email) DO NOTHING
+      RETURNING id
+    `) as { id: string }[];
+    return { isNew: rows.length > 0 };
+  }
+}
+
+export class InMemoryNewsletterStore implements NewsletterStore {
+  private readonly emails = new Set<string>();
+
+  async subscribe(email: string): Promise<{ isNew: boolean }> {
+    const isNew = !this.emails.has(email);
+    this.emails.add(email);
+    return { isNew };
+  }
+}
+
+let newsletterStore: NewsletterStore | null = null;
+
+export function getNewsletterStore(): NewsletterStore {
+  if (newsletterStore) return newsletterStore;
+  if (isConfigured.database && env.database.url) {
+    newsletterStore = new NeonNewsletterStore(neon(env.database.url));
+  } else {
+    console.warn(
+      "[db] DATABASE_URL not set — using in-memory newsletter store (dev mode).",
+    );
+    newsletterStore = new InMemoryNewsletterStore();
+  }
+  return newsletterStore;
+}
+
+export function __setNewsletterStore(next: NewsletterStore | null): void {
+  newsletterStore = next;
+}

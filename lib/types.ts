@@ -43,3 +43,11 @@ export type GuestbookSignResult = {
   pending?: boolean;
   entry?: GuestbookEntry;
 };
+
+/** POST /api/newsletter answer: a successful subscribe unlocks the download. */
+export type NewsletterResult = {
+  ok: boolean;
+  subscribed?: boolean;
+  isNew?: boolean;
+  error?: string;
+};

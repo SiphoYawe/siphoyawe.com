@@ -14,3 +14,12 @@ CREATE TABLE IF NOT EXISTS guestbook_entries (
 
 CREATE INDEX IF NOT EXISTS guestbook_entries_approved_created_idx
   ON guestbook_entries (approved, created_at DESC);
+
+-- Newsletter subscribers (gated blog downloads). Run once against Neon:
+--   psql "$DATABASE_URL" -f schema.sql
+CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  email text UNIQUE NOT NULL,
+  source text,
+  created_at timestamptz NOT NULL DEFAULT now()
+);

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllSlugs, getPost } from "@/lib/blog";
 import { JsonLd, SITE_URL } from "@/components/seo/json-ld";
+import { EmailGate } from "@/components/blog/email-gate";
 
 export function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -131,6 +132,8 @@ export default async function BlogPost({
       <article className="mdx-body">
         <MDXRemote source={post.content} />
       </article>
+
+      {post.gatedPdf && <EmailGate pdf={post.gatedPdf} note={post.gateNote} />}
 
       <footer className="mt-16 border-t border-line pt-8">
         <p className="-rotate-2 font-hand text-xl text-ink-soft">coram deo</p>

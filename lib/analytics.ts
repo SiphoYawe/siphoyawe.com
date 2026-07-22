@@ -12,6 +12,7 @@ export const AnalyticsEvents = {
   CalBooking: "cal_booking_opened",
   SpeakingSubmit: "speaking_form_submitted",
   GuestbookSign: "guestbook_entry_submitted",
+  NewsletterSubscribe: "newsletter_subscribed",
   SectionView: "section_viewed",
   EasterEgg: "easter_egg_found",
   LanguageToggle: "language_toggled",

@@ -21,6 +21,11 @@ export type PostMeta = {
   cover?: string;
   /** Optional last-modified date (frontmatter `updated`), ISO yyyy-mm-dd. */
   updated?: string;
+  /** Optional gated PDF path (frontmatter `gatedPdf`): a newsletter email gate
+   * at the bottom of the post unlocks the download. */
+  gatedPdf?: string;
+  /** Optional note shown above the newsletter gate (frontmatter `gateNote`). */
+  gateNote?: string;
 };
 
 export type Post = PostMeta & { content: string };
@@ -41,6 +46,8 @@ function toMeta(slug: string, data: Record<string, unknown>, content: string): P
     readingTime: readingTime(content),
     cover: data.cover ? String(data.cover) : undefined,
     updated: data.updated ? String(data.updated) : undefined,
+    gatedPdf: data.gatedPdf ? String(data.gatedPdf) : undefined,
+    gateNote: data.gateNote ? String(data.gateNote) : undefined,
   };
 }
 

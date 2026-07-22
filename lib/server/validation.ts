@@ -19,6 +19,14 @@ export const guestbookSchema = z.object({
 
 export type GuestbookInput = z.infer<typeof guestbookSchema>;
 
+export const newsletterSchema = z.object({
+  email: z.string().trim().email().max(200),
+  source: z.string().trim().max(120).optional(),
+  website: honeypot,
+});
+
+export type NewsletterInput = z.infer<typeof newsletterSchema>;
+
 export const moderateActionSchema = z.object({
   token: z.string().min(1),
   id: z.uuid(),

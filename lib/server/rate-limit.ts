@@ -87,3 +87,4 @@ const TEN_MINUTES = 10 * 60 * 1000;
 
 export const speakingRateLimiter = new InMemoryRateLimiter(3, TEN_MINUTES);
 export const guestbookRateLimiter = new InMemoryRateLimiter(2, TEN_MINUTES);
+export const newsletterRateLimiter = new InMemoryRateLimiter(5, TEN_MINUTES);

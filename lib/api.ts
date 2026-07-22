@@ -2,6 +2,7 @@ import type {
   GuestbookEntry,
   GuestbookSignResult,
   GuestbookSignature,
+  NewsletterResult,
   NowPlaying,
   SpeakingInquiry,
 } from "./types";
@@ -93,4 +94,23 @@ export async function signGuestbook(
   console.info("[api offline] guestbook signature:", data);
   await new Promise((r) => setTimeout(r, 600));
   return { ok: true, pending: true };
+}
+
+/**
+ * POST /api/newsletter — subscribe an email to unlock a gated download. Stored
+ * in Neon; offline the client unlocks optimistically so the UI keeps working.
+ */
+export async function subscribeNewsletter(data: {
+  email: string;
+  source?: string;
+  website?: string;
+}): Promise<NewsletterResult> {
+  const live = await tryFetch<NewsletterResult>("/api/newsletter", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (live) return live;
+  console.info("[api offline] newsletter subscribe:", data.email);
+  return { ok: true, subscribed: true };
 }
