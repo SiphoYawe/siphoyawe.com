@@ -8,7 +8,6 @@ import {
 import { env, isConfigured } from "./env";
 import { screenMessage } from "./moderation";
 import { guestbookRateLimiter, type RateLimiter } from "./rate-limit";
-import { verifyTurnstile } from "./turnstile";
 import {
   firstError,
   guestbookSchema,
@@ -23,7 +22,6 @@ const PENDING_LIMIT = 100;
 export type GuestbookDeps = {
   store?: GuestbookStore;
   rateLimiter?: RateLimiter;
-  verify?: typeof verifyTurnstile;
   capture?: typeof captureServerEvent;
 };
 
@@ -42,7 +40,6 @@ export async function createGuestbookEntry(
 ): Promise<ServiceResponse> {
   const store = deps.store ?? getGuestbookStore();
   const rateLimiter = deps.rateLimiter ?? guestbookRateLimiter;
-  const verify = deps.verify ?? verifyTurnstile;
   const capture = deps.capture ?? captureServerEvent;
 
   if (raw === null || typeof raw !== "object") {
@@ -67,11 +64,6 @@ export async function createGuestbookEntry(
       body: { ok: false, error: "Too many requests. Try again later." },
       headers: { "retry-after": String(limit.retryAfterSeconds) },
     };
-  }
-
-  const human = await verify(input.turnstileToken, ip);
-  if (!human) {
-    return { status: 400, body: { ok: false, error: "Verification failed" } };
   }
 
   // Spam screen: same silent-accept shape as the honeypot so spammers can't

@@ -29,8 +29,6 @@ const values = {
   SPEAKING_TO_EMAIL: readVar("SPEAKING_TO_EMAIL", email),
   SPEAKING_FROM_EMAIL: readVar("SPEAKING_FROM_EMAIL", email),
 
-  TURNSTILE_SECRET_KEY: readVar("TURNSTILE_SECRET_KEY", str),
-
   DATABASE_URL: readVar("DATABASE_URL", str),
   IP_HASH_SALT: readVar("IP_HASH_SALT", str),
 
@@ -55,9 +53,6 @@ export const env = {
     toEmail: values.SPEAKING_TO_EMAIL,
     fromEmail: values.SPEAKING_FROM_EMAIL ?? DEFAULT_SPEAKING_FROM,
   },
-  turnstile: {
-    secretKey: values.TURNSTILE_SECRET_KEY,
-  },
   database: {
     url: values.DATABASE_URL,
     ipHashSalt: values.IP_HASH_SALT ?? DEFAULT_IP_HASH_SALT,
@@ -78,7 +73,6 @@ export const isConfigured = {
       env.spotify.refreshToken,
   ),
   resend: Boolean(env.resend.apiKey && env.resend.toEmail),
-  turnstile: Boolean(env.turnstile.secretKey),
   database: Boolean(env.database.url),
   posthog: Boolean(env.posthog.apiKey),
   guestbookModeration: Boolean(env.guestbook.moderationToken),

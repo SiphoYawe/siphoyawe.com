@@ -15,7 +15,6 @@ export const guestbookSchema = z.object({
   name: z.string().trim().min(1).max(50),
   message: z.string().trim().min(1).max(500),
   website: honeypot,
-  turnstileToken: z.string().optional(),
 });
 
 export type GuestbookInput = z.infer<typeof guestbookSchema>;

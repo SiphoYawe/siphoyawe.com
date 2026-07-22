@@ -37,7 +37,6 @@ export const speakingSchema = z.object({
     .min(10, "a sentence or two helps me say yes well")
     .max(5000),
   website: honeypot,
-  turnstileToken: z.string().optional(),
 });
 
 export type SpeakingInput = z.infer<typeof speakingSchema>;

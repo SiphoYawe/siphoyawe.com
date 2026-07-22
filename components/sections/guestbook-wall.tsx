@@ -5,7 +5,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Reveal } from "@/components/ui/reveal";
 import { springs } from "@/lib/motion";
 import { getGuestbook, signGuestbook } from "@/lib/api";
-import { Turnstile } from "@/components/forms/turnstile";
 import { trackEvent, AnalyticsEvents } from "@/lib/analytics";
 import type { GuestbookEntry } from "@/lib/types";
 
@@ -74,10 +73,9 @@ type FormErrors = { name?: string; message?: string };
 export function GuestbookWall({ initialEntries }: { initialEntries: GuestbookEntry[] }) {
   const [entries, setEntries] = useState(initialEntries);
   const [pendingNote, setPendingNote] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
-  // Swap the static seed for live entries once /api/guestbook exists
-  // (getGuestbook falls back to the same mock while it doesn't).
+  // Pull live entries once /api/guestbook answers (getGuestbook returns an
+  // empty list until then, so the wall simply starts bare).
   useEffect(() => {
     let cancelled = false;
     void getGuestbook().then((live) => {
@@ -120,7 +118,6 @@ export function GuestbookWall({ initialEntries }: { initialEntries: GuestbookEnt
         name: name.trim(),
         message: message.trim(),
         website,
-        turnstileToken: turnstileToken ?? undefined,
       });
       if (!res.ok) {
         setStatus("error");
@@ -232,8 +229,6 @@ export function GuestbookWall({ initialEntries }: { initialEntries: GuestbookEnt
               onChange={(e) => setWebsite(e.target.value)}
             />
           </div>
-
-          <Turnstile onToken={setTurnstileToken} />
 
           <motion.button
             type="submit"

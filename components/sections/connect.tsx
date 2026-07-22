@@ -10,7 +10,6 @@ import { ConnectButton } from "@/components/ui/connect-button";
 import { Reveal } from "@/components/ui/reveal";
 import { Handwritten } from "@/components/ui/handwritten";
 import { SocialDock } from "@/components/nav/social-dock";
-import { Turnstile } from "@/components/forms/turnstile";
 import { springs } from "@/lib/motion";
 import { submitSpeaking } from "@/lib/api";
 import { aiAsset } from "@/lib/ai-assets";
@@ -134,7 +133,6 @@ function SpeakingForm() {
   const [values, setValues] = useState<SpeakingValues>(EMPTY_VALUES);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   const set = (key: keyof SpeakingValues) => (value: string) =>
     setValues((prev) => ({ ...prev, [key]: value }));
@@ -172,7 +170,6 @@ function SpeakingForm() {
       budget: parsed.data.budget || undefined,
       message: parsed.data.message,
       website: parsed.data.website,
-      turnstileToken: turnstileToken ?? undefined,
     };
     try {
       const res = await submitSpeaking(inquiry);
@@ -339,8 +336,6 @@ function SpeakingForm() {
           onChange={(e) => set("website")(e.target.value)}
         />
       </div>
-
-      <Turnstile onToken={setTurnstileToken} />
 
       {status === "error" && (
         <p role="alert" className="text-sm text-gules">

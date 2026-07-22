@@ -3,7 +3,6 @@ import { hashIp } from "./db";
 import { sendSpeakingEmail } from "./email";
 import type { ServiceResponse } from "./http";
 import { speakingRateLimiter, type RateLimiter } from "./rate-limit";
-import { verifyTurnstile } from "./turnstile";
 import {
   firstError,
   honeypotTripped,
@@ -14,7 +13,6 @@ export type { ServiceResponse } from "./http";
 
 export type SpeakingDeps = {
   rateLimiter?: RateLimiter;
-  verify?: typeof verifyTurnstile;
   send?: typeof sendSpeakingEmail;
   capture?: typeof captureServerEvent;
 };
@@ -25,7 +23,6 @@ export async function handleSpeaking(
   deps: SpeakingDeps = {},
 ): Promise<ServiceResponse> {
   const rateLimiter = deps.rateLimiter ?? speakingRateLimiter;
-  const verify = deps.verify ?? verifyTurnstile;
   const send = deps.send ?? sendSpeakingEmail;
   const capture = deps.capture ?? captureServerEvent;
 
@@ -51,14 +48,6 @@ export async function handleSpeaking(
       status: 429,
       body: { ok: false, error: "Too many requests. Try again later." },
       headers: { "retry-after": String(limit.retryAfterSeconds) },
-    };
-  }
-
-  const human = await verify(input.turnstileToken, ip);
-  if (!human) {
-    return {
-      status: 400,
-      body: { ok: false, error: "Verification failed" },
     };
   }
 

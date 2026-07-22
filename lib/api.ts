@@ -48,7 +48,7 @@ export async function getNowPlaying(): Promise<NowPlaying> {
   return live ?? OFFLINE_NOW_PLAYING;
 }
 
-/** POST /api/speaking — zod-validated server-side; honeypot + Turnstile. */
+/** POST /api/speaking — zod-validated server-side; honeypot + rate limit. */
 export async function submitSpeaking(
   data: SpeakingInquiry,
 ): Promise<{ ok: boolean; error?: string }> {
