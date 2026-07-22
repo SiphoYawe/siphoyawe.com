@@ -13,7 +13,7 @@ declare global {
           size?: "normal" | "compact";
           callback?: (token: string) => void;
           "expired-callback"?: () => void;
-          "error-callback"?: () => void;
+          "error-callback"?: (code?: string) => void;
         },
       ) => string;
       reset: (widgetId?: string) => void;
@@ -38,6 +38,8 @@ type TurnstileProps = {
 export function Turnstile({ onToken, className = "" }: TurnstileProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
+  const [errored, setErrored] = useState(false);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     if (!SITE_KEY) return;
@@ -52,25 +54,54 @@ export function Turnstile({ onToken, className = "" }: TurnstileProps) {
     script.async = true;
     script.defer = true;
     script.onload = () => setReady(true);
+    script.onerror = () => setErrored(true);
     document.head.appendChild(script);
   }, []);
 
   useEffect(() => {
     if (!SITE_KEY || !ready || !containerRef.current || !window.turnstile) return;
-    const widgetId = window.turnstile.render(containerRef.current, {
-      sitekey: SITE_KEY,
-      theme: "auto",
-      size: "compact",
-      callback: (token) => onToken(token),
-      "expired-callback": () => onToken(null),
-      "error-callback": () => onToken(null),
-    });
+    const el = containerRef.current;
+    el.innerHTML = ""; // clear any prior widget before a retry re-render
+    let widgetId: string | undefined;
+    try {
+      widgetId = window.turnstile.render(el, {
+        sitekey: SITE_KEY,
+        theme: "auto",
+        size: "compact",
+        callback: (token) => {
+          setErrored(false);
+          onToken(token);
+        },
+        "expired-callback": () => onToken(null),
+        "error-callback": (code) => {
+          // Log the code for diagnosis (often a hostname-allowlist mismatch).
+          console.debug("[turnstile] error-callback", code);
+          onToken(null);
+          setErrored(true);
+        },
+      });
+    } catch (err) {
+      console.debug("[turnstile] render failed", err);
+      setErrored(true);
+    }
     return () => {
       // Reset the live widget before React tears the container down; nulling the
       // ref first would strand the widget with no node to reset against.
-      window.turnstile?.reset(widgetId);
+      if (widgetId) {
+        try {
+          window.turnstile?.reset(widgetId);
+        } catch {
+          /* widget already gone */
+        }
+      }
     };
-  }, [ready, onToken]);
+  }, [ready, onToken, attempt]);
+
+  const retry = () => {
+    onToken(null);
+    setErrored(false);
+    setAttempt((a) => a + 1);
+  };
 
   if (!SITE_KEY) {
     return (
@@ -83,5 +114,21 @@ export function Turnstile({ onToken, className = "" }: TurnstileProps) {
     );
   }
 
-  return <div ref={containerRef} className={className} aria-label="Spam check" />;
+  return (
+    <div className={className}>
+      <div ref={containerRef} aria-label="Spam check" className={errored ? "hidden" : ""} />
+      {errored && (
+        <p className="font-hand text-lg text-ink-soft" role="status">
+          spam check hiccuped.{" "}
+          <button
+            type="button"
+            onClick={retry}
+            className="cursor-pointer underline decoration-accent decoration-2 underline-offset-2 hover:text-ink"
+          >
+            tap to retry
+          </button>
+        </p>
+      )}
+    </div>
+  );
 }
