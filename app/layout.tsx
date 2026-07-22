@@ -13,6 +13,9 @@ const satoshi = localFont({
   variable: "--font-satoshi",
   weight: "300 900",
   display: "swap",
+  // Sans-serif fallback so nothing (esp. the preloader, which paints first)
+  // ever flashes the browser default serif during font swap.
+  fallback: ["system-ui", "-apple-system", "Segoe UI", "Helvetica", "Arial", "sans-serif"],
 });
 
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans" });
