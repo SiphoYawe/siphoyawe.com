@@ -71,20 +71,21 @@ function Lanyard({ talk, index }: { talk: Talk; index: number }) {
         className="flex flex-col items-center"
       >
         {aiSrc ? (
-          <div className="relative w-full">
+          <div className="flex w-full flex-col items-center">
+            {/* the strap + clip (cleaned asset), hanging from the top */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={aiSrc} alt="" loading="lazy" className="w-full" />
-            {/* overlay sits on the blank badge face; the inset percentages
-                may need a nudge once the generated final lands */}
-            <div className="absolute inset-x-[14%] top-[38%] overflow-hidden rounded-lg">
-              <div className="px-4 pt-2 pb-1.5 text-center" style={{ background: strip }}>
-                <span aria-hidden className="mx-auto mb-1.5 block h-1 w-8 rounded-full bg-sable/25" />
-                <p className="font-sans font-semibold text-[10px] tracking-[0.35em] text-[#F7F5F0]">SPEAKER</p>
+            <img src={aiSrc} alt="" loading="lazy" className="w-16 object-contain drop-shadow-sm sm:w-20" />
+            {/* the badge card, hooked onto the clip */}
+            <div className="relative -mt-7 w-44 overflow-hidden rounded-xl border border-line bg-canvas-raised shadow-(--shadow-polaroid)">
+              {/* the slot the clip hooks through */}
+              <span aria-hidden className="mx-auto mt-2.5 block h-1.5 w-9 rounded-full bg-sable/25" />
+              <div className="mt-2 px-4 py-1.5 text-center" style={{ background: strip }}>
+                <p className="font-sans text-[10px] font-bold tracking-[0.35em] text-[#F7F5F0]">SPEAKER</p>
               </div>
-              <div className="p-4 text-center">
-                <p className="font-display text-base leading-snug font-semibold text-[#141416]">{talk.title}</p>
-                <p className="mt-1.5 text-sm text-[#55534e]">{talk.venue}</p>
-                <p className="mt-1 font-sans font-semibold text-[10px] tracking-[0.25em] text-accent uppercase">
+              <div className="px-4 py-4 text-center">
+                <p className="line-clamp-2 font-display text-sm leading-snug font-semibold text-ink">{talk.title}</p>
+                <p className="mt-1 line-clamp-1 text-xs text-ink-soft">{talk.venue}</p>
+                <p className="mt-1.5 font-sans text-[10px] font-semibold tracking-[0.22em] text-accent uppercase">
                   {talk.date}
                 </p>
               </div>
@@ -146,20 +147,16 @@ function Stub({ talk, index }: { talk: Talk; index: number }) {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={aiSrc} alt="" loading="lazy" className="w-full" />
-            {/* nub + text over the blank center panel of the generated ticket */}
-            <div className="absolute inset-0 flex">
-              <div className="grid w-12 shrink-0 place-items-center">
-                <span aria-hidden className="-rotate-90 font-sans font-semibold text-[10px] tracking-[0.3em] text-[#55534e]">
-                  SY
-                </span>
-              </div>
-              <div className="min-w-0 self-center p-4 sm:p-5">
-                <p className="font-display text-base leading-snug font-semibold text-[#141416]">{talk.title}</p>
-                <p className="mt-1 text-sm text-[#55534e]">{talk.venue}</p>
-                <p className="mt-1.5 font-sans font-semibold text-[10px] tracking-[0.25em] text-accent uppercase">
-                  {talk.date}
-                </p>
-              </div>
+            {/* text kept inside the ticket's cream safe area: the ornamental
+                border and torn stub start near 78% width, so cap the right. */}
+            <div className="absolute inset-y-[15%] left-[9%] right-[27%] flex flex-col justify-center">
+              <p className="line-clamp-2 font-display text-sm leading-snug font-semibold text-[#141416] sm:text-base">
+                {talk.title}
+              </p>
+              <p className="mt-1 line-clamp-1 text-xs text-[#55534e] sm:text-sm">{talk.venue}</p>
+              <p className="mt-1.5 font-sans text-[10px] font-semibold tracking-[0.22em] text-accent uppercase">
+                {talk.date}
+              </p>
             </div>
           </motion.div>
         ) : (
