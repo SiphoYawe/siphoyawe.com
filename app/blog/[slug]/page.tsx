@@ -65,7 +65,7 @@ export default async function BlogPost({
       </Link>
 
       <header className="mt-8 mb-12">
-        <p className="mb-3 font-heraldic text-[11px] tracking-[0.25em] text-ink-soft uppercase">
+        <p className="mb-3 font-sans font-semibold text-[11px] tracking-[0.25em] text-ink-soft uppercase">
           {formatDate(post.date)}
           <span className="ml-3">{post.readingTime}</span>
         </p>

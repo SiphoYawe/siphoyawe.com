@@ -11,7 +11,7 @@ import { PROVERBS, type Proverb as ProverbType } from "@/data/proverbs";
 function ProverbText({ proverb }: { proverb: ProverbType }) {
   return (
     <>
-      <span className="font-heraldic text-[10px] tracking-[0.32em] text-ink-soft uppercase">
+      <span className="font-sans font-semibold text-[10px] tracking-[0.32em] text-ink-soft uppercase">
         {proverb.lang}
       </span>
       <p className="mt-6 font-hand text-3xl leading-tight text-balance text-ink sm:text-4xl">

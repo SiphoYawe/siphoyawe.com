@@ -27,7 +27,7 @@ export default function BlogIndex() {
   return (
     <main id="main-content" className="mx-auto max-w-2xl px-5 pt-32 pb-24 sm:px-8">
       <header className="mb-14">
-        <p className="mb-3 font-heraldic text-xs tracking-[0.3em] text-accent uppercase">
+        <p className="mb-3 font-sans font-semibold text-xs tracking-[0.3em] text-accent uppercase">
           The desk
         </p>
         <h1 className="font-display text-5xl font-semibold tracking-tight">Notes, by hand</h1>
@@ -49,7 +49,7 @@ export default function BlogIndex() {
                 href={`/blog/${post.slug}`}
                 className="group block rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
-                <p className="font-heraldic text-[11px] tracking-[0.25em] text-ink-soft uppercase">
+                <p className="font-sans font-semibold text-[11px] tracking-[0.25em] text-ink-soft uppercase">
                   {formatDate(post.date)}
                   {post.readingTime && <span className="ml-3">{post.readingTime}</span>}
                 </p>

@@ -49,7 +49,7 @@ function EnamelPin({ job, index }: { job: Experience; index: number }) {
       <div className="mt-4">
         <p className="font-display text-sm leading-tight font-semibold sm:text-base">{job.company}</p>
         <p className="mt-0.5 text-xs text-ink-soft sm:text-sm">{job.role}</p>
-        <p className="mt-1 font-heraldic text-[10px] tracking-[0.2em] text-accent uppercase">
+        <p className="mt-1 font-sans font-semibold text-[10px] tracking-[0.2em] text-accent uppercase">
           {job.start} to {job.end}
         </p>
         {job.note && (

@@ -79,12 +79,12 @@ function Lanyard({ talk, index }: { talk: Talk; index: number }) {
             <div className="absolute inset-x-[14%] top-[38%] overflow-hidden rounded-lg">
               <div className="px-4 pt-2 pb-1.5 text-center" style={{ background: strip }}>
                 <span aria-hidden className="mx-auto mb-1.5 block h-1 w-8 rounded-full bg-sable/25" />
-                <p className="font-heraldic text-[10px] tracking-[0.35em] text-[#F7F5F0]">SPEAKER</p>
+                <p className="font-sans font-semibold text-[10px] tracking-[0.35em] text-[#F7F5F0]">SPEAKER</p>
               </div>
               <div className="p-4 text-center">
                 <p className="font-display text-base leading-snug font-semibold text-[#141416]">{talk.title}</p>
                 <p className="mt-1.5 text-sm text-[#55534e]">{talk.venue}</p>
-                <p className="mt-1 font-heraldic text-[10px] tracking-[0.25em] text-accent uppercase">
+                <p className="mt-1 font-sans font-semibold text-[10px] tracking-[0.25em] text-accent uppercase">
                   {talk.date}
                 </p>
               </div>
@@ -102,12 +102,12 @@ function Lanyard({ talk, index }: { talk: Talk; index: number }) {
         <div className="-mt-1.5 w-full overflow-hidden rounded-xl border border-line bg-canvas-raised shadow-(--shadow-polaroid)">
           <div className="px-4 pt-2 pb-1.5 text-center" style={{ background: strip }}>
             <span aria-hidden className="mx-auto mb-1.5 block h-1 w-8 rounded-full bg-sable/25" />
-            <p className="font-heraldic text-[10px] tracking-[0.35em] text-[#F7F5F0]">SPEAKER</p>
+            <p className="font-sans font-semibold text-[10px] tracking-[0.35em] text-[#F7F5F0]">SPEAKER</p>
           </div>
           <div className="p-4 text-center">
             <p className="font-display text-base leading-snug font-semibold">{talk.title}</p>
             <p className="mt-1.5 text-sm text-ink-soft">{talk.venue}</p>
-            <p className="mt-1 font-heraldic text-[10px] tracking-[0.25em] text-accent uppercase">
+            <p className="mt-1 font-sans font-semibold text-[10px] tracking-[0.25em] text-accent uppercase">
               {talk.date}
             </p>
             {talk.note && <p className="mt-1.5 text-xs text-ink-soft">{talk.note}</p>}
@@ -149,14 +149,14 @@ function Stub({ talk, index }: { talk: Talk; index: number }) {
             {/* nub + text over the blank center panel of the generated ticket */}
             <div className="absolute inset-0 flex">
               <div className="grid w-12 shrink-0 place-items-center">
-                <span aria-hidden className="-rotate-90 font-heraldic text-[10px] tracking-[0.3em] text-[#55534e]">
+                <span aria-hidden className="-rotate-90 font-sans font-semibold text-[10px] tracking-[0.3em] text-[#55534e]">
                   SY
                 </span>
               </div>
               <div className="min-w-0 self-center p-4 sm:p-5">
                 <p className="font-display text-base leading-snug font-semibold text-[#141416]">{talk.title}</p>
                 <p className="mt-1 text-sm text-[#55534e]">{talk.venue}</p>
-                <p className="mt-1.5 font-heraldic text-[10px] tracking-[0.25em] text-accent uppercase">
+                <p className="mt-1.5 font-sans font-semibold text-[10px] tracking-[0.25em] text-accent uppercase">
                   {talk.date}
                 </p>
               </div>
@@ -171,14 +171,14 @@ function Stub({ talk, index }: { talk: Talk; index: number }) {
         >
           {/* the torn-off nub, kept for luck */}
           <div className="grid w-12 shrink-0 place-items-center border-r-2 border-dashed border-line">
-            <span aria-hidden className="-rotate-90 font-heraldic text-[10px] tracking-[0.3em] text-ink-soft">
+            <span aria-hidden className="-rotate-90 font-sans font-semibold text-[10px] tracking-[0.3em] text-ink-soft">
               SY
             </span>
           </div>
           <div className="min-w-0 p-4 sm:p-5">
             <p className="font-display text-base leading-snug font-semibold">{talk.title}</p>
             <p className="mt-1 text-sm text-ink-soft">{talk.venue}</p>
-            <p className="mt-1.5 font-heraldic text-[10px] tracking-[0.25em] text-accent uppercase">
+            <p className="mt-1.5 font-sans font-semibold text-[10px] tracking-[0.25em] text-accent uppercase">
               {talk.date}
             </p>
             {talk.note && <p className="mt-1.5 text-xs text-ink-soft">{talk.note}</p>}

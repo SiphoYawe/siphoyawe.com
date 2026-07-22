@@ -81,7 +81,7 @@ export function About() {
         <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-4">
           {FACTS.map((fact) => (
             <div key={fact.label} className="bg-canvas-raised p-5">
-              <dt className="font-heraldic text-[11px] tracking-[0.25em] text-ink-soft uppercase">
+              <dt className="font-sans font-semibold text-[11px] tracking-[0.25em] text-ink-soft uppercase">
                 {fact.label}
               </dt>
               <dd className="mt-2 font-display text-sm font-semibold sm:text-base">

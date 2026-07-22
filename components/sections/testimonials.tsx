@@ -61,7 +61,7 @@ function QuoteCard({ item, index }: { item: Testimonial; index: number }) {
       className="flex h-full flex-col"
     >
       <figure className="flex h-full flex-col p-6">
-        <span aria-hidden className="font-heraldic text-6xl leading-[0.5] text-accent/30">
+        <span aria-hidden className="font-display text-6xl leading-[0.5] text-accent/30">
           &ldquo;
         </span>
         <blockquote className="mt-5 flex-1">
@@ -70,7 +70,7 @@ function QuoteCard({ item, index }: { item: Testimonial; index: number }) {
         <figcaption className="mt-6 flex items-center gap-3">
           <span
             aria-hidden
-            className="grid size-11 shrink-0 place-items-center rounded-full border border-line bg-canvas font-heraldic text-sm text-ink-soft"
+            className="grid size-11 shrink-0 place-items-center rounded-full border border-line bg-canvas font-display text-sm font-semibold text-ink-soft"
           >
             {initials(item.name)}
           </span>
