@@ -6,6 +6,8 @@ export type Book = {
   spine: "azure" | "or" | "gules" | "mint" | "sable";
   /** The current read gets the red ribbon bookmark. */
   current?: boolean;
+  /** Front-cover image; a typographic placeholder shows until one is set. */
+  coverImage?: string;
   note?: string;
 };
 

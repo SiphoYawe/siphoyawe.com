@@ -16,58 +16,69 @@ const SPINE_STYLES: Record<Book["spine"], { bg: string; ink: string }> = {
   sable: { bg: "#141416", ink: "#FCDD09" },
 };
 
-/** Hand-varied heights and widths, so the shelf looks shelved, not rendered. */
-const BOOK_SIZES = ["h-40 w-11", "h-48 w-12", "h-44 w-10"];
+/** Slight per-book lean so the shelf looks shelved, not rendered. */
+const BOOK_TILTS = [-2, 1.5, -1, 2];
 
 /** The phrase that gets the soft yellow highlighter when the Bible opens. */
 const HIGHLIGHT_PHRASE = "he will establish your plans";
 
 /**
- * One standing spine on the shelf. Micro-interaction (brief section 6.6):
- * eases forward off the shelf on hover, a small lift and tilt on a soft
- * spring. The current read wears the red ribbon bookmark past the shelf edge.
+ * One front-facing book cover standing on the shelf. Micro-interaction (brief
+ * section 6.6): eases forward off the shelf on hover, a small lift and tilt on
+ * a soft spring. The current read wears the red ribbon bookmark past the top.
+ * Renders a real cover image when present, a typographic placeholder otherwise.
  */
 function ShelfBook({ book, index }: { book: Book; index: number }) {
   const reduce = useReducedMotion();
   const { bg, ink } = SPINE_STYLES[book.spine];
+  const tilt = BOOK_TILTS[index % BOOK_TILTS.length];
 
   return (
     <motion.li
-      whileHover={reduce ? undefined : { y: -6, rotate: -2 }}
-      transition={springs.soft}
-      className={`relative z-10 flex ${BOOK_SIZES[index % BOOK_SIZES.length]} cursor-default flex-col items-center justify-between rounded-t-[3px] px-1.5 pt-2.5 pb-2`}
-      style={{
-        background: `linear-gradient(90deg, rgb(0 0 0 / 0.28), transparent 20%, rgb(255 255 255 / 0.16) 46%, transparent 68%, rgb(0 0 0 / 0.32)), ${bg}`,
-        boxShadow: "0 3px 5px rgb(0 0 0 / 0.3)",
-      }}
+      initial={reduce ? false : { opacity: 0, y: 16 }}
+      whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      whileHover={reduce ? undefined : { y: -10, rotate: 0, scale: 1.03 }}
+      transition={{ ...springs.soft, delay: index * 0.06 }}
+      style={{ rotate: `${tilt}deg` }}
+      className="relative z-10 -mx-1 cursor-default"
     >
       {book.current && (
         <span
           aria-hidden
-          className="absolute top-0 left-1/2 w-1.5 -translate-x-1/2 bg-gules shadow-sm"
+          className="absolute top-[-10px] left-6 z-20 w-2 bg-gules shadow-sm"
           style={{
-            height: "calc(100% + 30px)",
-            clipPath: "polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 6px), 0 100%)",
+            height: "calc(100% + 4px)",
+            clipPath: "polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 5px), 0 100%)",
           }}
         />
       )}
-      {/* binding bands */}
-      <span aria-hidden className="flex w-full flex-col gap-1">
-        <span className="h-px w-full" style={{ background: ink, opacity: 0.45 }} />
-        <span className="h-px w-full" style={{ background: ink, opacity: 0.45 }} />
-      </span>
-      <span
-        className="flex-1 overflow-hidden pt-2 text-[10px] font-semibold tracking-[0.14em] uppercase [writing-mode:vertical-rl]"
-        style={{ color: ink }}
+      <div
+        className="relative h-44 w-28 overflow-hidden rounded-[2px] rounded-r-[4px] shadow-[0_10px_18px_-8px_rgb(0_0_0/0.55)]"
+        style={{ background: bg }}
       >
-        {book.title}
-      </span>
+        {book.coverImage ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img src={book.coverImage} alt={`${book.title} cover`} loading="lazy" className="size-full object-cover" />
+        ) : (
+          /* typographic placeholder cover */
+          <div className="flex h-full flex-col justify-between p-4" style={{ color: ink }}>
+            <p className="text-[13px] leading-tight font-bold" style={{ fontFamily: "var(--font-display)" }}>
+              {book.title}
+            </p>
+            <p className="text-[9px] font-semibold tracking-[0.14em] uppercase opacity-85">{book.author}</p>
+          </div>
+        )}
+        {/* spine shadow at the binding + cover sheen */}
+        <span aria-hidden className="pointer-events-none absolute inset-y-0 left-0 w-3 bg-gradient-to-r from-black/35 to-transparent" />
+        <span aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/12 via-transparent to-black/10" />
+      </div>
+      {/* page-block thickness on the right edge */}
       <span
-        className="pt-1 text-[7px] tracking-[0.12em] uppercase opacity-80 [writing-mode:vertical-rl]"
-        style={{ color: ink }}
-      >
-        {book.author}
-      </span>
+        aria-hidden
+        className="absolute inset-y-1 -right-1 w-1.5 rounded-r-[2px]"
+        style={{ background: "repeating-linear-gradient(180deg, #efe8d2 0 2px, #ded4b8 2px 3px)" }}
+      />
     </motion.li>
   );
 }
