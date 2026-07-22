@@ -176,7 +176,7 @@ export function Passport() {
             src={coverSrc}
             alt="A closed Ugandan passport"
             loading="lazy"
-            className="pointer-events-none absolute -top-10 -left-14 z-0 hidden w-40 -rotate-[9deg] select-none drop-shadow-[0_16px_30px_rgb(0_0_0/0.35)] lg:block xl:-left-24 xl:w-44"
+            className="pointer-events-none absolute -top-12 -left-24 z-0 hidden w-44 -rotate-[9deg] select-none drop-shadow-[0_16px_30px_rgb(0_0_0/0.35)] lg:block xl:-left-36 xl:w-52"
           />
         )}
         {/* a crowned crane flying the Kampala-to-UK route, over the spread */}

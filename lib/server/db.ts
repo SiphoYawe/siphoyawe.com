@@ -81,7 +81,7 @@ class NeonStore implements GuestbookStore {
   async insert(entry: NewEntry): Promise<{ id: string }> {
     const rows = (await this.sql`
       INSERT INTO guestbook_entries (name, message, ip_hash, approved)
-      VALUES (${entry.name}, ${entry.message}, ${entry.ipHash}, false)
+      VALUES (${entry.name}, ${entry.message}, ${entry.ipHash}, true)
       RETURNING id
     `) as { id: string }[];
     const id = rows[0]?.id ?? "";
@@ -148,7 +148,7 @@ export class InMemoryStore implements GuestbookStore {
       id,
       name: entry.name,
       message: entry.message,
-      approved: false,
+      approved: true,
       createdAt: new Date().toISOString(),
       ipHash: entry.ipHash,
     });

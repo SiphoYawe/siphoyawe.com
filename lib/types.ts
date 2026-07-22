@@ -35,6 +35,11 @@ export type GuestbookEntry = {
   approved?: boolean;
 };
 
-/** POST /api/guestbook answer: entries are pre-moderated (brief section 10),
- * so a successful sign comes back pending, never instantly public. */
-export type GuestbookSignResult = { ok: boolean; pending?: boolean };
+/** POST /api/guestbook answer: notes publish immediately, so a successful sign
+ * returns the created `entry`. `pending` is only true for silently-dropped
+ * spam (honeypot / screen), which never produces an entry. */
+export type GuestbookSignResult = {
+  ok: boolean;
+  pending?: boolean;
+  entry?: GuestbookEntry;
+};

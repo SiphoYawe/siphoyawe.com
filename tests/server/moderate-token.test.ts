@@ -27,7 +27,7 @@ test("listPending returns 404 on missing or wrong token", async () => {
   );
 });
 
-test("listPending returns pending entries with the correct token", async () => {
+test("listPending is empty with the correct token (notes publish immediately)", async () => {
   const store = new InMemoryStore();
   await store.insert({ name: "P", message: "waiting", ipHash: null });
   const result = await listPendingGuestbook(
@@ -35,7 +35,7 @@ test("listPending returns pending entries with the correct token", async () => {
     { store },
   );
   assert.equal(result.status, 200);
-  assert.equal((result.body.entries as unknown[]).length, 1);
+  assert.equal((result.body.entries as unknown[]).length, 0);
 });
 
 test("moderate returns 404 on wrong token and works with the right one", async () => {

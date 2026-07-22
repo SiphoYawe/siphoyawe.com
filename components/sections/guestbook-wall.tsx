@@ -73,6 +73,7 @@ type FormErrors = { name?: string; message?: string };
 export function GuestbookWall({ initialEntries }: { initialEntries: GuestbookEntry[] }) {
   const [entries, setEntries] = useState(initialEntries);
   const [pendingNote, setPendingNote] = useState(false);
+  const [freshId, setFreshId] = useState<string | null>(null);
 
   // Pull live entries once /api/guestbook answers (getGuestbook returns an
   // empty list until then, so the wall simply starts bare).
@@ -123,9 +124,17 @@ export function GuestbookWall({ initialEntries }: { initialEntries: GuestbookEnt
         setStatus("error");
         return;
       }
-      // Entries are pre-moderated: the note queues for approval instead of
-      // sticking straight onto the public wall.
-      setPendingNote(res.pending !== false);
+      // Notes publish immediately: the API returns the created entry, so it
+      // sticks straight onto the wall. `pending` only comes back for silently
+      // dropped spam.
+      if (res.entry) {
+        const created = res.entry;
+        setEntries((prev) => [created, ...prev.filter((e) => e.id !== created.id)]);
+        setFreshId(created.id);
+        setPendingNote(false);
+      } else {
+        setPendingNote(res.pending !== false);
+      }
       setName("");
       setMessage("");
       setErrors({});
@@ -148,7 +157,7 @@ export function GuestbookWall({ initialEntries }: { initialEntries: GuestbookEnt
           <ul className="grid list-none gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {entries.map((entry, i) => (
               <li key={entry.id}>
-                <StickyNote entry={entry} index={i} fresh={false} />
+                <StickyNote entry={entry} index={i} fresh={entry.id === freshId} />
               </li>
             ))}
           </ul>

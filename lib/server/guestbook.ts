@@ -5,6 +5,7 @@ import {
   hashIp,
   type GuestbookStore,
 } from "./db";
+import { sendGuestbookEmail } from "./email";
 import { env, isConfigured } from "./env";
 import { screenMessage } from "./moderation";
 import { guestbookRateLimiter, type RateLimiter } from "./rate-limit";
@@ -77,7 +78,7 @@ export async function createGuestbookEntry(
     return { status: 200, body: { ok: true, pending: true } };
   }
 
-  await store.insert({
+  const { id } = await store.insert({
     name: input.name,
     message: input.message,
     ipHash: hashIp(ip),
@@ -85,7 +86,21 @@ export async function createGuestbookEntry(
 
   await capture(hashIp(ip), "guestbook_entry_submitted", {});
 
-  return { status: 200, body: { ok: true, pending: true } };
+  // Notify Sipho. Never fail the note if the email hiccups.
+  try {
+    await sendGuestbookEmail({ name: input.name, message: input.message });
+  } catch (err) {
+    console.error("[guestbook] notify failed", err);
+  }
+
+  // The note is live immediately — return it so the wall sticks it up now.
+  const entry = {
+    id,
+    name: input.name,
+    message: input.message,
+    createdAt: new Date().toISOString(),
+  };
+  return { status: 200, body: { ok: true, pending: false, entry } };
 }
 
 function tokenMatches(provided: string | null | undefined): boolean {

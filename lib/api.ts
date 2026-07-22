@@ -78,8 +78,8 @@ export async function getGuestbook(): Promise<GuestbookEntry[]> {
 }
 
 /**
- * POST /api/guestbook — entries are pre-moderated, so success means
- * "pending", not "on the wall".
+ * POST /api/guestbook — notes publish immediately; a successful sign returns
+ * the created entry so the wall can stick it up at once.
  */
 export async function signGuestbook(
   data: GuestbookSignature,

@@ -19,7 +19,7 @@ test("in-memory store starts empty", async () => {
   assert.equal((await store.listPending(100)).length, 0);
 });
 
-test("insert creates a pending entry, hidden until approved", async () => {
+test("insert creates an approved entry, visible immediately", async () => {
   const store = new InMemoryStore();
   const { id } = await store.insert({
     name: "Test",
@@ -27,17 +27,10 @@ test("insert creates a pending entry, hidden until approved", async () => {
     ipHash: "abc",
   });
 
-  assert.equal((await store.listApproved(100)).length, 0);
-  const pending = await store.listPending(100);
-  assert.equal(pending.length, 1);
-  assert.equal(pending[0]?.id, id);
-
-  const changed = await store.moderate(id, true);
-  assert.equal(changed, true);
-
   const approved = await store.listApproved(100);
   assert.equal(approved.length, 1);
   assert.equal(approved[0]?.id, id);
+  assert.equal((await store.listPending(100)).length, 0);
 });
 
 test("moderate reject removes the entry", async () => {
@@ -55,7 +48,7 @@ test("moderate on unknown id returns false", async () => {
   );
 });
 
-test("createGuestbookEntry returns pending and stores entry", async () => {
+test("createGuestbookEntry publishes immediately and returns the entry", async () => {
   const store = new InMemoryStore();
   const result = await createGuestbookEntry(
     { name: "Grace", message: "Beautiful site", website: "" },
@@ -63,8 +56,18 @@ test("createGuestbookEntry returns pending and stores entry", async () => {
     { store, rateLimiter: freshLimiter() },
   );
   assert.equal(result.status, 200);
-  assert.deepEqual(result.body, { ok: true, pending: true });
-  assert.equal((await store.listPending(100)).length, 1);
+  const body = result.body as {
+    ok: boolean;
+    pending: boolean;
+    entry?: { id: string; name: string; message: string };
+  };
+  assert.equal(body.ok, true);
+  assert.equal(body.pending, false);
+  assert.equal(body.entry?.name, "Grace");
+  assert.equal(body.entry?.message, "Beautiful site");
+  const approved = await store.listApproved(100);
+  assert.equal(approved.length, 1);
+  assert.equal(approved[0]?.id, body.entry?.id);
 });
 
 test("createGuestbookEntry silently drops honeypot hits", async () => {
@@ -129,9 +132,11 @@ test("moderation endpoints 404 when no token is configured", async () => {
   assert.equal(mod.status, 404);
 });
 
-test("listGuestbook returns only approved entries", async () => {
+test("listGuestbook returns published entries", async () => {
   const store = new InMemoryStore();
-  await store.insert({ name: "Pending", message: "wait", ipHash: null });
+  await store.insert({ name: "Grace", message: "hi", ipHash: null });
   const result = await listGuestbook({ store });
-  assert.deepEqual(result.body, { entries: [] });
+  const body = result.body as { entries: { name: string }[] };
+  assert.equal(body.entries.length, 1);
+  assert.equal(body.entries[0]?.name, "Grace");
 });
