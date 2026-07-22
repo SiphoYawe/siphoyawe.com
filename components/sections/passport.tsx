@@ -5,7 +5,6 @@ import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
 import { springs } from "@/lib/motion";
 import { aiAsset } from "@/lib/ai-assets";
-import { Crane } from "@/components/crane/crane-mascot";
 import { STAMPS, type Stamp } from "@/data/stamps";
 
 const INK: Record<Stamp["ink"], string> = {
@@ -174,6 +173,8 @@ export function Passport() {
   // The closed Ugandan passport, tucked behind the open spread as the lead
   // object — the book these stamps came out of (AI-ASSET-PROMPTS.md C).
   const coverSrc = aiAsset("artifacts/passport-cover");
+  // Uganda Airlines jet flying the Kampala-to-UK route, over the spread.
+  const planeSrc = aiAsset("artifacts/uganda-airlines");
 
   return (
     <Section
@@ -193,12 +194,17 @@ export function Passport() {
             className="pointer-events-none absolute -top-12 -left-24 z-0 hidden w-44 -rotate-[9deg] select-none drop-shadow-[0_16px_30px_rgb(0_0_0/0.35)] lg:block xl:-left-36 xl:w-52"
           />
         )}
-        {/* a crowned crane flying the Kampala-to-UK route, over the spread */}
-        <Crane
-          pose="flying"
-          phase={1.1}
-          className="absolute -top-12 right-6 z-20 hidden w-24 sm:block xl:right-0"
-        />
+        {/* a Uganda Airlines jet flying the Kampala-to-UK route, over the spread */}
+        {planeSrc && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={planeSrc}
+            alt=""
+            aria-hidden
+            loading="lazy"
+            className="pointer-events-none absolute -top-14 right-2 z-20 hidden w-40 -rotate-[4deg] select-none drop-shadow-[0_12px_20px_rgb(0_0_0/0.32)] sm:block xl:right-0 xl:w-52"
+          />
+        )}
         <div className="relative z-10 -rotate-[0.6deg] rounded-[1.6rem] bg-night p-2.5 pb-4 shadow-(--shadow-lift) sm:p-3 sm:pb-5">
           <div className={`grid overflow-hidden rounded-[1.1rem] sm:grid-cols-2 ${spreadSrc ? "relative" : ""}`}>
             {spreadSrc && (

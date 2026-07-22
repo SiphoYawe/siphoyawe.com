@@ -119,22 +119,42 @@ export function CorkboardNow() {
   const string = (
     <svg
       aria-hidden
-      viewBox="0 0 100 12"
+      viewBox="0 0 100 16"
       preserveAspectRatio="none"
-      className="pointer-events-none absolute inset-x-[3%] top-4 hidden h-10 w-[94%] lg:block"
+      className="pointer-events-none absolute inset-x-[6%] top-1 hidden h-14 w-[88%] lg:block"
     >
-      <motion.path
-        d="M-2 6 Q 6 9.5 12.5 3.5 Q 25 11 37.5 3.5 Q 50 11 62.5 3.5 Q 75 11 87.5 3.5 Q 94 9 102 6"
+      {/* twine shadow on the cork */}
+      <path
+        d="M0 5 C 16 15, 34 15, 50 7 C 66 15, 84 15, 100 6"
         fill="none"
-        stroke="#D50000"
-        strokeWidth="2"
+        stroke="rgb(60 30 10 / 0.28)"
+        strokeWidth="5"
         vectorEffect="non-scaling-stroke"
         strokeLinecap="round"
-        opacity="0.7"
+        transform="translate(0.6 1.4)"
+      />
+      {/* the red twine, drooping naturally between the tacks, drawing in on view */}
+      <motion.path
+        d="M0 5 C 16 15, 34 15, 50 7 C 66 15, 84 15, 100 6"
+        fill="none"
+        stroke="#c1121f"
+        strokeWidth="3.5"
+        vectorEffect="non-scaling-stroke"
+        strokeLinecap="round"
         initial={reduce ? { pathLength: 1 } : { pathLength: 0 }}
         whileInView={reduce ? undefined : { pathLength: 1 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 1.4, ease: [0.65, 0, 0.35, 1], delay: 0.3 }}
+      />
+      {/* subtle highlight along the top of the twine */}
+      <path
+        d="M0 5 C 16 15, 34 15, 50 7 C 66 15, 84 15, 100 6"
+        fill="none"
+        stroke="rgb(255 255 255 / 0.35)"
+        strokeWidth="1"
+        vectorEffect="non-scaling-stroke"
+        strokeLinecap="round"
+        transform="translate(0 -0.5)"
       />
     </svg>
   );

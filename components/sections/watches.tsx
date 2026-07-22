@@ -20,6 +20,10 @@ const HOUR_DEG = 305;
 const MINUTE_DEG = 60;
 const SECOND_DEG = 170;
 
+/** Per-slot vertical seat, so each dial lines up in its velvet cushion. The
+ * Opulens image carries more strap below the dial, so it seats a touch lower. */
+const SLOT_TOP = ["30%", "34%", "30%"];
+
 /**
  * One watch resting in its slot: strap arcs above and below a toned dial
  * with simple hands and a crown nub. Micro-interaction (brief section 6.7):
@@ -43,7 +47,7 @@ function WatchPiece({ watch, slotX, index = 0 }: { watch: Watch; slotX?: string;
           ? "absolute flex w-[32%] -translate-x-1/2 flex-col items-center text-center"
           : "flex flex-col items-center text-center"
       }
-      style={slotX ? { left: slotX, top: "30%" } : undefined}
+      style={slotX ? { left: slotX, top: SLOT_TOP[index] ?? "30%" } : undefined}
     >
       {/* the watch seated in its slot on the leather */}
       <div className="relative flex h-44 w-full items-center justify-center sm:h-48">

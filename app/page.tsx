@@ -3,7 +3,7 @@ import { Preloader } from "@/components/preloader/preloader";
 import { About } from "@/components/sections/about";
 import { Projects } from "@/components/sections/projects";
 import { WorkExperience } from "@/components/sections/work-experience";
-import { Awards } from "@/components/sections/awards";
+// import { Awards } from "@/components/sections/awards"; // fridge section paused
 import { Medals } from "@/components/sections/medals";
 import { Reading } from "@/components/sections/reading";
 import { Watches } from "@/components/sections/watches";
@@ -32,7 +32,7 @@ export default function Home() {
       <About />
       <Projects />
       <WorkExperience />
-      <Awards />
+      {/* <Awards /> fridge section paused */}
       <Medals />
       <Reading />
       <Watches />
