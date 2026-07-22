@@ -115,7 +115,7 @@ export function Wordmark() {
   return (
     <h1
       aria-label="Sipho Yawe"
-      className="relative z-10 w-screen max-w-none -translate-x-[2%] text-center font-display text-[clamp(4.5rem,18vw,21rem)] leading-[0.82] font-semibold tracking-[-0.03em] whitespace-nowrap text-sable select-none dark:text-paper"
+      className="relative z-10 w-screen max-w-none text-center font-display text-[clamp(3rem,15.5vw,20rem)] leading-[0.82] font-semibold tracking-[-0.03em] whitespace-nowrap text-sable select-none dark:text-paper"
     >
       <span aria-hidden className="inline-flex items-baseline justify-center">
         {LETTERS.slice(0, 5).map(({ char, sticker, egg }) => (
