@@ -21,4 +21,4 @@ export const IDENTITY_CHIPS = [
 ];
 
 /** Polaroid caption (Luganda flavour). */
-export const POLAROID_CAPTION = "nze ono (that's me)";
+export const POLAROID_CAPTION = "that's me";

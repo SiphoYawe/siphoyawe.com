@@ -65,6 +65,7 @@ export function Proverb() {
   }, [paused, cycle, advance]);
 
   const current = PROVERBS[index];
+  if (!current) return null; // hidden until PROVERBS is repopulated
 
   return (
     <Section id="proverb" title="Wise sayings from home" aside="luganda & runyankole">

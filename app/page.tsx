@@ -15,9 +15,11 @@ import { Talks } from "@/components/sections/talks";
 import { Passport } from "@/components/sections/passport";
 import { Proverb } from "@/components/sections/proverb";
 import { Faith } from "@/components/sections/faith";
+import { LatestWriting } from "@/components/sections/latest-writing";
 import { Testimonials } from "@/components/sections/testimonials";
 import { Guestbook } from "@/components/sections/guestbook";
 import { Connect } from "@/components/sections/connect";
+import { getAllPosts } from "@/lib/blog";
 
 /**
  * The intimate scroll (brief section 5): seventeen sections, each a designed
@@ -25,6 +27,8 @@ import { Connect } from "@/components/sections/connect";
  * closes the page with the wax seal.
  */
 export default function Home() {
+  const [latestPost = null] = getAllPosts();
+
   return (
     <main id="main-content">
       <Preloader />
@@ -44,6 +48,7 @@ export default function Home() {
       <Passport />
       <Proverb />
       <Faith />
+      <LatestWriting post={latestPost} />
       <Testimonials />
       <Guestbook />
       <Connect />

@@ -80,7 +80,7 @@ export function About() {
             <BentoCard>
               <p className="leading-relaxed text-ink-soft">{BIO.offKeyboard}</p>
               <Handwritten className="mt-4" rotate={-1.5}>
-                the part a CV never captures
+                you won&apos;t find this part in an interview
               </Handwritten>
             </BentoCard>
           </Reveal>

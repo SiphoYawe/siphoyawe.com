@@ -8,26 +8,6 @@ export type Proverb = {
 
 /**
  * Rotating proverbs on the kitenge card (brief section 6.13).
- * TODO(Sipho): confirm wording and add your favourites.
+ * TODO(Sipho): repopulate with the curated Luganda + Runyankole proverbs.
  */
-export const PROVERBS: Proverb[] = [
-  {
-    id: "kamu-kamu",
-    lang: "Luganda",
-    text: "Kamu kamu gwe muganda",
-    english: "Little by little, a bundle is made.",
-  },
-  {
-    id: "mbuulu",
-    lang: "Luganda",
-    text: "Agamba empanga atya ngo",
-    english: "He who speaks plainly fears no leopard.",
-  },
-  {
-    id: "rum-1",
-    lang: "Runyankole",
-    text: "Enyamaisha eteekateeka eri amaisho gabo",
-    // TODO(Sipho): confirm the exact wording of this Runyankole translation.
-    english: "Every herd has its own keeper.",
-  },
-];
+export const PROVERBS: Proverb[] = [];

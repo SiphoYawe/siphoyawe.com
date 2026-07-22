@@ -14,18 +14,15 @@ export function DocumentCover({
   return (
     <div
       aria-hidden
-      className={`pointer-events-none relative w-48 select-none sm:w-56 ${className}`}
+      className={`pointer-events-none relative w-64 select-none sm:w-80 ${className}`}
       style={{ filter: "drop-shadow(0 16px 26px rgb(0 0 0 / 0.22))" }}
     >
-      <div
-        style={{
-          maskImage: "linear-gradient(to bottom, #000 46%, transparent 90%)",
-          WebkitMaskImage: "linear-gradient(to bottom, #000 46%, transparent 90%)",
-        }}
-      >
-        {/* two sheets stacked behind the cover, peeking at the edges */}
-        <div className="absolute inset-0 translate-x-[10px] translate-y-[8px] rotate-[3.5deg] rounded-[4px] bg-[#e7e3d8] ring-1 ring-black/[0.06]" />
-        <div className="absolute inset-0 -translate-x-[7px] translate-y-[4px] -rotate-[2.5deg] rounded-[4px] bg-[#f2efe7] ring-1 ring-black/[0.06]" />
+      <div className="relative">
+        {/* two sheets stacked behind the cover, peeking at the edges. Told
+        apart from the page behind them by their own shadow and edge, the way
+        real paper is, not by colour. */}
+        <div className="absolute inset-0 translate-x-[14px] translate-y-[10px] rotate-[4deg] rounded-[4px] bg-[#faf8f2] shadow-[0_6px_16px_rgb(0_0_0/0.16)] ring-1 ring-black/10" />
+        <div className="absolute inset-0 -translate-x-[10px] translate-y-[6px] -rotate-[3deg] rounded-[4px] bg-[#fdfcf8] shadow-[0_4px_12px_rgb(0_0_0/0.14)] ring-1 ring-black/10" />
         {/* the front page */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -34,6 +31,11 @@ export function DocumentCover({
           loading="lazy"
           className="relative block w-full rounded-[4px] bg-white ring-1 ring-black/10"
         />
+        {/* the whole stack fades to nothing about halfway down: an overlay
+        blending into the page background, not a CSS mask (unreliable across
+        browsers for this gradient), overshooting the box a little so the
+        rotated sheets' peeking corners fade too, not just the front page. */}
+        <div className="pointer-events-none absolute -inset-x-3 top-[44%] -bottom-6 bg-gradient-to-b from-transparent to-canvas" />
       </div>
     </div>
   );

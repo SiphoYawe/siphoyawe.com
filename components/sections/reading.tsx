@@ -32,6 +32,7 @@ function ShelfBook({ book, index }: { book: Book; index: number }) {
   const reduce = useReducedMotion();
   const { bg, ink } = SPINE_STYLES[book.spine];
   const tilt = BOOK_TILTS[index % BOOK_TILTS.length];
+  const amazonUrl = `https://www.amazon.co.uk/s?k=${encodeURIComponent(`${book.title} ${book.author}`)}`;
 
   return (
     <motion.li
@@ -41,34 +42,51 @@ function ShelfBook({ book, index }: { book: Book; index: number }) {
       whileHover={reduce ? undefined : { y: -10, rotate: 0, scale: 1.03 }}
       transition={{ ...springs.soft, delay: index * 0.06 }}
       style={{ rotate: `${tilt}deg` }}
-      className="relative z-10 -mx-1 cursor-default"
+      className="group relative z-10 -mx-1"
     >
-      <div
-        className="relative h-28 w-[4.5rem] overflow-hidden rounded-[2px] rounded-r-[4px] shadow-[0_10px_18px_-8px_rgb(0_0_0/0.55)] sm:h-44 sm:w-28"
-        style={{ background: bg }}
+      <a
+        href={amazonUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${book.title} by ${book.author}, find it on Amazon`}
+        className="relative block rounded-[2px] outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
-        {book.coverImage ? (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img src={book.coverImage} alt={`${book.title} cover`} loading="lazy" className="size-full object-cover" />
-        ) : (
-          /* typographic placeholder cover */
-          <div className="flex h-full flex-col justify-between p-2.5 sm:p-4" style={{ color: ink }}>
-            <p className="text-[9px] leading-tight font-bold sm:text-[13px]" style={{ fontFamily: "var(--font-display)" }}>
-              {book.title}
-            </p>
-            <p className="text-[7px] font-semibold tracking-[0.14em] uppercase opacity-85 sm:text-[9px]">{book.author}</p>
-          </div>
-        )}
-        {/* spine shadow at the binding + cover sheen */}
-        <span aria-hidden className="pointer-events-none absolute inset-y-0 left-0 w-3 bg-gradient-to-r from-black/35 to-transparent" />
-        <span aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/12 via-transparent to-black/10" />
-      </div>
-      {/* page-block thickness on the right edge */}
-      <span
-        aria-hidden
-        className="absolute inset-y-1 -right-1 w-1.5 rounded-r-[2px]"
-        style={{ background: "repeating-linear-gradient(180deg, #efe8d2 0 2px, #ded4b8 2px 3px)" }}
-      />
+        <div
+          className="relative h-28 w-[4.5rem] overflow-hidden rounded-[2px] rounded-r-[4px] shadow-[0_10px_18px_-8px_rgb(0_0_0/0.55)] sm:h-44 sm:w-28"
+          style={{ background: bg }}
+        >
+          {book.coverImage ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img src={book.coverImage} alt={`${book.title} cover`} loading="lazy" className="size-full object-cover" />
+          ) : (
+            /* typographic placeholder cover */
+            <div className="flex h-full flex-col justify-between p-2.5 sm:p-4" style={{ color: ink }}>
+              <p className="text-[9px] leading-tight font-bold sm:text-[13px]" style={{ fontFamily: "var(--font-display)" }}>
+                {book.title}
+              </p>
+              <p className="text-[7px] font-semibold tracking-[0.14em] uppercase opacity-85 sm:text-[9px]">{book.author}</p>
+            </div>
+          )}
+          {/* spine shadow at the binding + cover sheen */}
+          <span aria-hidden className="pointer-events-none absolute inset-y-0 left-0 w-3 bg-gradient-to-r from-black/35 to-transparent" />
+          <span aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/12 via-transparent to-black/10" />
+        </div>
+        {/* page-block thickness on the right edge */}
+        <span
+          aria-hidden
+          className="absolute inset-y-1 -right-1 w-1.5 rounded-r-[2px]"
+          style={{ background: "repeating-linear-gradient(180deg, #efe8d2 0 2px, #ded4b8 2px 3px)" }}
+        />
+        {/* proper tooltip with title + author, floats above the cover on hover */}
+        <div className="pointer-events-none absolute bottom-full left-1/2 z-30 mb-1.5 w-max max-w-[13rem] -translate-x-1/2 scale-95 rounded-xl border border-line bg-canvas-raised px-3 py-2 text-left opacity-0 shadow-[var(--shadow-lift)] transition-all duration-150 group-hover:scale-100 group-hover:opacity-100 group-focus-within:scale-100 group-focus-within:opacity-100">
+          <p className="font-display text-sm font-semibold text-ink">{book.title}</p>
+          <p className="mt-0.5 text-xs leading-snug text-ink-soft">{book.author}</p>
+          <span
+            aria-hidden
+            className="absolute top-full left-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rotate-45 border-r border-b border-line bg-canvas-raised"
+          />
+        </div>
+      </a>
     </motion.li>
   );
 }

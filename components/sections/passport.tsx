@@ -205,7 +205,11 @@ export function Passport() {
             className="pointer-events-none absolute -top-14 right-2 z-20 hidden w-40 -rotate-[4deg] select-none drop-shadow-[0_12px_20px_rgb(0_0_0/0.32)] sm:block xl:right-0 xl:w-52"
           />
         )}
-        <div className="relative z-10 -rotate-[0.6deg] rounded-[1.6rem] bg-night p-2.5 pb-4 shadow-(--shadow-lift) sm:p-3 sm:pb-5">
+        <div
+          className={`relative z-10 -rotate-[0.6deg] rounded-[1.6rem] shadow-(--shadow-lift) ${
+            spreadSrc ? "" : "bg-night p-2.5 pb-4 sm:p-3 sm:pb-5"
+          }`}
+        >
           <div className={`grid overflow-hidden rounded-[1.1rem] sm:grid-cols-2 ${spreadSrc ? "relative" : ""}`}>
             {spreadSrc && (
               // eslint-disable-next-line @next/next/no-img-element
