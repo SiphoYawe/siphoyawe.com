@@ -26,7 +26,7 @@ export function Hero() {
           {t("blessing")}
         </p>
         {/* Coram Deo spine: hand-lettered near the hero blessing */}
-        <p className="mt-1 ml-8 -rotate-3 font-hand text-xl text-or-soft [text-shadow:0_0_1px_#8a6d00] sm:text-2xl dark:text-or dark:[text-shadow:none]">
+        <p className="mt-1 ml-8 -rotate-3 font-hand text-xl text-[#a8870c] sm:text-2xl dark:text-or">
           coram deo
         </p>
       </div>
