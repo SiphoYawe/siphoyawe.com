@@ -227,7 +227,7 @@ function Stub({ talk, index }: { talk: Talk; index: number }) {
  */
 export function Talks() {
   const lanyards = TALKS.filter((talk) => talk.kind === "lanyard");
-  const stubs = TALKS.filter((talk) => talk.kind === "stub");
+  // const stubs = TALKS.filter((talk) => talk.kind === "stub");
 
   return (
     <Section id="talks" title="Talks & media" aside="stages & hackathons so far">
@@ -278,6 +278,7 @@ export function Talks() {
         </div>
       </Reveal>
 
+      {/* Hackathon ticket stubs section — commented out (medals section now covers hackathon wins).
       <Reveal className="mt-12" delay={0.08}>
         <div className="grid items-start gap-6 sm:grid-cols-3">
           {stubs.map((talk, i) => (
@@ -288,6 +289,7 @@ export function Talks() {
           the hackathon stubs I kept
         </Handwritten>
       </Reveal>
+      */}
     </Section>
   );
 }
